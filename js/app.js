@@ -4,6 +4,7 @@ let allData = {
 };
 
 let currentTab = 'cores';
+const fieldsToIgnore = ['Hex'];
 
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -75,6 +76,10 @@ function updateSearchFields() {
     fields = Object.keys(allData.efeitos[0]);
     console.log('Campos disponíveis para pesquisa em efeitos:', fields);
   }
+
+  console.log('Campos antes da filtragem:', fields);
+  fields = fields.filter(field => !fieldsToIgnore.includes(field));
+  console.log('Campos após filtragem:', fields);
 
   const defaultOption = document.createElement('option');
   defaultOption.value = '';
