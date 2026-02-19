@@ -155,6 +155,7 @@ function createCard(item) {
       <div class="card-header">
         <div class="card-title">${escapeHtml(title)}</div>
         ${code ? `<div class="card-code">${escapeHtml(code)}</div>` : ''}
+        ${keywords ? `<div class="card-keywords">${escapeHtml(keywords)}</div>` : ''}
       </div>
   `;
 
