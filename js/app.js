@@ -16,6 +16,7 @@ function loadData() {
     .then(response => response.json())
     .then(data => {
       allData = data;
+      updateSearchFields();
       displayResults();
     })
     .catch(error => {
@@ -56,9 +57,6 @@ function switchTab(tab) {
       btn.classList.add('active');
     }
   });
-
-  // Atualizar campos de pesquisa
-  updateSearchFields();
 
   // Limpar pesquisa e mostrar todos os resultados
   clearSearch();
