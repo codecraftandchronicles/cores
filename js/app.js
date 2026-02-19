@@ -146,8 +146,9 @@ function displayResults(results = null) {
 
 function createCard(item) {
   const fields = Object.entries(item);
-  const title = item['Cor Base'] || item['Unnamed: 0'] || 'Item';
-  const code = item['Código'] || item['Unnamed: 1'] || '';
+  const title = item['Cor Base'] || item['Nome do Produto'] || 'Item';
+  const code = item['Código'] || item['Código'] || '';
+  const keywords = item['Palavras-Chave'] || item['Keywords'] || '';
 
   let cardHTML = `
     <div class="card">
@@ -159,7 +160,7 @@ function createCard(item) {
 
   fields.forEach(([key, value]) => {
     // Pular campos que já foram mostrados no header
-    if (key === 'Cor Base' || key === 'Unnamed: 0' || key === 'Código' || key === 'Unnamed: 1') {
+    if (key === 'Cor Base' || key === 'Nome do Produto' || key === 'Código' || key === 'Palavras-Chave' || key === 'Keywords') {
       return;
     }
 
