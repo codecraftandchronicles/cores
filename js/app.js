@@ -8,15 +8,14 @@ let currentTab = 'cores';
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
-  setupEventListeners();
+  setupEventListeners();  
 });
 
 function loadData() {
   fetch('./data/cores-efeitos.json')
     .then(response => response.json())
     .then(data => {
-      allData = data;
-      updateSearchFields();
+      allData = data;    
       displayResults();
     })
     .catch(error => {
@@ -58,11 +57,14 @@ function switchTab(tab) {
     }
   });
 
+  updateSearchFields();
+
   // Limpar pesquisa e mostrar todos os resultados
   clearSearch();
 }
 
 function updateSearchFields() {
+  console.log('Atualizando campos de pesquisa para a aba:', currentTab);
   const fieldSelect = document.getElementById('searchField');
   fieldSelect.innerHTML = '';
 
@@ -71,6 +73,7 @@ function updateSearchFields() {
     fields = Object.keys(allData.cores[0]);
   } else if (currentTab === 'efeitos' && allData.efeitos.length > 0) {
     fields = Object.keys(allData.efeitos[0]);
+    console.log('Campos disponíveis para pesquisa em efeitos:', fields);
   }
 
   const defaultOption = document.createElement('option');
@@ -229,6 +232,10 @@ function showError(message) {
 }
 
 // Inicializar campos de pesquisa
-window.addEventListener('load', () => {
-  updateSearchFields();
+ window.addEventListener('load', () => {
+  // Pequeno delay para garantir que os dados foram carregados
+  setTimeout(() => {
+    updateSearchFields();
+    displayResults();
+  }, 100);
 });
