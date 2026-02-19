@@ -1,0 +1,21 @@
+# Ficheiros do sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependências (se usar Node.js no futuro)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Ficheiros temporários
+*.tmp
+*.log
