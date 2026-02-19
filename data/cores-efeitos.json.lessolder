@@ -3,7 +3,6 @@
     {
       "Cor Base": "MATT RED",
       "Código": "AK11092",
-      "Hex": "#B22222",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base",
       "Nível de saturação (claro/médio/escuro)": "Médio/Escuro",
@@ -16,7 +15,6 @@
     {
       "Cor Base": "DEEP RED",
       "Código": "AK11088",
-      "Hex": "#8B0000",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Sombra",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
@@ -29,12 +27,11 @@
     {
       "Cor Base": "CADMIUM RED",
       "Código": "AK11085",
-      "Hex": "#E34234",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base/Realce",
       "Nível de saturação (claro/médio/escuro)": "Claro/Médio",
       "Função Principal": "Tom Base/Intermediário — Cor quente e vibrante, excelente para realces de tons de terra ou como base para madeira avermelhada e enferrujada.",
-      "Uso Estratégico": "Usar em drybrush leve para realces quentes em madeira avermelhada ou couro. Aplicar com pontilhado (stippling) para criar textura de ferrugem ou terra.",
+      "Uso Estratégico": "Utilizar em drybrush leve para realces quentes em madeira avermelhada ou couro. Aplicar com pontilhado (stippling) para criar textura de ferrugem ou terra.",
       "Complementar": "ARCHAIC TURQUOISE",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste complementar frio. Ideal para reflexos metálicos e brilho de aço próximo a tons quentes.",
       "Keywords": "Ferrugem, Couro, Madeira, Drybrush, Stippling, Realce Quente"
@@ -42,7 +39,6 @@
     {
       "Cor Base": "ULTRAMARINE",
       "Código": "AK11179",
-      "Hex": "#120A8F",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base",
       "Nível de saturação (claro/médio/escuro)": "Médio",
@@ -55,7 +51,6 @@
     {
       "Cor Base": "LIGHT PRUSSIAN BLUE",
       "Código": "AK11186",
-      "Hex": "#5D8AA8",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base/Realce",
       "Nível de saturação (claro/médio/escuro)": "Claro",
@@ -68,12 +63,11 @@
     {
       "Cor Base": "DARK PRUSSIAN BLUE",
       "Código": "AK11189",
-      "Hex": "#003153",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Sombra",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
       "Função Principal": "Tom de Sombra Fria/Metal Azulado — Excelente para sombras profundas de tecidos azuis ou como um tom base para aço envelhecido e escuro.",
-      "Uso Estratégico": "Base para metal não metálico (NMM) em tons de aço envelhecido. Usar em lavagens (washes) escuras para sombras profundas em azuis sem \"sujar\" a cor.",
+      "Uso Estratégico": "Base para metal não metálico (non-metallic metal - NMM (Non-Metallic Metal - NMM)) (NMM (Non-Metallic Metal - NMM)) em tons de aço envelhecido. Usar em lavagens (washes) escuras para sombras profundas em azuis sem \"sujar\" a cor.",
       "Complementar": "BURNT RED",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste forte (análogo quente) — excelente para adicionar tons de poeira, sujeira ou ferrugem, criando um realismo terroso.",
       "Keywords": "NMM, Aço Envelhecido, Sombra Profunda, Deep Wash, Armadura Negra"
@@ -81,7 +75,6 @@
     {
       "Cor Base": "BEIGE",
       "Código": "AK11030",
-      "Hex": "#F5F5DC",
       "Temperatura (Quente/Frio/Neutra)": "Neutra/Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base",
       "Nível de saturação (claro/médio/escuro)": "Claro/Médio",
@@ -92,13 +85,12 @@
       "Keywords": "Pergaminhos, Ossos, Tabards, Pedra Clara, Argamassa, Base Coating"
     },
     {
-      "Cor Base": "IVORY",
+      "Cor Base": "IVORY ",
       "Código": "AK11004",
-      "Hex": "#FFFFF0",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Realce",
       "Nível de saturação (claro/médio/escuro)": "Claro",
-      "Função Principal": "Realce/Ponto de Luz — O tom mais claro para os realces dos tecidos Bege ou para os pontos mais iluminados da pedra/osso.",
+      "Função Principal": "Realce/Ponto de Luz — O tom mais claro para os realces (highlights (highlights)) dos tecidos Bege ou para os pontos mais iluminados da pedra/osso.",
       "Uso Estratégico": "Ideal para realces finais em pergaminhos, selos de pureza e dentes dos cavaleiros. Use para fazer escritas manuais detalhadas (Freehand) com um pincel de ponta fina sobre bases de Bege. É a cor perfeita para iluminar as quinas mais afiadas de superfícies ósseas ou tecidos claros.",
       "Complementar": "DEEP PURPLE",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Sombras suaves frias — equilibram luz quente, ideais para superfícies claras ou de osso.",
@@ -107,34 +99,31 @@
     {
       "Cor Base": "OFFWHITE",
       "Código": "AK11002",
-      "Hex": "#FAF9F6",
       "Temperatura (Quente/Frio/Neutra)": "Neutra",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Realce",
       "Nível de saturação (claro/médio/escuro)": "Muito Claro/Claro",
-      "Função Principal": "Máximo Realce/Branco Puro — Usado com moderação para brilhos de metal, olhos, cruzes nos escudos e o topo do seu efeito OSL. Nunca usar diretamente para grandes áreas.",
-      "Uso Estratégico": "Usar para pontos de luz precisos em superfícies não metálicas (olhos, cruzes). Base crucial para cores transparentes e para o brilho secundário em efeitos OSL.",
+      "Função Principal": "Máximo Realce/Branco Puro — Usado com moderação para brilhos de metal, olhos, cruzes nos escudos e o topo do seu efeito OSL (Object Source Lighting - OSL). Nunca usar diretamente para grandes áreas.",
+      "Uso Estratégico": "Usar para pontos de luz precisos em superfícies não metálicas (olhos, cruzes). Base crucial para cores transparentes e para o brilho secundário em efeitos OSL (Object Source Lighting - OSL).",
       "Complementar": "AMETHYST BLUE",
-      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Sombra Cromática Fria (Chromatic Shadowing): Como o Offwhite é um tom de \"casca de ovo\" quase branco, usar um violeta/azul diluído nas sombras evita que a peça pareça suja, dando um aspeto etéreo e limpo.",
+      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Sombra Cromática Fria (Chromatic Shadowing): Como o Offwhite é um tom de \"casca de ovo\" quase branco, usar um violeta/azul diluído nas sombras evita que a peça pareça suja, dando um aspecto etéreo e limpo.",
       "Keywords": "OSL, Olhos, Cruzes Templárias, Specular Highlight, Ponto de Luz"
     },
     {
       "Cor Base": "FLUORESCENT YELLOW",
       "Código": "AK11049",
-      "Hex": "#CCFF00",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Efeito Especial",
       "Nível de saturação (claro/médio/escuro)": "Vibrante/Claro",
-      "Função Principal": "Luz Máxima (OSL/LED) — O ponto mais brilhante para a iluminação (pico de luz). Sendo fluorescente, amplifica a luz do seu LED âmbar/amarelo, dando um brilho incandescente e ultrarrealista ao bulbo da lamparina.",
-      "Uso Estratégico": "Aplicar sobre base branca para maximizar o efeito OSL (Object Source Lighting) de lâmpadas e chamas. Usar em camadas finas (layering) para construir intensidade luminosa (luminous intensity).",
+      "Função Principal": "Luz Máxima (OSL (Object Source Lighting - OSL)/LED) — O ponto mais brilhante para a iluminação (pico de luz). Sendo fluorescente, amplifica a luz do seu LED âmbar/amarelo, dando um brilho incandescente e ultrarrealista ao bulbo da lamparina.",
+      "Uso Estratégico": "Aplicar sobre base branca para maximizar o efeito OSL (Object Source Lighting - OSL) (Object Source Lighting) de lâmpadas e chamas. Usar em camadas finas (layering) para construir intensidade luminosa (luminous intensity).",
       "Complementar": "DEEP PURPLE",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste de Intensidade (Intensity Contrast): Essencial para o efeito de luz (OSL). O roxo profundo colocado ao redor da fonte amarela faz com que o brilho pareça emitir luz real por puro contraste cromático.",
       "Keywords": "LED, Lamparina, Glow Effect, OSL, Fluorescente, Sherlock"
     },
     {
-      "Cor Base": "SUNNY SKIN TONE",
-      "Código": "AK11055",
-      "Hex": "#F7D5B4",
-      "Temperatura (Quente/Frio/Neutra)": "Quente",
+      "Cor Base": "SUNNY SKIN TONE ",
+      "Código": "AK11055 ",
+      "Temperatura (Quente/Frio/Neutra)": "Quente ",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base/Realce",
       "Nível de saturação (claro/médio/escuro)": "Claro/Médio",
       "Função Principal": "Tom Base/Realce Quente — Principalmente para pintura de pele de figuras (Cavaleiros). Também útil como um realce quente e amarelado para texturas de pedra e terra, complementando o seu Beige.",
@@ -146,12 +135,11 @@
     {
       "Cor Base": "BLACK",
       "Código": "AK 1109",
-      "Hex": "#0A0A0A",
       "Temperatura (Quente/Frio/Neutra)": "Neutra",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Sombra",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
       "Função Principal": "Sombra Absoluta / Oclusão: Usado para a separação entre materiais (ex: linha entre o cinto e a túnica) e para misturar com outras cores para criar tons de sombra profundos.",
-      "Uso Estratégico": "Essencial para blacklining, definindo contornos e separando materiais. Base para NMM escuro e para sombras de oclusão onde a luz não atinge.",
+      "Uso Estratégico": "Essencial para blacklining (blacklining), definindo contornos e separando materiais. Base para NMM (Non-Metallic Metal - NMM) escuro e para sombras de oclusão onde a luz não atinge.",
       "Complementar": "WHITE (Puro)",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste Binário (Binary Contrast): Tecnicamente o preto não tem complementar no círculo cromático, mas seu papel é o contraste absoluto. O branco serve para definir as formas através do realce de arestas (Edge Highlighting).",
       "Keywords": "Blacklining, Armadura Negra, Oclusão, Sombra Absoluta, Contornos"
@@ -159,12 +147,11 @@
     {
       "Cor Base": "ASH GREY",
       "Código": "AK11024",
-      "Hex": "#B2BEB5",
       "Temperatura (Quente/Frio/Neutra)": "Neutra",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Fase (Transição)/Filtro",
       "Nível de saturação (claro/médio/escuro)": "Médio",
       "Função Principal": "Tonalidade Neutra de Transição: Ideal para pintar superfícies de pedra, desgastes em metal ou para suavizar a transição entre o preto e o branco sem saturação.",
-      "Uso Estratégico": "Usar em drybrush para simular textura de pedra ou concreto. Misturar para suavizar transições entre preto e branco, evitando contrastes muito duros.",
+      "Uso Estratégico": "Utilizar em drybrush para simular textura de pedra ou concreto. Misturar para suavizar transições entre preto e branco, evitando contrastes muito duros.",
       "Complementar": "BURNT RED",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste de Desgaste (Weathering Contrast): Em pedras cinzas (como as do Sherlock), sombras ou manchas de um vermelho terroso simulam oxidação, sujeira acumulada ou tijolos aparentes sob o reboco.",
       "Keywords": "Pedra, Concreto, Sherlock, Transição Neutra, Drybrush, Londres"
@@ -172,25 +159,23 @@
     {
       "Cor Base": "WHITE",
       "Código": "AK11001",
-      "Hex": "#FFFFFF",
       "Temperatura (Quente/Frio/Neutra)": "Neutra",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Realce",
       "Nível de saturação (claro/médio/escuro)": "Muito Claro/Claro",
-      "Função Principal": "Specular Highlight / Mistura: Diferente do Offwhite, este é o \"Pure White\". Usa-se apenas no ponto exato onde a luz reflete (ponto de brilho) ou para clarear cores muito saturadas.\n\nEssencial como \"primer local (spot primer)\" para cores transparentes (Fluors/Gels). Sem ele, o pigmento flúor não tem onde \"quicar\" a luz.",
-      "Uso Estratégico": "Reservado para o ponto de brilho (specular highlight) extremo. Usar como primer local (spot primer) para cores fluorescentes ou transparentes, potencializando a sua vivacidade.",
+      "Função Principal": "Specular Highlight / Mistura: Diferente do Offwhite, este é o \"Pure White\". Usa-se apenas no ponto exato onde a luz reflete (ponto de brilho (specular highlight)) ou para clarear cores muito saturadas.\n\nEssencial como \"primer local (spot primer)\" para cores transparentes (Fluors/Gels). Sem ele, o pigmento flúor não tem onde \"quicar\" a luz. ",
+      "Uso Estratégico": "Reservado para o ponto de brilho (specular highlight) extremo (specular highlight). Usar como primer local (spot primer) para cores fluorescentes ou transparentes, potencializando a sua vivacidade.",
       "Complementar": "BLACK",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Definição de Volume (Volume Definition): O preto serve para criar o delineamento técnico (Black Lining) ao redor do branco, impedindo que a cor \"estoure\" e perca o formato visual.",
       "Keywords": "Pure White, Spot Primer, Specular Highlight, Misturas, Brilho"
     },
     {
-      "Cor Base": "VIOLET RED",
+      "Cor Base": "VIOLET RED ",
       "Código": "AK11075",
-      "Hex": "#922B3E",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Filtro",
       "Nível de saturação (claro/médio/escuro)": "Médio",
       "Função Principal": "filtro (filter) de Profundidade Orgânica: Excelente para sombras em tecidos vermelhos ou para dar \"vida\" a áreas de pele (olheiras, lábios ou cicatrizes) por ser uma cor rica e profunda.",
-      "Uso Estratégico": "Excelente para criar sombras ricas e orgânicas em tecidos vermelhos (como a capa do Templário). Use muito diluído como uma veladura (Glazing) para aplicar em recessos da pele, dando um aspeto mais realista e \"vivo\" a rostos e cicatrizes.",
+      "Uso Estratégico": "Excelente para criar sombras ricas e orgânicas em tecidos vermelhos (como a capa do Templário). Use muito diluído como uma veladura (Glazing) para aplicar em recessos da pele, dando um aspecto mais realista e \"vivo\" a rostos e cicatrizes.",
       "Complementar": "MINT GREEN",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste de Vibração (Vibrancy Contrast): O verde menta é o oposto direto. Usar pequenos pontos de verde nas luzes máximas de um manto violeta faz com que a cor \"salte\" aos olhos do observador.",
       "Keywords": "Cicatrizes, Olheiras, Pele Viva, Sombra Vermelha, Glazing Orgânico"
@@ -198,7 +183,6 @@
     {
       "Cor Base": "MINT GREEN",
       "Código": "AK11143",
-      "Hex": "#98FF98",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Realce/Filtro",
       "Nível de saturação (claro/médio/escuro)": "Claro",
@@ -211,25 +195,23 @@
     {
       "Cor Base": "Fluorescent Blue",
       "Código": "Game Color 72.160",
-      "Hex": "#00FFFF",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Efeito Especial",
       "Nível de saturação (claro/médio/escuro)": "Vibrante",
-      "Função Principal": "Efeito de Energia / OSL (Object Source Lighting): O ponto de luz para efeitos de magia ou reflexos de aço azulado sob luz intensa. Devido à fluorescência, ele \"vibra\" mais que o azul normal.",
-      "Uso Estratégico": "Aplicar sobre base branca para efeitos de energia mágica ou plasma. camadas finas (layering) constroem um brilho intenso, ideal para OSL em fontes de luz azul.",
+      "Função Principal": "Efeito de Energia / OSL (Object Source Lighting - OSL): O ponto de luz para efeitos de magia ou reflexos de aço azulado sob luz intensa. Devido à fluorescência, ele \"vibra\" mais que o azul normal.",
+      "Uso Estratégico": "Aplicar sobre base branca para efeitos de energia mágica ou plasma. camadas finas (layering) constroem um brilho intenso, ideal para OSL (Object Source Lighting - OSL) em fontes de luz azul.",
       "Complementar": "Fluorescent Orange",
-      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste Vibrante OSL",
+      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste Vibrante OSL (Object Source Lighting - OSL)",
       "Keywords": "Energia, Plasma, Magia, OSL Azul, Vibrante"
     },
     {
       "Cor Base": "LIGHT YELLOW",
       "Código": "AK17014",
-      "Hex": "#FFFFED",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Realce",
       "Nível de saturação (claro/médio/escuro)": "Claro",
       "Função Principal": "Highlight de Luz Solar: A cor ideal para fazer o \"ponto de luz\" em cores quentes (vermelho, pele, amarelo). Dá um aspeto de luz natural em vez de luz artificial.",
-      "Uso Estratégico": "Usar em realces finos para simular a intensidade direta de luz solar intensa em cores quentes (vermelhos, laranjas). Misturar para tons de pele claros.",
+      "Uso Estratégico": "Utilizar em realces finos para simular a intensidade direta de luz solar intensa em cores quentes (vermelhos, laranjas). Misturar para tons de pele claros.",
       "Complementar": "DEEP PURPLE",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Sombra Complementar (Complementary Shadow): Em vez de usar preto para sombrear o amarelo (o que criaria um verde lodo feio), use o roxo para criar sombras profundas, ricas e naturais.",
       "Keywords": "Luz Solar, Realce Quente, Highlight Final, Pele Clara"
@@ -237,20 +219,18 @@
     {
       "Cor Base": "WASH UMBER",
       "Código": "Game Color 73.203",
-      "Hex": "#635147",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Filtro",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
       "Função Principal": "filtro (filter) de Sujidade Realista: A sua função é unificar texturas (como o couro ou terra) e criar sombras automáticas nas ranhuras de 0.04mm. É o \"médico\" da pintura.",
       "Uso Estratégico": "Aplicar em lavagens (washes) em couro ou terra para unificar texturas e criar sombras automáticas nos recessos. Funciona como filtro (filter) para envelhecimento e sujidade.",
       "Complementar": "ULTRAMARINE",
-      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Neutralização Térmica (Thermal Neutralization): O Umber é um castanho muito quente. Se a sujeira parecer \"quente\" demais, um pouco de azul neutraliza o tom, transformando-o num castanho acinzentado mais realista.",
+      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Neutralização Térmica (Thermal Neutralization): O Umber é um marrom muito quente. Se a sujeira parecer \"quente\" demais, um pouco de azul neutraliza o tom, transformando-o num marrom acinzentado mais realista.",
       "Keywords": "Wash, Sujidade, Unificar, Couro, Terra, Recess Shading"
     },
     {
-      "Cor Base": "GRASS GREEN",
+      "Cor Base": "GRASS GREEN ",
       "Código": "AK11140",
-      "Hex": "#567D46",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base",
       "Nível de saturação (claro/médio/escuro)": "Médio",
@@ -261,9 +241,8 @@
       "Keywords": "Musgo, Vegetação, Stippling, Sherlock, Natural"
     },
     {
-      "Cor Base": "DARK GREEN",
+      "Cor Base": "DARK GREEN ",
       "Código": "AK11146",
-      "Hex": "#013220",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Sombra",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
@@ -276,7 +255,6 @@
     {
       "Cor Base": "ARCHAIC TURQUOISE",
       "Código": "AK11172",
-      "Hex": "#40E0D0",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Contraste/Filtro",
       "Nível de saturação (claro/médio/escuro)": "Médio",
@@ -289,12 +267,11 @@
     {
       "Cor Base": "LIGHT ORANGE",
       "Código": "AK11077",
-      "Hex": "#FFB347",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Realce",
       "Nível de saturação (claro/médio/escuro)": "Claro",
       "Função Principal": "Realce Quente de Luz Solar — Excelente para iluminar tecidos, couro e metais dourados mantendo riqueza cromática sem recorrer ao amarelo puro.",
-      "Uso Estratégico": "Usar em glazing em vermelhos para intensificar o calor. Aplicar em realces finos em ouro ou bronze para simular o reflexo de chamas ou brasas.",
+      "Uso Estratégico": "Utilizar em glazing em vermelhos para intensificar o calor. Aplicar em realces finos em ouro ou bronze para simular o reflexo de chamas ou brasas.",
       "Complementar": "ULTRAMARINE",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste quente — perfeito para luz e realce em áreas iluminadas.",
       "Keywords": "Brasas, Chamas, Realce Dourado, Calor, Glazing Quente"
@@ -302,7 +279,6 @@
     {
       "Cor Base": "BURNT RED",
       "Código": "AK11097",
-      "Hex": "#7E3517",
       "Temperatura (Quente/Frio/Neutra)": "Quente",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Efeito/Sombra",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
@@ -315,7 +291,6 @@
     {
       "Cor Base": "AMETHYST BLUE",
       "Código": "AK11183",
-      "Hex": "#6C2E9C",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Sombra",
       "Nível de saturação (claro/médio/escuro)": "Médio/Escuro",
@@ -328,112 +303,75 @@
     {
       "Cor Base": "DEEP PURPLE",
       "Código": "AK11074",
-      "Hex": "#301934",
       "Temperatura (Quente/Frio/Neutra)": "Frio",
       "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Sombra",
       "Nível de saturação (claro/médio/escuro)": "Escuro",
       "Função Principal": "Sombra Profunda de Luxo — Excelente para tecidos nobres, áreas dramáticas e profundidade em composições de alto contraste.",
       "Uso Estratégico": "Ideal para wet blending em tecidos luxuosos ou para criar contrastes dramáticos em figuras de fantasia. Base excelente para pintar gemas e cristais.",
-      "Complementar": "IVORY",
+      "Complementar": "IVORY ",
       "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Sombras suaves frias — equilibram luz quente, ideais para superfícies claras ou de osso.",
       "Keywords": "Gemas, Cristais, Nobreza, Wet Blending, Sombra Dramática"
-    },
-    {
-      "Cor Base": "STERLING SILVER",
-      "Código": "TMM 77.716",
-      "Hex": "#B8B8B8",
-      "Temperatura (Quente/Frio/Neutra)": "Frio",
-      "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base/Realce",
-      "Nível de saturação (claro/médio/escuro)": "Brilhante/Claro",
-      "Função Principal": "Metal Nobre de Alta Refletividade — Prata pura de alto brilho para armaduras de cavaleiros, lâminas de espadas templárias e detalhes de prataria no cenário do Sherlock.",
-      "Uso Estratégico": "Por ser da linha Metal Color, a fluidez é incrível. Ideal para aerógrafo ou pincel em camadas finas. Use para realces finais (edge highlighting) sobre metais mais escuros para simular o fio da lâmina.",
-      "Complementar": "DARK PRUSSIAN BLUE",
-      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Sombra de Reflexo (Reflection Shadow): O azul profundo simula o reflexo do céu ou sombras frias no metal polido, essencial para profundidade em TMM.",
-      "Keywords": "Prata, Armadura, Espada, Metal Color, TMM, Alto Brilho"
-    },
-    {
-      "Cor Base": "IMPERIAL GOLD",
-      "Código": "TMM 77.723",
-      "Hex": "#D4AF37",
-      "Temperatura (Quente/Frio/Neutra)": "Quente",
-      "Fase (Base / Sombra / Realce / Filtro / Efeito Especial)": "Base/Realce",
-      "Nível de saturação (claro/médio/escuro)": "Médio/Vibrante",
-      "Função Principal": "Ouro Imperial / Heráldico — Tom de ouro rico para detalhes de punhos de espada, cruzes ornamentais e fivelas. Oferece uma cobertura metálica superior sem grumos.",
-      "Uso Estratégico": "Excelente para pintura de detalhes finos com pincel. Para sombras, misture levemente com um Wash Umber para um ouro envelhecido ou mantenha puro para ouro novo e polido.",
-      "Complementar": "DEEP PURPLE",
-      "Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)": "Contraste de Realeza: O roxo profundo nas sombras do ouro cria um contraste cromático clássico que faz o brilho dourado parecer muito mais intenso.",
-      "Keywords": "Ouro, Dourado, Ornamentos, Heráldica, Luxo, TMM"
     }
   ],
   "efeitos": [
     {
       "Nome do Produto": "Rust Streaks",
       "Código": "AK 013",
-      "Hex": "#843E2B",
       "Função": "Efeito de Ferrugem/Intempéries (Enamel): Líquido de cor ferrugem usado para simular escorrimentos de metal enferrujado em veículos, armaduras ou superfícies de pedra próximas a objetos de metal. Aplicado em linhas finas e depois suavizado com diluente (Thinner) Enamel.",
       "Keywords": "Ferrugem, Enamel, Streaking, Weathering, Escorrimento"
     },
     {
       "Nome do Produto": "Concrete DIORAMA",
       "Código": "AK1229",
-      "Hex": "#959391",
       "Função": "Textura de Concreto/Cimento: Produto de base acrílica espessa, pronto para uso, que simula a textura e a cor do concreto. Ideal para criar fundações, pisos ou paredes na base do seu diorama.",
       "Keywords": "Concreto, Diorama, Textura, Sherlock, Londres, Base"
     },
     {
       "Nome do Produto": "Pigments Dark Steel",
       "Código": "AK080",
-      "Hex": "#3C3F41",
       "Função": "Pigmento (Pó) de Aço Escuro: Pó ultrafino usado para criar efeitos de poeira, sujeira, ou para polir superfícies de metal (como a cota de malha do cavaleiro), dando um brilho metálico escuro realista. Aplicado a seco ou fixado com fixador de pigmentos.",
       "Keywords": "Pigmento, Aço, Polimento, Cota de Malha, Metal Realista"
     },
     {
       "Nome do Produto": "VIVID Green Mossy Texture",
       "Código": "AK8259",
-      "Hex": "#4B5320",
       "Função": "Textura de Musgo Verde: Produto acrílico que simula musgo e líquen em superfícies. Ótimo para adicionar vida e umidade às pedras, dando um contraste com a rocha cinzenta ou avermelhada.",
       "Keywords": "Musgo, Umidade, Líquen, Textura, Sherlock"
     },
     {
       "Nome do Produto": "VANISH SATIN",
       "Código": "AK11238",
-      "Hex": "#E8E8E8",
       "Função": "Verniz Acetinado (Acrílico): Verniz com um acabamento intermediário entre o fosco e o brilhante. Ideal para dar um leve brilho de \"umidade\" ou para proteger cores que não devem ficar totalmente foscas.",
       "Keywords": "Verniz, Acetinado, Proteção, Brilho Leve, Acrílico"
     },
     {
       "Nome do Produto": "WHITE PRIMER",
       "Código": "AK11240",
-      "Hex": "#FFFFFF",
       "Função": "Selador/Primer Branco (Acrílico): Fundo de cor branca para preparar a superfície (plástico, resina, metal, pedra). Essencial para garantir a aderência da tinta e fazer as cores brilhantes (como o vermelho do cavaleiro) ficarem mais vibrantes.",
       "Keywords": "Primer, Branco, Aderência, Cores Vibrantes, Base Preparatória"
     },
     {
       "Nome do Produto": "BLACK PRIMER",
       "Código": "AK11242",
-      "Hex": "#000000",
       "Função": "Selador/Primer Preto (Acrílico): Fundo de cor preta. Ótimo para pré-sombreamento e para cores escuras. Ajuda a definir as reentrâncias e dá profundidade imediata à miniatura.",
       "Keywords": "Primer, Preto, Pré-sombreamento, Zenital, Armadura"
     },
     {
       "Nome do Produto": "ACRYLIC THINNER ",
       "Código": "AK11500",
-      "Hex": "#B0E0E6",
       "Função": "Diluente Acrílico: Usado para diluir as tintas e primers acrílicos da AK, seja para aplicação com aerógrafo, seja para criar washes mais suaves e controlados com pincel.",
       "Keywords": "Diluente, Thinner, Aerógrafo, Lavagens, Acrílico"
     },
     {
       "Nome do Produto": "GRAVEL & SAND FIXER ",
       "Código": "AK118",
-      "Hex": "#FDF5E6",
-      "Função": "Fixador de Areia e Cascalho (Líquido): Cola/líquido transparente usado para fixar areia, cascalho, pedras pequenas e flocos de relva na base do diorama, garantindo que não se soltem.",
+      "Função": "Fixador de Areia e Cascalho (Líquido): Cola/líquido transparente usado para fixar areia, cascalho, pedras pequenas e flocos de grama na base do diorama, garantindo que não se soltem.",
       "Keywords": "Fixador, Areia, Cascalho, Cola Diorama, Base Building"
     },
     {
       "Nome do Produto": "REAL COLORS NATO BROWN",
       "Código": "RC887",
-      "Hex": "#4E3B31",
-      "Função": "Cor de Camuflagem NATO: Marrom padrão utilizado em veículos militares modernos da NATO. Ideal para dioramas militares ou para simular lama seca e terra batida em bases.",
+      "Função": "Cor de Camuflagem NATO: Marrom padrão utilizado em veículos militares modernos da OTAN. Ideal para dioramas militares ou para simular lama seca e terra batida em bases.",
       "Keywords": "Lama Seca, Militar, NATO, Camuflagem, Terra"
     }
   ]

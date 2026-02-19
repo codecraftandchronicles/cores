@@ -137,7 +137,7 @@ function displayResults(results = null) {
   }
 
   const tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
-  resultsInfo.innerHTML = `<p>Mostrando <strong>${data.length}</strong> ${tabName}</p>`;
+  resultsInfo.innerHTML = `<p>A exibir <strong>${data.length}</strong> ${tabName}</p>`;
 
   resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
 }
@@ -147,19 +147,22 @@ function createCard(item) {
   const title = item['Cor Base'] || item['Nome do Produto'] || 'Item';
   const code = item['Código'] || item['Código'] || '';
   const keywords = item['Palavras-Chave'] || item['Keywords'] || '';
+  const hex = item['Hex'] || '';
+  const specialClass = getSpecialClass(hex);
+  const codeStyle = specialClass ? '' : `background-color: ${hex}; color: ${getContrastColor(hex)};`;
 
   let cardHTML = `
-    <div class="card">
+    <div class="card" onmouseover="this.style.borderColor = '${hex}';" onmouseout="this.style.borderColor = '#e0e0e0';">
       <div class="card-header">
         <div class="card-title">${escapeHtml(title)}</div>
-        ${code ? `<div class="card-code">${escapeHtml(code)}</div>` : ''}
+        ${code ? `<div class="card-code ${specialClass}" style="${codeStyle}">${escapeHtml(code)}</div>` : ''}
         ${keywords ? `<div class="card-keywords">${escapeHtml(keywords)}</div>` : ''}
       </div>
   `;
 
   fields.forEach(([key, value]) => {
     // Pular campos que já foram mostrados no header
-    if (key === 'Cor Base' || key === 'Nome do Produto' || key === 'Código' || key === 'Palavras-Chave' || key === 'Keywords') {
+    if (key === 'Cor Base' || key === 'Nome do Produto' || key === 'Código' || key === 'Palavras-Chave' || key === 'Keywords' || key === 'Hex') {
       return;
     }
 
@@ -181,6 +184,26 @@ function createCard(item) {
   cardHTML += `</div>`;
 
   return cardHTML;
+}
+
+function getSpecialClass(hexColor) {
+  const hex = (hexColor || '').replace('#', '').toUpperCase();
+  
+  if (hex === 'B8B8B8') return 'silver-preview';
+  if (hex === 'D4AF37') return 'gold-preview';
+  
+  return '';
+}
+
+
+function getContrastColor(hexColor) {
+  if (!hexColor || hexColor === '') return 'white';
+  const hex = hexColor.replace('#', '');
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.5 ? 'black' : 'white';
 }
 
 function escapeHtml(text) {
