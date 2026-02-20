@@ -4,11 +4,11 @@ let allData = {
 };
 
 let currentTab = 'cores';
-const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Efeito Especial / TMM)','Nível de saturação (claro/médio/escuro)'];
+const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)'];
 let colorMap = {};
 const filterFields = [
   'Temperatura (Quente/Frio/Neutra)',
-  'Fase (Base / Sombra / Realce / Filtro / Efeito Especial / TMM)',
+  'Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)',
   'Nível de saturação (claro/médio/escuro)'
 ];
 
@@ -264,7 +264,7 @@ function createCard(item) {
   let cardHTML = `
     <div class="card">
       <div class="card-header">
-        <span class="card-title">${item['Cor Base'] || item['Nome'] || 'Sem Nome'}</span>
+        <span class="card-title">${item['Cor Base'].toUpperCase() || item['Nome do Produto'].toUpperCase()}</span>
         <span class="card-code ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
           ${item['Código'] || ''}
         </span>
@@ -275,12 +275,11 @@ function createCard(item) {
   // 2. Itera sobre os campos do JSON
   Object.entries(item).forEach(([key, value]) => {
     // Ignora campos que não queremos exibir como texto simples
-    if (fieldsToIgnore.includes(key) && key !== 'Complementar') return;
+    if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto' || (fieldsToIgnore.includes(key) && key !== 'Complementar')) return;
 
     let displayValue = value;
     let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
 
-    // --- LÓGICA DA COR COMPLEMENTAR ---
     // --- LÓGICA DA COR COMPLEMENTAR ---
     if (key === 'Complementar') {
       // Se o valor estiver vazio no JSON ou não existir

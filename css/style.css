@@ -172,7 +172,7 @@ header p {
   display: flex;
   justify-content: space-between;
   align-items: start;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   border-bottom: 2px solid #e0e0e0;
   padding-bottom: 10px;
   flex-wrap: wrap;
@@ -199,10 +199,12 @@ header p {
 .card-keywords{
   color: #000;
   width: 100%;
-  padding: 3px;
+  margin-bottom: 10px;
   border-radius: 4px;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   font-weight: 300;
+  background-color: #dfe5e5;
+  padding: 4px;
 }
 
 .silver-preview {
@@ -527,21 +529,43 @@ header p {
   }
 }
 
+.footer-content {
+    margin-top: 20px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding-top: 20px;
+}
+
 .footer-links {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 10px;
+    gap: 25px;
+    margin-bottom: 20px;
 }
 
 .footer-links a {
-    color: #d4af37; /* O seu dourado Imperial */
-    font-size: 1.5rem;
-    transition: transform 0.3s ease, color 0.3s ease;
-    text-decoration: none;
+    color: #d4af37; /* Dourado Imperial */
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
 }
 
 .footer-links a:hover {
     color: #fff;
-    transform: scale(1.2); /* Efeito de zoom ao passar o rato */
+    transform: translateY(-3px);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.contribution-text {
+    font-size: 0.85rem;
+    color: #ccc !important;
+    line-height: 1.6;
+}
+
+.contribution-text a {
+    color: #d4af37;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.contribution-text a:hover {
+    text-decoration: underline;
 }
