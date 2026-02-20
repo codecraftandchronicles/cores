@@ -264,7 +264,7 @@ function createCard(item) {
   let cardHTML = `
     <div class="card">
       <div class="card-header">
-        <span class="card-title">${item['Cor Base'].toUpperCase() || item['Nome do Produto'].toUpperCase()}</span>
+        <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || '').toUpperCase()}</span>
         <span class="card-code ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
           ${item['Código'] || ''}
         </span>
