@@ -569,3 +569,32 @@ header p {
 .contribution-text a:hover {
     text-decoration: underline;
 }
+
+.top-language-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 10px;    
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.flag-container.disabled {
+    opacity: 0.4;
+    filter: grayscale(1);
+}
+
+.wip-text {
+    font-size: 0.7rem;
+    color: #ccc;
+    font-family: sans-serif; /* Força uma fonte simples fora do estilo medieval */
+}
+
+/* Ajuste para as letras PT/GB que aparecem na imagem */
+.flag-container span {
+    color: #fff; /* Branco para o PT ficar bem visível */
+    font-weight: 600;
+}
