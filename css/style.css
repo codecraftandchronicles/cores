@@ -90,6 +90,7 @@ header p {
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.3s;
+  width: 100%;
 }
 
 .form-group input:focus,
