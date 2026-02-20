@@ -6,6 +6,7 @@
   <title>Cadastro de Cores e Efeitos</title>
   <link rel="stylesheet" href="./css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <div class="container">
@@ -35,12 +36,18 @@
         <div class="form-group">
           <label for="searchField">Campo</label>
           <select id="searchField">
-            <option value="">Todos os campos</option>
+            <option value="">Selecionar campo...</option>
           </select>
         </div>
 
-        <div>
-          <button class="btn-search" id="btnSearch">Pesquisar</button>
+        <div class="form-group">          
+          <button class="btn-search" id="btnSearch">OK</button>
+        </div>
+
+        <!-- Filtros com Checkboxes -->
+        <div id="filtersContainer" class="filters-container"></div>
+
+        <div>          
           <button class="btn-clear" id="btnClear">Limpar</button>
         </div>
       </div>
@@ -66,6 +73,15 @@
       
       <footer class="main-footer">
           <p>© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Comunidade de Pintura de Miniaturas</p>
+
+          <div class="footer-links">
+              <a href="https://www.instagram.com/medievalcraftsforge" target="_blank" title="Siga no Instagram">
+                  <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://codecraftandchronicles.wordpress.com/" target="_blank" title="Visite o Blog">
+                  <i class="fa-brands fa-wordpress-simple"></i>
+              </a>
+          </div>
       </footer>
   </div>
 
