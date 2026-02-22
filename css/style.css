@@ -598,3 +598,39 @@ header p {
     color: #fff; /* Branco para o PT ficar bem visível */
     font-weight: 600;
 }
+
+
+/* Contentor da régua */
+.dilution-container {
+    margin-top: 12px;
+    width: 100%;
+}
+
+/* A régua propriamente dita */
+.dilution-rule {
+    height: 15px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* O gradiente usa a variável --paint-color que vira do JS */
+    background: linear-gradient(to right, 
+        var(--paint-color) 0%, 
+        var(--paint-color) 20%, 
+        rgba(255, 255, 255, 0.5) 80%, 
+        #ffffff 100%
+    );
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    border: none; /* Às vezes a borda fina 1px solid ajuda a criar esse efeito, tenta remover */
+    outline: 1px solid rgba(0,0,0,0.05); /* Usa outline se precisares de definição */
+}
+
+/* O aviso de "Mera Ilustração" */
+.dilution-disclaimer {
+    font-size: 0.6rem;
+    color: #999;
+    font-style: italic;
+    text-align: right;
+    margin-top: 2px;
+    font-family: sans-serif;
+}

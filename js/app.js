@@ -11,16 +11,26 @@ const filterFields = [
   'Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)',
   'Nível de saturação (claro/médio/escuro)'
 ];
+let language = 'PT'; // Definir idioma padrão para português
 
+// Obtém o idioma preferencial
+fetch('https://ipapi.co/json/')
+  .then(res => res.json())
+  .then(data => {
+    language = data.country_name
+  });
 
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
-  loadData();
+  loadData(language);
   setupEventListeners();  
 });
 
-function loadData() {
-  fetch('./data/cores-efeitos.json')
+function loadData(language) {
+  if (language !== 'PT') {
+    language = 'EN'; // Fallback para inglês se não for português 
+  }
+  fetch(`./data/cores-efeitos-${language}.json`)
     .then(response => response.json())
     .then(data => {
       allData = data;    
@@ -272,6 +282,15 @@ function createCard(item) {
       <div class="card-keywords">${item['Keywords'] || ''}</div>
   `;
 
+const hexColor = item.Hex || '#ccc'; // Fallback caso não haja cor
+
+cardHTML += `
+    <div class="dilution-container">
+        <div class="dilution-rule" style="--paint-color: ${hexColor};"></div>
+        <div class="dilution-disclaimer">*Mera ilustração visual</div>
+    </div>
+`;
+
   // 2. Itera sobre os campos do JSON
   Object.entries(item).forEach(([key, value]) => {
     // Ignora campos que não queremos exibir como texto simples
@@ -322,7 +341,7 @@ function createCard(item) {
         <div class="card-label">${displayKey}</div>
         <div class="card-value">${displayValue}</div>
       </div>
-    `;
+    `;    
   });
 
   cardHTML += `</div>`;
