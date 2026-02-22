@@ -18,6 +18,7 @@ fetch('https://ipapi.co/json/')
   .then(res => res.json())
   .then(data => {
     language = data.country_name
+    console.log(`Idioma detectado: ${language}`);
   });
 
 // Carregar dados ao iniciar
