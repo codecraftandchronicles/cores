@@ -28,14 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadData(language) {
-  if (language !== 'PT') {
-    language = 'EN'; // Fallback para inglês se não for português 
-    console.log(`Idioma ${language} não suportado, usando inglês como fallback.`);
-  }
+  const langUpper = language.toUpperCase();  
+  let selectedLanguage = langUpper.startsWith('PT') ? 'PT' : 'EN';
+  console.log(`Carregando dados para o idioma: ${selectedLanguage}`);
   
-  alert(`Carregando dados para o idioma: ${language}`);
-
-  fetch(`./data/cores-efeitos-${language}.json`)
+   fetch(`./data/cores-efeitos-${selectedLanguage}.json`)
     .then(response => response.json())
     .then(data => {
       allData = data;    
