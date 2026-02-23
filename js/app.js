@@ -24,6 +24,16 @@ const filterFieldsEN = [
   'Saturation Level (light/medium/dark)'
 ];
 let language = 'PT'; 
+const uiTranslations = {
+    'PT': {
+        tabCores: 'Cores',
+        tabEfeitos: 'Efeitos'        
+    },
+    'EN': {
+        tabCores: 'Colours',
+        tabEfeitos: 'Effects'
+    }
+};
 
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,6 +61,15 @@ async function detectLanguageAndLoad() {
     }
 
     loadData(language);
+}
+
+function applyUiTranslations(lang) {
+    const texts = uiTranslations[lang];
+    document.getElementById('tab-cores-label').innerText = texts.tabCores;
+    document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
+    
+    const titleKey = currentTab === 'cores' ? 'titleCores' : 'titleEfeitos';
+    document.getElementById('section-title').innerText = texts[titleKey];
 }
 
 function loadData(language) {
@@ -332,7 +351,6 @@ function clearSearch() {
 }
 
 function displayResults(results = null) {
-  console.log("Exibindo resultados para:", { currentTab, language, resultsCount: results ? results.length : "todos" });
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
   if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
@@ -343,6 +361,7 @@ function displayResults(results = null) {
   }
   else
   {    
+    console.log("Exibindo resultados para:", { currentTab, language, resultsCount: results ? results.length : "todos" });
     data = results !== null ? results : (currentTab === 'colours' ? allDataEN.colours : allDataEN.effects);
     resultsInfoLabel = "No results found";
     resultsContainerLabel = "Try adjusting your search criteria";
