@@ -24,16 +24,6 @@ const filterFieldsEN = [
   'Saturation Level (light/medium/dark)'
 ];
 let language = 'PT'; 
-const uiTranslations = {
-    'PT': {
-        tabCores: 'Cores',
-        tabEfeitos: 'Efeitos'        
-    },
-    'EN': {
-        tabCores: 'Colours',
-        tabEfeitos: 'Effects'
-    }
-};
 
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,10 +71,19 @@ function loadData(language) {
 
     if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
     {
+      document.getElementById('tab-cores-label').innerText = "Cores";
+      document.getElementById('tab-efeitos-label').innerText = "Efeitos";
+      document.getElementById('searchInputLabel').innerText = "Pesquisar";
+      
       allData.cores.forEach(c => {
         colorMap[c["Cor Base"].toUpperCase()] = c["Hex"];
       });
     } else {
+
+      document.getElementById('tab-cores-label').innerText = "Colours";
+      document.getElementById('tab-efeitos-label').innerText = "Effects";
+      document.getElementById('searchInputLabel').innerText = "Search";
+
       allDataEN.colours.forEach(c => {
         colorMap[c["Base Colour"].toUpperCase()] = c["Hex"];
       });
@@ -94,12 +93,7 @@ function loadData(language) {
     .catch(error => {
       console.error('Erro ao carregar dados:', error);
       showError('Erro ao carregar os dados. Verifique se o ficheiro JSON está acessível.');
-    });
-
-    console.log("Aplicando traduções para:", language);
-    const texts = uiTranslations[language];
-    document.getElementById('tab-cores-label').innerText = texts.tabCores;
-    document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
+    });        
 }
 
 function setupEventListeners() {
