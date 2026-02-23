@@ -6,6 +6,7 @@ let isPT = true; // Helper para facilitar os IFs no código todo
 const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)'];
 const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)'];
 let colorMap = {};
+let searchField = "";
 const filterFields = ['Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)'];
 const filterFieldsEN = ['Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)'];
 const uiTranslations = {
@@ -13,23 +14,25 @@ const uiTranslations = {
         tabCores: 'Cores',
         tabEfeitos: 'Efeitos',
         searchPlaceholder: 'Digite um termo...',
-        selectField: 'Selecionar campo...',
+        searchField: 'Selecionar um filtro...',
         noResults: 'Nenhum resultado encontrado',
-        tryAgain: 'Tente ajustar os filtros',
+        tryAgain: 'LIMPAR',
         showing: 'A exibir',
         illustrative: 'Mera ilustração visual',
-        searchInputLabel: 'Pesquisar'
+        searchInputLabel: 'Pesquisar',
+        searchFieldLabel: 'Filtro'
     },
     'EN': {
         tabCores: 'Colours',
         tabEfeitos: 'Effects',
         searchPlaceholder: 'Search for a term...',
-        selectField: 'Select field...',
+        searchField: 'Select field...',
         noResults: 'No results found',
-        tryAgain: 'Try adjusting your search criteria',
+        tryAgain: 'RESET',
         showing: 'Showing',
         illustrative: 'Illustrative purposes only',
-        searchInputLabel: 'Search'
+        searchInputLabel: 'Search',
+        searchFieldLabel: 'Field'
     }
 };
 // Carregar dados ao iniciar
@@ -66,12 +69,14 @@ async function detectLanguageAndLoad() {
 }
 
 function applyUiTranslations(lang) {
-  console.log("Aplicando traduções para:", lang);
-    const texts = uiTranslations[lang];
-    console.log("Textos aplicados:", texts);
-    document.getElementById('tab-cores-label').innerText = texts.tabCores;
-    document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
-    document.getElementById('searchInputLabel').innerText = texts.searchInputLabel;
+  const texts = uiTranslations[lang];
+  document.getElementById('tab-cores-label').innerText = texts.tabCores;
+  document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
+  document.getElementById('searchInputLabel').innerText = texts.searchInputLabel;
+  document.getElementById('searchInput').placeholder = texts.searchPlaceholder;
+  document.getElementById('searchFieldLabel').innerText = texts.searchFieldLabel;
+  document.getElementById('btnClear').innerText = texts.tryAgain;
+  searchField = texts.searchField;
 }
 
 function loadData(detectedLang) {  
@@ -160,7 +165,7 @@ function updateSearchFields() {
 
   const defaultOption = document.createElement('option');
   defaultOption.value = '';
-  defaultOption.textContent = 'Selecionar campo...';
+  defaultOption.textContent = searchField;
   fieldSelect.appendChild(defaultOption);
 
   fields.forEach(field => {
