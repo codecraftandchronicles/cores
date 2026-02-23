@@ -48,12 +48,7 @@ async function detectLanguageAndLoad() {
     } catch (error) {
         console.error("Falha ao detectar localização:", error);
         language = 'Portugal'; 
-    }
-
-   
-    
-    const titleKey = currentTab === 'cores' ? 'titleCores' : 'titleEfeitos';
-    document.getElementById('section-title').innerText = texts[titleKey];
+    }   
 
     loadData(language);
 }
