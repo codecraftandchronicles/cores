@@ -60,6 +60,8 @@ async function detectLanguageAndLoad() {
         language = 'Portugal'; 
     }
 
+    applyUiTranslations(selectedLanguage);
+    
     loadData(language);
 }
 
