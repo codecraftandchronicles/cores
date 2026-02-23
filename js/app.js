@@ -24,7 +24,13 @@ const uiTranslations = {
         searchFieldLabel: 'Filtro',
         resultsLabel: 'resultados',
         headerLabel: 'Cadastro de Cores e Efeitos',
-        headerParagraph: 'Guia de consulta rápida para tintas, texturas e técnicas de pintura'
+        headerParagraph: 'Guia de consulta rápida para tintas, texturas e técnicas de pintura',
+        disclaimerTitle: 'Aviso Legal',
+        disclaimerText: 'Esta aplicação é um projeto pessoal e não tem afiliação oficial com marcas ou produtos. As informações apresentadas são baseadas em pesquisas e podem conter imprecisões. Use como referência, mas verifique sempre com fontes oficiais.',
+        footerCopyright: '© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Comunidade de Pintura de Miniaturas',
+        helpExpand: 'Ajude a expandir este guia:',
+        suggestCorrection: 'Viu algo errado ou quer sugerir uma nova tinta?',
+        clickHere: 'Clique aqui para enviar uma correção ou sugestão.'
     },
     'EN': {
         tabCores: 'Colours',
@@ -40,7 +46,13 @@ const uiTranslations = {
         searchFieldLabel: 'Field',
         resultsLabel: 'results',
         headerLabel: 'Colour and Effects Catalog',
-        headerParagraph: 'Quick reference guide for paints, textures and painting techniques'
+        headerParagraph: 'Quick reference guide for paints, textures and painting techniques',
+        disclaimerTitle: 'Disclaimer',
+        disclaimerText: 'This application is a personal project and has no official affiliation with any brands or products. The information presented is based on research and may contain inaccuracies. Use as a reference, but always verify with official sources.',
+        footerCopyright: '© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Miniature Painting Community',
+        helpExpand: 'Help expand this guide:',
+        suggestCorrection: 'Did you spot an error or want to suggest a new paint?',
+        clickHere: 'Click here to send a correction or suggestion.'
     }
 };
 // Carregar dados ao iniciar
@@ -92,6 +104,10 @@ function applyUiTranslations(lang) {
   resultsLabel = texts.resultsLabel;  
   document.getElementById('headerLabel').innerText = texts.headerLabel;
   document.getElementById('headerParagraph').innerText = texts.headerParagraph;
+  document.getElementById('helpExpand').innerText = texts.helpExpand;
+  document.getElementById('helpExpandButton').innerText = texts.clickHere;
+  document.getElementById('footer').innerText = texts.footerCopyright;
+  document.getElementById('disclaimer').innerText = texts.disclaimerText;
 }
 
 function loadData(lang) {
@@ -116,19 +132,21 @@ function loadData(lang) {
 }
 
 function setupEventListeners() {
-  const searchInput = document.getElementById('searchInput');  
+  const searchInput = document.getElementById('searchInput'); 
+  const searchFieldSelect = document.getElementById('searchField'); 
   searchInput.addEventListener('input', validateSearchButton);
+  searchFieldSelect.addEventListener('change', validateSearchButton);
   validateSearchButton();
 
   document.querySelectorAll('.flag-container').forEach(flag => {
         flag.addEventListener('click', function() {
-            const selectedLang = this.dataset.lang; // Pega 'PT' ou 'EN'
-          
-            // 1. Atualiza a UI das bandeiras (visual)
+            clearSearch();  
+            const selectedLang = this.dataset.lang; 
+            
             document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
             this.classList.add('active');
 
-             language = selectedLang; 
+            language = selectedLang; 
             loadData(selectedLang);
         });
     });
@@ -493,9 +511,16 @@ function showError(message) {
 
 function validateSearchButton() {
   const searchTerm = document.getElementById('searchInput').value.trim();
+  const searchField = document.getElementById('searchField').value;
   const btnSearch = document.getElementById('btnSearch');
   
-  btnSearch.disabled = searchTerm.length === 0;
+  
+  const hasText = searchTerm.length > 0;
+  const hasFieldSelected = searchField !== "" && searchField !== null;
+
+  const isFormReady = hasText && hasFieldSelected;
+  btnSearch.disabled = !isFormReady;
+  
   
   if (btnSearch.disabled) {
     btnSearch.style.opacity = "0.5";
