@@ -332,6 +332,7 @@ function clearSearch() {
 }
 
 function displayResults(results = null) {
+  console.log("Exibindo resultados para:", { currentTab, language, resultsCount: results ? results.length : "todos" });
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
   if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
@@ -361,14 +362,15 @@ function displayResults(results = null) {
     return;
   }
 
+  let tabName = "";
   if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
   { 
-    const tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
+    tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
     resultsInfo.innerHTML = `<p>A exibir <strong>${data.length}</strong> ${tabName}</p>`;
   }
   else
   {
-    const tabName = currentTab === 'colours' ? 'colours' : 'effects';
+    tabName = currentTab === 'colours' ? 'colours' : 'effects';
     resultsInfo.innerHTML = `<p>Showing <strong>${data.length}</strong> ${tabName}</p>`;
   }
 
