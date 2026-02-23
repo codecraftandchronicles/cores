@@ -3,23 +3,27 @@ let allData = {
   efeitos: []
 };
 
+let allDataEN = {
+  colours: [],
+  effects: []
+};
+
 let currentTab = 'cores';
+let currentTabEN = 'colours';
 const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)'];
+const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)'];
 let colorMap = {};
 const filterFields = [
   'Temperatura (Quente/Frio/Neutra)',
   'Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)',
   'Nível de saturação (claro/médio/escuro)'
 ];
-let language = 'PT'; // Definir idioma padrão para português
-
-// Obtém o idioma preferencial
-fetch('https://ipapi.co/json/')
-  .then(res => res.json())
-  .then(data => {
-    language = data.country_name
-    console.log(`Idioma detectado: ${language}`);
-  });
+const filterFieldsEN = [
+  'Temperature (Warm/Cold/Neutral)',
+  'Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)',
+  'Saturation Level (light/medium/dark)'
+];
+let language = 'PT'; 
 
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,26 +32,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function detectLanguageAndLoad() {
+    const hostname = window.location.hostname;
+    const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1" || hostname.includes("192.168");
+
+    if (isLocalhost) {
+        language = 'PT';
+        loadData(language);
+        return; 
+    }
+
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        
         language = data.country_name; 
-        console.log(`Idioma detectado: ${language}`);
     } catch (error) {
-        console.error("Falha ao detectar localização, usando padrão PT:", error);
+        console.error("Falha ao detectar localização:", error);
         language = 'Portugal'; 
     }
 
-    // SÓ AGORA chama o loadData, com o valor correto
     loadData(language);
 }
 
 function loadData(language) {
-  const langUpper = language.toUpperCase();  
-  let selectedLanguage = (langUpper.startsWith('PT') || langUpper === 'PORTUGAL' || langUpper === 'BRAZIL') ? 'PT' : 'EN';
-   
-  console.log(`Carregando dados para o idioma: ${selectedLanguage}`);
+  let selectedLanguage = (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL') ? 'PT' : 'EN';
     
   fetch(`./data/cores-efeitos-${selectedLanguage}.json`)
       .then(response => response.json())
@@ -56,9 +63,17 @@ function loadData(language) {
     displayResults();
 
     colorMap = {};
-    allData.cores.forEach(c => {
-      colorMap[c["Cor Base"].toUpperCase()] = c["Hex"];
-    });
+
+    if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+    {
+      allData.cores.forEach(c => {
+        colorMap[c["Cor Base"].toUpperCase()] = c["Hex"];
+      });
+    } else {
+      allDataEN.colours.forEach(c => {
+        colorMap[c["Base Colour"].toUpperCase()] = c["Hex"];
+      });
+    }
 
     })
     .catch(error => {
@@ -114,48 +129,96 @@ function switchTab(tab) {
 function updateSearchFields() {
   const fieldSelect = document.getElementById('searchField');
   fieldSelect.innerHTML = '';
-
   let fields = [];
-  if (currentTab === 'cores' && allData.cores.length > 0) {
-    fields = Object.keys(allData.cores[0]);
-    filtersContainer.style.display = 'block'; // Mostrar filtros para cores
-  } else if (currentTab === 'efeitos' && allData.efeitos.length > 0) {
-    fields = Object.keys(allData.efeitos[0]);
-    filtersContainer.style.display = 'none'; // Esconder filtros para efeitos
+  
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  {
+    if (currentTab === 'cores' && allData.cores.length > 0) {
+      fields = Object.keys(allData.cores[0]);
+      filtersContainer.style.display = 'block'; // Mostrar filtros para cores
+    } else if (currentTab === 'efeitos' && allData.efeitos.length > 0) {
+      fields = Object.keys(allData.efeitos[0]);
+      filtersContainer.style.display = 'none'; // Esconder filtros para efeitos
+    }
+
+    fields = fields.filter(field => !fieldsToIgnore.includes(field));
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'Selecionar campo...';
+    fieldSelect.appendChild(defaultOption);
+
+    fields.forEach(field => {
+      const option = document.createElement('option');
+      option.value = field;
+      option.textContent = field;
+      fieldSelect.appendChild(option);
+    });
   }
+  else
+  {
+     if (currentTab === 'colours' && allData.colours.length > 0) {
+       fields = Object.keys(allData.colours[0]);
+       filtersContainer.style.display = 'block'; // Mostrar filtros para cores
+     } else if (currentTab === 'effects' && allData.effects.length > 0) {
+       fields = Object.keys(allData.effects[0]);
+       filtersContainer.style.display = 'none'; // Esconder filtros para efeitos
+     }
+  
+     fields = fields.filter(field => !fieldsToIgnoreEN.includes(field));
 
-  fields = fields.filter(field => !fieldsToIgnore.includes(field));
+     const defaultOption = document.createElement('option');
+     defaultOption.value = '';
+     defaultOption.textContent = 'Select field...';
+     fieldSelect.appendChild(defaultOption);
 
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = 'Selecionar campo...';
-  fieldSelect.appendChild(defaultOption);
-
-  fields.forEach(field => {
-    const option = document.createElement('option');
-    option.value = field;
-    option.textContent = field;
-    fieldSelect.appendChild(option);
-  });
+     fields.forEach(field => {
+       const option = document.createElement('option');
+       option.value = field;
+       option.textContent = field;
+       fieldSelect.appendChild(option);
+    });
+  }
 }
 
 // Extrair valores únicos de um campo
 function extractUniqueValues(fieldName) {
-  const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
-  const values = new Set();
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  {  
+    const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
+    const values = new Set();
 
-  data.forEach(item => {
-    const fieldValue = item[fieldName];
-    if (fieldValue) {
-      // Dividir por / ou , para pegar valores individuais
-      const parts = fieldValue.split(/[\/,]/).map(v => v.trim());
-      parts.forEach(part => {
-        if (part) values.add(part);
-      });
-    }
-  });
+    data.forEach(item => {
+      const fieldValue = item[fieldName];
+      if (fieldValue) {
+        // Dividir por / ou , para pegar valores individuais
+        const parts = fieldValue.split(/[\/,]/).map(v => v.trim());
+        parts.forEach(part => {
+          if (part) values.add(part);
+        });
+      }
+    });
 
-  return Array.from(values).sort();
+    return Array.from(values).sort();
+   }
+   else
+   {  
+     const data = currentTab === 'colours' ? allDataEN.colours : allDataEN.effects;
+     const values = new Set();
+
+     data.forEach(item => {
+       const fieldValue = item[fieldName];
+       if (fieldValue) {
+         // Dividir por / ou , para pegar valores individuais
+         const parts = fieldValue.split(/[\/,]/).map(v => v.trim());
+         parts.forEach(part => {
+           if (part) values.add(part);
+         });
+       }
+     });
+
+     return Array.from(values).sort();
+   }  
 }
 
 // Atualizar filtros com checkboxes
@@ -177,9 +240,7 @@ function updateFilters() {
 
 
     values.forEach(value => {
-      const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');
-      // console.log(`Criando checkbox: ${checkboxId} para valor: ${value} no campo: ${fieldName}`);
-      
+      const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');      
       const label = document.createElement('label');
       label.className = 'checkbox-label';
       
@@ -203,7 +264,16 @@ function updateFilters() {
 function performSearch() {
   const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
   const searchField = document.getElementById('searchField').value;
-  const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
+  let data = "";
+
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  { 
+    data = currentTab === 'cores' ? allData.cores : allData.efeitos;
+  } 
+  else
+  {
+    data = currentTab === 'colours' ? allDataEN.colours : allDataEN.effects;
+  }
 
   // Obter checkboxes selecionados
   const selectedFilters = {};
@@ -262,109 +332,210 @@ function clearSearch() {
 }
 
 function displayResults(results = null) {
-  const data = results !== null ? results : (currentTab === 'cores' ? allData.cores : allData.efeitos);
+  let data = "";
+  let resultsInfoLabel, resultsContainerLabel = "";
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  { 
+    data = results !== null ? results : (currentTab === 'cores' ? allData.cores : allData.efeitos);
+    resultsInfoLabel = "Nenhum resultado encontrado";
+    resultsContainerLabel = "Tente ajustar os critérios de pesquisa";
+  }
+  else
+  {    
+    data = results !== null ? results : (currentTab === 'colours' ? allDataEN.colours : allDataEN.effects);
+    resultsInfoLabel = "No results found";
+    resultsContainerLabel = "Try adjusting your search criteria";
+  } 
   const resultsContainer = document.getElementById('results');
   const resultsInfo = document.getElementById('resultsInfo');
 
   if (data.length === 0) {
-    resultsInfo.innerHTML = `<p>Nenhum resultado encontrado</p>`;
+    resultsInfo.innerHTML = `<p>${resultsInfoLabel}</p>`;
     resultsContainer.innerHTML = `
       <div class="empty-state">
         <div class="empty-state-icon">🔍</div>
-        <h3>Nenhum resultado</h3>
-        <p>Tente ajustar os critérios de pesquisa</p>
+        <h3>${resultsInfoLabel}</h3>
+        <p>${resultsContainerLabel}</p>
       </div>
     `;
     return;
   }
 
-  const tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
-  resultsInfo.innerHTML = `<p>A exibir <strong>${data.length}</strong> ${tabName}</p>`;
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  { 
+    const tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
+    resultsInfo.innerHTML = `<p>A exibir <strong>${data.length}</strong> ${tabName}</p>`;
+  }
+  else
+  {
+    const tabName = currentTab === 'colours' ? 'colours' : 'effects';
+    resultsInfo.innerHTML = `<p>Showing <strong>${data.length}</strong> ${tabName}</p>`;
+  }
 
   resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
 }
 
 function createCard(item) {
-  // 1. Pega o Hex principal para o título do card
   const mainHex = item['Hex'] || '#ccc';
   const mainContrast = getContrastColor(mainHex);
   const mainSpecialClass = getSpecialClass(mainHex);
 
-  let cardHTML = `
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || '').toUpperCase()}</span>
-        <span class="card-code ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
-          ${item['Código'] || ''}
-        </span>
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  {
+    let cardHTML = `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || '').toUpperCase()}</span>
+          <span class="card-code ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
+            ${item['Código'] || ''}
+          </span>
+        </div>
+        <div class="card-keywords">${item['Keywords'] || ''}</div>
+    `;
+
+  const hexColor = item.Hex || '#ccc'; // Fallback caso não haja cor
+
+  cardHTML += `
+      <div class="dilution-container">
+          <div class="dilution-rule" style="--paint-color: ${hexColor};"></div>
+          <div class="dilution-disclaimer">*Mera ilustração visual</div>
       </div>
-      <div class="card-keywords">${item['Keywords'] || ''}</div>
   `;
 
-const hexColor = item.Hex || '#ccc'; // Fallback caso não haja cor
+    // 2. Itera sobre os campos do JSON
+    Object.entries(item).forEach(([key, value]) => {
+      // Ignora campos que não queremos exibir como texto simples
+      if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto' || (fieldsToIgnore.includes(key) && key !== 'Complementar')) return;
 
-cardHTML += `
-    <div class="dilution-container">
-        <div class="dilution-rule" style="--paint-color: ${hexColor};"></div>
-        <div class="dilution-disclaimer">*Mera ilustração visual</div>
-    </div>
-`;
+      let displayValue = value;
+      let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
 
-  // 2. Itera sobre os campos do JSON
-  Object.entries(item).forEach(([key, value]) => {
-    // Ignora campos que não queremos exibir como texto simples
-    if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto' || (fieldsToIgnore.includes(key) && key !== 'Complementar')) return;
-
-    let displayValue = value;
-    let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
-
-    // --- LÓGICA DA COR COMPLEMENTAR ---
-    if (key === 'Complementar') {
-      // Se o valor estiver vazio no JSON ou não existir
-      if (!value || value.trim() === "") {
-        displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
-      } else {
-        const compHex = colorMap[value.toUpperCase()];
-        
-        if (compHex) {
-          const compContrast = getContrastColor(compHex);
-          const compSpecialClass = getSpecialClass(compHex);
-          
-          displayValue = `
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>${value}</span>
-              <span class="card-code ${compSpecialClass}" 
-                    style="background-color: ${compHex}; color: ${compContrast}; 
-                          padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
-                ${compHex}
-              </span>
-            </div>
-          `;
+      // --- LÓGICA DA COR COMPLEMENTAR ---
+      if (key === 'Complementar') {
+        // Se o valor estiver vazio no JSON ou não existir
+        if (!value || value.trim() === "") {
+          displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
         } else {
-          // Se tiver o nome da cor, mas o Hex não estiver no nosso mapa
-          displayValue = `
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>${value}</span>
-              <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
-                Hex N/A
-              </span>
-            </div>
-          `;
+          const compHex = colorMap[value.toUpperCase()];
+          
+          if (compHex) {
+            const compContrast = getContrastColor(compHex);
+            const compSpecialClass = getSpecialClass(compHex);
+            
+            displayValue = `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>${value}</span>
+                <span class="card-code ${compSpecialClass}" 
+                      style="background-color: ${compHex}; color: ${compContrast}; 
+                            padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
+                  ${compHex}
+                </span>
+              </div>
+            `;
+          } else {
+            // Se tiver o nome da cor, mas o Hex não estiver no nosso mapa
+            displayValue = `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>${value}</span>
+                <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
+                  Hex N/A
+                </span>
+              </div>
+            `;
+          }
         }
       }
-    }
-    // ----------------------------------
+      // ----------------------------------
+
+      cardHTML += `
+        <div class="card-field">
+          <div class="card-label">${displayKey}</div>
+          <div class="card-value">${displayValue}</div>
+        </div>
+      `;    
+    });
+    
+    cardHTML += `</div>`;
+    return cardHTML;
+  }
+  else
+  {
+  let cardHTML = `
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">${(item['Base Colour'] || item['Product Name'] || '').toUpperCase()}</span>
+            <span class="card-code ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
+              ${item['Code'] || ''}
+            </span>
+          </div>
+          <div class="card-keywords">${item['Keywords'] || ''}</div>
+      `;
+
+    const hexColor = item.Hex || '#ccc'; 
 
     cardHTML += `
-      <div class="card-field">
-        <div class="card-label">${displayKey}</div>
-        <div class="card-value">${displayValue}</div>
-      </div>
-    `;    
-  });
+        <div class="dilution-container">
+            <div class="dilution-rule" style="--paint-color: ${hexColor};"></div>
+            <div class="dilution-disclaimer">*Illustrative purposes only</div>
+        </div>
+    `;
 
-  cardHTML += `</div>`;
-  return cardHTML;
+      // 2. Itera sobre os campos do JSON
+      Object.entries(item).forEach(([key, value]) => {
+        // Ignora campos que não queremos exibir como texto simples
+        if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || (fieldsToIgnore.includes(key) && key !== 'Complementary')) return;
+
+        let displayValue = value;
+        let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
+
+        // --- LÓGICA DA COR COMPLEMENTAR ---
+        if (key === 'Complementary') {
+          // Se o valor estiver vazio no JSON ou não existir
+          if (!value || value.trim() === "") {
+            displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
+          } else {
+            const compHex = colorMap[value.toUpperCase()];
+            
+            if (compHex) {
+              const compContrast = getContrastColor(compHex);
+              const compSpecialClass = getSpecialClass(compHex);
+              
+              displayValue = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span>${value}</span>
+                  <span class="card-code ${compSpecialClass}" 
+                        style="background-color: ${compHex}; color: ${compContrast}; 
+                              padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
+                    ${compHex}
+                  </span>
+                </div>
+              `;
+            } else {
+              // Se tiver o nome da cor, mas o Hex não estiver no nosso mapa
+              displayValue = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span>${value}</span>
+                  <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
+                    Hex N/A
+                  </span>
+                </div>
+              `;
+            }
+          }
+        }
+        // ----------------------------------
+
+        cardHTML += `
+          <div class="card-field">
+            <div class="card-label">${displayKey}</div>
+            <div class="card-value">${displayValue}</div>
+          </div>
+        `;    
+      });
+      
+    cardHTML += `</div>`;
+    return cardHTML;
+  }
 }
 
 function getSpecialClass(hexColor) {
@@ -400,6 +571,8 @@ function escapeHtml(text) {
 
 function showError(message) {
   const resultsContainer = document.getElementById('results');
+  if (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL')
+  {
   resultsContainer.innerHTML = `
     <div class="empty-state">
       <div class="empty-state-icon">⚠️</div>
@@ -407,6 +580,15 @@ function showError(message) {
       <p>${message}</p>
     </div>
   `;
+  } else {
+    resultsContainer.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">⚠️</div>
+        <h3>Error</h3>
+        <p>${message}</p>
+      </div>
+    `;
+  }
 }
 
 function validateSearchButton() {
