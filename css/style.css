@@ -179,6 +179,7 @@ header p {
 }
 
 .card-title {
+  flex: 1;
   font-size: 1.15rem;
   font-weight: 700;
   color: #333;
@@ -194,7 +195,21 @@ header p {
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
   margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block; /* Garante que o transform funcione bem */
+  user-select: none;     /* Evita selecionar o texto ao clicar rápido */
 }
+
+.card-hex:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.card-hex:active {
+    transform: scale(0.9) !important;
+}
+
 
 .card-code{
   font-size: 0.85rem;

@@ -3,14 +3,14 @@ let allData = { cores: [], efeitos: [] };
 let currentTab = 'cores';
 let language = 'PT'; 
 let isPT = true;
-const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)'];
-const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)'];
+const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)', 'Fabricante'];
+const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)', 'Manufacturer'];
 let colorMap = {};
 let sortAsc = true;
 let currentFilteredResults = []; 
 let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
-const filterFields = ['Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)'];
-const filterFieldsEN = ['Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)'];
+const filterFields = ['Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)', 'Fabricante'];
+const filterFieldsEN = ['Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)', 'Manufacturer'];
 const uiTranslations = {
     'PT': {
         tabCores: 'Cores',
@@ -412,8 +412,9 @@ function createCard(item) {
       <div class="card">
         <div class="card-header">
           <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || item['Base Colour'] || item['Product Name'] || '').toUpperCase()}</span>          
-          <span class="card-hex ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
-            ${item['Hex'] || item['Hex'] || ''}
+          <span class="card-hex ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}" onclick="copyToClipboard('${mainHex}', event)"
+      title="Clique para copiar HEX">
+            ${item['Hex'].toUpperCase() || ''}
           </span>
         </div>
         <span class="card-code">${(item['Código'] || item['Code'] || '').toUpperCase()}</span>        
@@ -430,8 +431,8 @@ function createCard(item) {
 
     // 2. Itera sobre os campos do JSON
     Object.entries(item).forEach(([key, value]) => {
-      if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto ' && key !== 'Complementar') return;
-      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' && key !== 'Complementary') return;
+      if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto ' || key === 'Hex' && key !== 'Complementar') return;
+      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' && key !== 'Complementary') return;
 
       let displayValue = value;
       let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
@@ -563,6 +564,29 @@ function toggleSort() {
     }
 
     performSearch();
+}
+
+function copyToClipboard(text, event) {
+    // Evita que o clique dispare outros eventos do card, se houver
+    if (event) event.stopPropagation();
+
+    navigator.clipboard.writeText(text).then(() => {
+        const element = event.target;
+        const originalText = element.innerText;
+
+        // Feedback visual rápido
+        element.innerText = "COPIADO!";
+        element.style.transform = "scale(1.1)";
+        
+        setTimeout(() => {
+            element.innerText = originalText;
+            element.style.transform = "scale(1.0)";
+        }, 800);
+    }).catch(err => {
+        console.error('Erro ao copiar: ', err);
+        // Fallback básico para browsers antigos (opcional)
+        alert("Erro ao copiar HEX");
+    });
 }
 
 // Inicializar campos de pesquisa
