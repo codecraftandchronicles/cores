@@ -57,9 +57,12 @@ async function detectLanguageAndLoad() {
         language = 'Portugal'; 
     }
 
-    applyUiTranslations(language);
+    isPT = (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL');
+    const selectedLanguage = isPT ? 'PT' : 'EN';
 
-    loadData(language);
+    applyUiTranslations(selectedLanguage);
+
+    loadData(selectedLanguage);
 }
 
 function applyUiTranslations(lang) {
@@ -71,15 +74,11 @@ function applyUiTranslations(lang) {
     document.getElementById('searchInputLabel').innerText = texts.searchInputLabel;
 }
 
-function loadData(detectedLang) {
-    // Define de vez se é PT ou EN
-    isPT = (detectedLang.startsWith('PT') || detectedLang === 'PORTUGAL' || detectedLang === 'BRAZIL');
-    const selectedLanguage = isPT ? 'PT' : 'EN';
-    
+function loadData(detectedLang) {  
     // Aplica as labels da UI (botões e placeholders)
-    applyUiTranslations(selectedLanguage);
+    applyUiTranslations(detectedLang);
 
-    fetch(`./data/cores-efeitos-${selectedLanguage}.json`)
+    fetch(`./data/cores-efeitos-${detectedLang}.json`)
         .then(response => response.json())
         .then(data => {
             // NORMALIZAÇÃO: Se o JSON vier com nomes em inglês, jogamos para a estrutura padrão
