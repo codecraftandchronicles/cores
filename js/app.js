@@ -180,7 +180,7 @@ function updateSearchFields() {
 function extractUniqueValues(fieldName) {
   const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
   const values = new Set();
-
+  console.log(`Extraindo valores únicos para o campo: ${fieldName}`);
   data.forEach(item => {
     const fieldValue = item[fieldName];
     if (fieldValue) {
