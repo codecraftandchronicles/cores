@@ -60,19 +60,19 @@ async function detectLanguageAndLoad() {
         language = 'Portugal'; 
     }
 
-    applyUiTranslations(language);
+   
+    
+    const titleKey = currentTab === 'cores' ? 'titleCores' : 'titleEfeitos';
+    document.getElementById('section-title').innerText = texts[titleKey];
 
     loadData(language);
 }
 
-function applyUiTranslations(lang) {
-    const texts = uiTranslations[lang];
-    document.getElementById('tab-cores-label').innerText = texts.tabCores;
-    document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
-    
-    const titleKey = currentTab === 'cores' ? 'titleCores' : 'titleEfeitos';
-    document.getElementById('section-title').innerText = texts[titleKey];
-}
+console.log("Aplicando traduções para:", language);
+const texts = uiTranslations[language];
+console.log("Textos aplicados:", texts);
+document.getElementById('tab-cores-label').innerText = texts.tabCores;
+document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
 
 function loadData(language) {
   let selectedLanguage = (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL') ? 'PT' : 'EN';
