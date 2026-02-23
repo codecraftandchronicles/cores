@@ -471,7 +471,6 @@ header p {
   grid-column: 1 / -1; /* Ocupa as duas colunas do grid pai */
   display: flex;       /* Muda de grid para flex para alinhar os grupos lado a lado */
   flex-wrap: wrap;     /* Se a tela for pequena, eles quebram linha automaticamente */
-  gap: 30px;           /* Espaço entre Temperatura, Fase e Saturação */
   background: #f8f9fa;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
@@ -524,7 +523,6 @@ header p {
 @media (max-width: 768px) {
   .filters-container {
     grid-template-columns: 1fr;
-    gap: 15px;
     padding: 15px;
   }
 }
@@ -582,9 +580,9 @@ header p {
     gap: 15px;
 }
 
-.flag-container.disabled {
-    opacity: 0.4;
-    filter: grayscale(1);
+.flag-container {
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease; /* Bónus: feedback visual */
 }
 
 .wip-text {
@@ -592,13 +590,6 @@ header p {
     color: #ccc;
     font-family: sans-serif; /* Força uma fonte simples fora do estilo medieval */
 }
-
-/* Ajuste para as letras PT/GB que aparecem na imagem */
-.flag-container span {
-    color: #fff; /* Branco para o PT ficar bem visível */
-    font-weight: 600;
-}
-
 
 /* Contentor da régua */
 .dilution-container {

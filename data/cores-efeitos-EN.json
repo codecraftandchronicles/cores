@@ -1,5 +1,5 @@
 {
-  "colours": [
+  "cores": [
     {
       "Base Colour": "MATT RED",
       "Code": "AK11092",
@@ -393,7 +393,7 @@
       "Manufacturer": "Vallejo"
     }
   ],
-  "effects": [
+  "efeitos": [
     {
       "Product Name": "Rust Streaks",
       "Code": "AK013",

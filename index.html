@@ -16,19 +16,18 @@
 
     <div class="top-language-bar">
         <div class="language-selector">
-            <div class="flag-container active" title="Português (Portugal)">
+            <div class="flag-container active" data-lang="PT" title="Português (Portugal)">
                 <span class="fi fi-pt"></span>
             </div>
-            <div class="flag-container disabled" title="English version WIP">
+            <div class="flag-container" data-lang="EN" title="English">
                 <span class="fi fi-gb"></span>
-                <span class="wip-text">(WIP)</span>
             </div>
         </div>
     </div>
   
     <header>
-        <h1>Cadastro de Cores e Efeitos</h1>
-        <p>Guia de consulta rápida para tintas, texturas e técnicas de pintura</p>
+        <h1 id="headerLabel">Cadastro de Cores e Efeitos</h1>
+        <p id="headerParagraph">Guia de consulta rápida para tintas, texturas e técnicas de pintura</p>
     </header>
 
     <div class="search-section">
@@ -62,7 +61,7 @@
         <div id="filtersContainer" class="filters-container"></div>
 
         <div>          
-          <button class="btn-clear" id="btnClear">Limpar</button>
+          <button class="btn-clear" id="btnClear">...</button>
         </div>
       </div>
     </div>

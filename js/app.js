@@ -6,7 +6,7 @@ let isPT = true; // Helper para facilitar os IFs no código todo
 const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)'];
 const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)'];
 let colorMap = {};
-let searchField = "";
+let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
 const filterFields = ['Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)'];
 const filterFieldsEN = ['Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)'];
 const uiTranslations = {
@@ -16,11 +16,15 @@ const uiTranslations = {
         searchPlaceholder: 'Digite um termo...',
         searchField: 'Selecionar um filtro...',
         noResults: 'Nenhum resultado encontrado',
+        noResultsContainer: 'Tente ajustar os critérios de pesquisa',
         tryAgain: 'LIMPAR',
         showing: 'A exibir',
         illustrative: 'Mera ilustração visual',
         searchInputLabel: 'Pesquisar',
-        searchFieldLabel: 'Filtro'
+        searchFieldLabel: 'Filtro',
+        resultsLabel: 'resultados',
+        headerLabel: 'Cadastro de Cores e Efeitos',
+        headerParagraph: 'Guia de consulta rápida para tintas, texturas e técnicas de pintura'
     },
     'EN': {
         tabCores: 'Colours',
@@ -28,11 +32,15 @@ const uiTranslations = {
         searchPlaceholder: 'Search for a term...',
         searchField: 'Select field...',
         noResults: 'No results found',
+        noResultsContainer: 'Try adjusting your search criteria',
         tryAgain: 'RESET',
         showing: 'Showing',
         illustrative: 'Illustrative purposes only',
         searchInputLabel: 'Search',
-        searchFieldLabel: 'Field'
+        searchFieldLabel: 'Field',
+        resultsLabel: 'results',
+        headerLabel: 'Colour and Effects Catalog',
+        headerParagraph: 'Quick reference guide for paints, textures and painting techniques'
     }
 };
 // Carregar dados ao iniciar
@@ -77,37 +85,53 @@ function applyUiTranslations(lang) {
   document.getElementById('searchFieldLabel').innerText = texts.searchFieldLabel;
   document.getElementById('btnClear').innerText = texts.tryAgain;
   searchField = texts.searchField;
+  noResults = texts.noResults;
+  showing = texts.showing;
+  illustrative = texts.illustrative;
+  noResultsContainer = texts.noResultsContainer;
+  resultsLabel = texts.resultsLabel;  
+  document.getElementById('headerLabel').innerText = texts.headerLabel;
+  document.getElementById('headerParagraph').innerText = texts.headerParagraph;
 }
 
-function loadData(detectedLang) {  
-    // Aplica as labels da UI (botões e placeholders)
-    applyUiTranslations(detectedLang);
+function loadData(lang) {
+    isPT = (lang.startsWith('PT') || lang === 'PORTUGAL' || lang === 'BRAZIL');
+    const langKey = isPT ? 'PT' : 'EN';
 
-    fetch(`./data/cores-efeitos-${detectedLang}.json`)
+    fetch(`./data/cores-efeitos-${langKey}.json`)
         .then(response => response.json())
         .then(data => {
-            // NORMALIZAÇÃO: Se o JSON vier com nomes em inglês, jogamos para a estrutura padrão
-            allData.cores = data.cores || data.colours || [];
-            allData.efeitos = data.efeitos || data.effects || [];
+            allData = data;
             
-            // Criar o mapa de cores para o Complementar
-            colorMap = {};
-            const corKey = isPT ? "Cor Base" : "Base Colour";
+            // Muito importante: traduzir a UI (labels, botões, select)
+            applyUiTranslations(langKey);
             
-            allData.cores.forEach(c => {
-                if(c[corKey]) colorMap[c[corKey].toUpperCase()] = c["Hex"];
-            });
-
-            displayResults();
-            updateSearchFields();
+            // Reconstruir o mapa de cores e os campos de busca
+            buildColorMap(); 
+            updateSearchFields(); 
             updateFilters();
-        });
+            displayResults();
+        })
+        .catch(err => showError("Erro ao trocar idioma."));
 }
 
 function setupEventListeners() {
   const searchInput = document.getElementById('searchInput');  
   searchInput.addEventListener('input', validateSearchButton);
   validateSearchButton();
+
+  document.querySelectorAll('.flag-container').forEach(flag => {
+        flag.addEventListener('click', function() {
+            const selectedLang = this.dataset.lang; // Pega 'PT' ou 'EN'
+          
+            // 1. Atualiza a UI das bandeiras (visual)
+            document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+
+             language = selectedLang; 
+            loadData(selectedLang);
+        });
+    });
 
   // Botões de aba
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -149,38 +173,50 @@ function switchTab(tab) {
 }
 
 function updateSearchFields() {
-  const fieldSelect = document.getElementById('searchField');
-  fieldSelect.innerHTML = '';
-  let fields = [];
+    const fieldSelect = document.getElementById('searchField');
+    if (!fieldSelect) return;
+    fieldSelect.innerHTML = '';
+    
+    let fields = [];
+    const dataRef = currentTab === 'cores' ? allData.cores : allData.efeitos;
 
-  if (currentTab === 'cores' && allData.cores.length > 0) {
-    fields = Object.keys(allData.cores[0]);
-    filtersContainer.style.display = 'block'; // Mostrar filtros para cores
-  } else if (currentTab === 'efeitos' && allData.efeitos.length > 0) {
-    fields = Object.keys(allData.efeitos[0]);
-    filtersContainer.style.display = 'none'; // Esconder filtros para efeitos
-  }
+    // Só tenta pegar chaves se houver dados
+    if (dataRef && dataRef.length > 0) {
+        fields = Object.keys(dataRef[0]);
+        const ignoreList = isPT ? fieldsToIgnore : fieldsToIgnoreEN;
+        fields = fields.filter(field => !ignoreList.includes(field));
+    }
 
-  fields = fields.filter(field => !fieldsToIgnore.includes(field));
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = searchField; // Valor vindo do applyUiTranslations
+    fieldSelect.appendChild(defaultOption);
 
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = searchField;
-  fieldSelect.appendChild(defaultOption);
+    fields.forEach(field => {
+        const option = document.createElement('option');
+        option.value = field;
+        option.textContent = field;
+        fieldSelect.appendChild(option);
+    });
+}
 
-  fields.forEach(field => {
-    const option = document.createElement('option');
-    option.value = field;
-    option.textContent = field;
-    fieldSelect.appendChild(option);
-  }); 
+function buildColorMap() {
+    colorMap = {};
+    if (!allData.cores) return;
+
+    const chaveNome = isPT ? "Cor Base" : "Base Colour";
+    
+    allData.cores.forEach(c => {
+        if (c[chaveNome]) {
+            colorMap[c[chaveNome].toUpperCase()] = c["Hex"] || "#ccc";
+        }
+    });
 }
 
 // Extrair valores únicos de um campo
 function extractUniqueValues(fieldName) {
   const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
   const values = new Set();
-  console.log(`Extraindo valores únicos para o campo: ${fieldName}`);
   data.forEach(item => {
     const fieldValue = item[fieldName];
     if (fieldValue) {
@@ -197,42 +233,47 @@ function extractUniqueValues(fieldName) {
 
 // Atualizar filtros com checkboxes
 function updateFilters() {
-  const container = document.getElementById('filtersContainer');
-  container.innerHTML = '';
+    const container = document.getElementById('filtersContainer');
+    if (!container) return;
+    container.innerHTML = '';
 
-  filterFields.forEach(fieldName => {
-    const values = extractUniqueValues(fieldName);    
-    
-    if (values.length === 0) return;
+    // Seleciona a lista de chaves correta baseada no idioma
+    const currentFilterFields = isPT ? filterFields : filterFieldsEN;
 
-    const filterGroup = document.createElement('div');
-    filterGroup.className = 'filter-group';
-    filterGroup.innerHTML = `<label class="filter-label">${fieldName.replace(/\s*\(.*/, "")}</label>`;    
+    currentFilterFields.forEach(fieldName => {
+        // Agora o extractUniqueValues vai procurar pela chave em inglês (ex: "Phase...")
+        const values = extractUniqueValues(fieldName); 
+        
+        if (values.length === 0) return;
 
-    const checkboxesDiv = document.createElement('div');
-    checkboxesDiv.className = 'filter-checkboxes';
+        const filterGroup = document.createElement('div');
+        filterGroup.className = 'filter-group';
+        // Limpa o texto entre parênteses para o label ficar bonito
+        filterGroup.innerHTML = `<label class="filter-label">${fieldName.replace(/\s*\(.*/, "")}</label>`; 
 
+        const checkboxesDiv = document.createElement('div');
+        checkboxesDiv.className = 'filter-checkboxes';
 
-    values.forEach(value => {
-      const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');      
-      const label = document.createElement('label');
-      label.className = 'checkbox-label';
-      
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = checkboxId;
-      checkbox.value = value;
-      checkbox.dataset.field = fieldName;
-      checkbox.addEventListener('change', performSearch);
+        values.forEach(value => {
+            const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');      
+            const label = document.createElement('label');
+            label.className = 'checkbox-label';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = checkboxId;
+            checkbox.value = value;
+            checkbox.dataset.field = fieldName;
+            checkbox.addEventListener('change', performSearch);
 
-      label.appendChild(checkbox);
-      label.appendChild(document.createTextNode(value));
-      checkboxesDiv.appendChild(label);
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(value));
+            checkboxesDiv.appendChild(label);
+        });
+
+        filterGroup.appendChild(checkboxesDiv);
+        container.appendChild(filterGroup);
     });
-
-    filterGroup.appendChild(checkboxesDiv);
-    container.appendChild(filterGroup);
-  });
 }
 
 function performSearch() {
@@ -300,8 +341,8 @@ function displayResults(results = null) {
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
   data = results !== null ? results : (currentTab === 'cores' ? allData.cores : allData.efeitos);
-  resultsInfoLabel = "Nenhum resultado encontrado";
-  resultsContainerLabel = "Tente ajustar os critérios de pesquisa";
+  resultsInfoLabel = noResults;
+  resultsContainerLabel = noResultsContainer;
   
   const resultsContainer = document.getElementById('results');
   const resultsInfo = document.getElementById('resultsInfo');
@@ -320,7 +361,7 @@ function displayResults(results = null) {
 
   let tabName = "";
   tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
-  resultsInfo.innerHTML = `<p>A exibir <strong>${data.length}</strong> ${tabName}</p>`;
+  resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> ${resultsLabel}</p>`;
   resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
 }
 
@@ -333,9 +374,9 @@ function createCard(item) {
     let cardHTML = `
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || '').toUpperCase()}</span>
+          <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || item['Base Colour'] || item['Product Name'] || '').toUpperCase()}</span>
           <span class="card-code ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}">
-            ${item['Código'] || ''}
+            ${item['Código'] || item['Code'] || ''}
           </span>
         </div>
         <div class="card-keywords">${item['Keywords'] || ''}</div>
@@ -346,7 +387,7 @@ function createCard(item) {
   cardHTML += `
       <div class="dilution-container">
           <div class="dilution-rule" style="--paint-color: ${hexColor};"></div>
-          <div class="dilution-disclaimer">*Mera ilustração visual</div>
+          <div class="dilution-disclaimer">${illustrative}</div>
       </div>
   `;
 
@@ -354,6 +395,7 @@ function createCard(item) {
     Object.entries(item).forEach(([key, value]) => {
       // Ignora campos que não queremos exibir como texto simples
       if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto' || (fieldsToIgnore.includes(key) && key !== 'Complementar')) return;
+      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || (fieldsToIgnore.includes(key) && key !== 'Complementary')) return;
 
       let displayValue = value;
       let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
