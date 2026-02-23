@@ -68,12 +68,6 @@ async function detectLanguageAndLoad() {
     loadData(language);
 }
 
-console.log("Aplicando traduções para:", language);
-const texts = uiTranslations[language];
-console.log("Textos aplicados:", texts);
-document.getElementById('tab-cores-label').innerText = texts.tabCores;
-document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
-
 function loadData(language) {
   let selectedLanguage = (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL') ? 'PT' : 'EN';
     
@@ -101,6 +95,11 @@ function loadData(language) {
       console.error('Erro ao carregar dados:', error);
       showError('Erro ao carregar os dados. Verifique se o ficheiro JSON está acessível.');
     });
+
+    console.log("Aplicando traduções para:", language);
+    const texts = uiTranslations[language];
+    document.getElementById('tab-cores-label').innerText = texts.tabCores;
+    document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
 }
 
 function setupEventListeners() {
