@@ -30,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadData(language) {
   if (language !== 'PT') {
     language = 'EN'; // Fallback para inglês se não for português 
+    console.log(`Idioma ${language} não suportado, usando inglês como fallback.`);
   }
+  
+  alert(`Carregando dados para o idioma: ${language}`);
+
   fetch(`./data/cores-efeitos-${language}.json`)
     .then(response => response.json())
     .then(data => {
