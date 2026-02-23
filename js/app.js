@@ -23,25 +23,42 @@ fetch('https://ipapi.co/json/')
 
 // Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
-  loadData(language);
+  detectLanguageAndLoad();
   setupEventListeners();  
 });
 
+async function detectLanguageAndLoad() {
+    try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        
+        language = data.country_name; 
+        console.log(`Idioma detectado: ${language}`);
+    } catch (error) {
+        console.error("Falha ao detectar localização, usando padrão PT:", error);
+        language = 'Portugal'; 
+    }
+
+    // SÓ AGORA chama o loadData, com o valor correto
+    loadData(language);
+}
+
 function loadData(language) {
   const langUpper = language.toUpperCase();  
-  let selectedLanguage = langUpper.startsWith('PT') ? 'PT' : 'EN';
+  let selectedLanguage = (langUpper.startsWith('PT') || langUpper === 'PORTUGAL' || langUpper === 'BRAZIL') ? 'PT' : 'EN';
+   
   console.log(`Carregando dados para o idioma: ${selectedLanguage}`);
-  
-   fetch(`./data/cores-efeitos-${selectedLanguage}.json`)
-    .then(response => response.json())
-    .then(data => {
-      allData = data;    
-      displayResults();
+    
+  fetch(`./data/cores-efeitos-${selectedLanguage}.json`)
+      .then(response => response.json())
+      .then(data => {
+    allData = data;    
+    displayResults();
 
-      colorMap = {};
-      allData.cores.forEach(c => {
-        colorMap[c["Cor Base"].toUpperCase()] = c["Hex"];
-      });
+    colorMap = {};
+    allData.cores.forEach(c => {
+      colorMap[c["Cor Base"].toUpperCase()] = c["Hex"];
+    });
 
     })
     .catch(error => {
