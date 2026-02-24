@@ -3,14 +3,14 @@ let allData = { cores: [], efeitos: [] };
 let currentTab = 'cores';
 let language = 'PT'; 
 let isPT = true;
-const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)', 'Fabricante'];
-const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)', 'Manufacturer'];
+const fieldsToIgnore = ['Hex', 'Papel do Complementar (Sombra, Reflexo, Contraste, Desgaste etc.)', 'Complementar', 'Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Contraste / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)', 'Fabricante'];
+const fieldsToIgnoreEN = ['Hex', 'Role of Complementary (Shadow, Reflection, Contrast, Weathering etc.)', 'Complementary', 'Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Contrast / Fluorescent / TMM)','Saturation Level (light/medium/dark)', 'Manufacturer'];
 let colorMap = {};
 let sortAsc = true;
 let currentFilteredResults = []; 
 let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
-const filterFields = ['Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)', 'Fabricante'];
-const filterFieldsEN = ['Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Fluorescent / TMM)','Saturation Level (light/medium/dark)', 'Manufacturer'];
+const filterFields = ['Temperatura (Quente/Frio/Neutra)','Fase (Base / Sombra / Realce / Filtro / Contraste / Fluorescente / TMM)','Nível de saturação (claro/médio/escuro)', 'Fabricante'];
+const filterFieldsEN = ['Temperature (Warm/Cold/Neutral)','Phase (Base / Shadow / Highlight / Filter / Contrast / Fluorescent / TMM)','Saturation Level (light/medium/dark)', 'Manufacturer'];
 const uiTranslations = {
     'PT': {
         tabCores: 'Cores',
