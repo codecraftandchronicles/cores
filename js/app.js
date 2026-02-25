@@ -45,7 +45,7 @@ const uiTranslations = {
         footerCopyright: '© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Comunidade de Pintura de Miniaturas',
         helpExpand: 'Ajude a expandir este guia:',
         suggestCorrection: 'Viu algo errado ou quer sugerir uma nova tinta?',
-        clickHere: 'Clique aqui para enviar uma correção ou sugestão.'
+        clickHere: 'Clique aqui para enviar uma correção ou sugestão.',
     },
     'EN': {
         tabCores: 'Colours',
@@ -67,7 +67,7 @@ const uiTranslations = {
         footerCopyright: '© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Miniature Painting Community',
         helpExpand: 'Help expand this guide:',
         suggestCorrection: 'Did you spot an error or want to suggest a new paint?',
-        clickHere: 'Click here to send a correction or suggestion.'
+        clickHere: 'Click here to send a correction or suggestion.',
     }
 };
 // Carregar dados ao iniciar  
@@ -129,6 +129,13 @@ function applyUiTranslations(lang) {
 }
 
 function loadDataColours(lang) {
+    // 1. Mostrar o Loading antes de qualquer coisa
+    const loader = document.getElementById('loading-overlay');
+    if (loader) {
+        loader.style.display = 'flex';
+        loader.style.opacity = '1';
+    }
+
     isPT = (lang.startsWith('PT') || lang === 'PORTUGAL' || lang === 'BRAZIL');
     const langKey = isPT ? 'PT' : 'EN';
     const chaveNome = isPT ? "Cor Base" : "Base Colour";
@@ -143,19 +150,29 @@ function loadDataColours(lang) {
                     return nomeA.localeCompare(nomeB);
                 });
             }
-               
+                
             allDataColours = data;            
             
-            // Muito importante: traduzir a UI (labels, botões, select)
+            // Muito importante: traduzir a UI
             applyUiTranslations(langKey);
             
-            // Reconstruir o mapa de cores e os campos de busca
+            // Reconstruir o mapa e filtros
             buildColorMap(); 
             updateSearchFields(); 
             updateFilters();
             displayResults();
+
+            // 2. Esconder o Loading com um leve fade-out para suavizar
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
+            }
         })
-        .catch(err => showError("Erro ao trocar idioma."));
+        .catch(err => {
+            showError("Erro ao trocar idioma.");
+            // 3. Garantir que o loader suma mesmo se der erro
+            if (loader) loader.style.display = 'none';
+        });
 }
 
 function loadDataEffects(lang) {

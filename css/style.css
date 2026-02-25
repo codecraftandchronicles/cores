@@ -5,54 +5,43 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: #272753;
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif; 
+  background: #1a73e8; /* Azul vibrante para um visual mais moderno e energético */
   min-height: 100vh;
-  padding: 20px;
-  color: #333;
+  padding: 0; 
+  margin: 0;
+  color: #f8fafc;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 100%; 
+  padding: 20px;
 }
 
 header {
     text-align: center;
-    color: white;
-    margin-bottom: 20px;
-    padding: 10px 10px;
-    position: relative;
+    padding: 20px 20px;
+    margin-bottom: 30px;
 }
 
-/* O Título Principal */
 header h1 {
-    font-family: 'Cinzel Decorative', serif; /* Fonte majestosa */
-    font-size: 2.5rem;
-    background: linear-gradient(to bottom, #fff6e5 20%, #d4af37 50%, #8b6d10 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
-    letter-spacing: 2px;
+    font-family: 'Segoe UI', sans-serif; 
+    font-size: 1.5rem; /* Diminuído de 2.5rem para 1.5rem */
+    color: #ffffff; /* Branco puro */
+    background: none;
+    -webkit-text-fill-color: initial;
+    filter: none;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
-/* O Subtítulo */
 header p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-style: italic;
-    color: #e0e0e0;
-    opacity: 0.9;
-    letter-spacing: 1px;
-    max-width: 700px;
-    margin: 0 auto;
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    padding: 10px 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.85rem;
+    font-style: normal;
+    color: #ffffff; 
+    margin-top: 5px;
 }
-
-/* Adiciona um brilho de "divindade" atrás do título */
-
 
 .search-section {
   background: white;
@@ -348,7 +337,7 @@ header p {
     padding: 30px;
     border-radius: 12px;
     margin: 60px auto 20px; /* Espaço generoso acima */
-    border-left: 6px solid #d4af37; /* Destaque Imperial Gold */
+    border-left: 6px solid whitesmoke; /* Destaque Imperial Gold */
     max-width: 1000px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -363,15 +352,15 @@ header p {
 }
 
 .disclaimer-text strong {
-    color: #d4af37;
+    color: whitesmoke;
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
 
 .main-footer {
-    border-top: 1px solid rgba(212, 175, 55, 0.3); /* Linha dourada subtil */
+    border-top: 1px solid whitesmoke; /* Linha dourada subtil */
     padding-top: 20px;
-    color: #d4af37; /* Texto do copyright em dourado */
+    color: whitesmoke;
     font-weight: 600;
     font-size: 0.85rem;
 }
@@ -561,7 +550,7 @@ header p {
 }
 
 .footer-links a {
-    color: #d4af37; /* Dourado Imperial */
+    color: whitesmoke;
     font-size: 1.8rem;
     transition: all 0.3s ease;
 }
@@ -579,7 +568,7 @@ header p {
 }
 
 .contribution-text a {
-    color: #d4af37;
+    color: whitesmoke;
     text-decoration: none;
     font-weight: 600;
 }
@@ -684,3 +673,55 @@ header p {
 
 .sort-btn.desc #sort-icon-asc { display: none !important; }
 .sort-btn.desc #sort-icon-desc { display: inline !important; }
+
+#loading-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #1a1a1a; display: flex; justify-content: center; align-items: center;
+    z-index: 10000; transition: opacity 0.5s;
+}
+
+.hobby-loader { position: relative; width: 120px; height: 150px; text-align: center; }
+
+/* Pote de Tinta */
+.paint-pot {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 50px; border: 4px solid #eee;
+    border-radius: 5px 5px 15px 15px; background: transparent; overflow: hidden;
+}
+
+.paint-fill {
+    position: absolute; bottom: 0; width: 100%; height: 60%;
+    background: #e74c3c; /* Cor da tinta (pode ser dinâmica!) */
+    animation: paint-wave 2s infinite ease-in-out;
+}
+
+/* O Pincel */
+.brush {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 20px; animation: brush-dip 2s infinite ease-in-out;
+}
+
+.brush-handle { width: 6px; height: 60px; background: #8b4513; margin: 0 auto; border-radius: 5px; }
+.brush-ferrule { width: 5px; height: 10px; background: #aaa; margin: -5px auto 0; }
+.brush-bristles { 
+    width: 3px; height: 18px; background: #d2b48c; margin: 0 auto; 
+    border-radius: 0 0 5px 5px;
+}
+
+/* Animações */
+@keyframes brush-dip {
+    0%, 80% { transform: translate(-50%, 0) rotate(0deg); }
+    30% { transform: translate(-50%, 30px) rotate(5deg); } /* Mergulha */
+    45% { transform: translate(-50%, 30px) rotate(-5deg); } /* Chacoalha */
+}
+
+@keyframes paint-wave {
+    0%, 100% { height: 60%; }
+    50% { height: 65%; }
+}
+
+#loadingText {
+    position: absolute; bottom: -40px; width: 200px; left: 50%; 
+    transform: translateX(-50%); color: #eee; font-family: sans-serif;
+    font-size: 0.8rem; letter-spacing: 1px;
+}
