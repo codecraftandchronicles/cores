@@ -103,7 +103,7 @@ async function detectLanguageAndLoad() {
 
     loadDataColours(selectedLanguage);
     loadDataEffects(selectedLanguage);
-    console.log(`Idioma detectado: ${language} | Carregando dados em: ${selectedLanguage}`);
+    console.log(`Idioma detectado: ${language} | Carregando dados em: ${selectedLanguage} | isPT: ${isPT}`);
 }
 
 function applyUiTranslations(lang) {
