@@ -1,6 +1,5 @@
 
-let allDataColours = { cores: []};
-let allDataEffects = { efeitos: [] };
+let allData = { cores: []}; //, efeitos: [] };
 let currentTab = 'cores';
 let language = 'PT'; 
 let isPT = true;
@@ -10,6 +9,8 @@ let colorMap = {};
 let sortAsc = true;
 let currentFilteredResults = []; 
 let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
+// const filterFields = ['Temperatura','Fase','Nível de Saturação', 'Fabricante'];
+// const filterFieldsEN = ['Temperature','Phase','Saturation Level', 'Manufacturer'];
 const configFiltros = {
     'PT': {
         'Temperatura': ['Quente', 'Frio', 'Neutra'],
@@ -82,8 +83,7 @@ async function detectLanguageAndLoad() {
 
     if (isLocalhost) {
         language = 'PT';
-        loadDataColours(language);
-        loadDataEffects(language);
+        loadData(language);
         return; 
     }
 
@@ -101,8 +101,7 @@ async function detectLanguageAndLoad() {
 
     applyUiTranslations(selectedLanguage);
 
-    loadDataColours(selectedLanguage);
-    loadDataEffects(selectedLanguage);
+    loadData(selectedLanguage);
 }
 
 function applyUiTranslations(lang) {
@@ -127,12 +126,12 @@ function applyUiTranslations(lang) {
   document.getElementById('disclaimer').innerText = texts.disclaimerText;
 }
 
-function loadDataColours(lang) {
+function loadData(lang) {
     isPT = (lang.startsWith('PT') || lang === 'PORTUGAL' || lang === 'BRAZIL');
     const langKey = isPT ? 'PT' : 'EN';
     const chaveNome = isPT ? "Cor Base" : "Base Colour";
 
-    fetch(`./data/cores-${langKey}.json`)
+    fetch(`./data/cores-efeitos-${langKey}.json`)
         .then(response => response.json())
         .then(data => {
             if (data.cores) {
@@ -142,39 +141,18 @@ function loadDataColours(lang) {
                     return nomeA.localeCompare(nomeB);
                 });
             }
-               
-            allDataColours = data;            
             
-            // Muito importante: traduzir a UI (labels, botões, select)
-            applyUiTranslations(langKey);
+            // if (data.efeitos) {
+            //     const chaveEfeito = isPT ? "Nome do Produto" : "Product Name";
+            //     data.efeitos.sort((a, b) => {
+            //         const nomeA = (a[chaveEfeito] || "").toUpperCase();
+            //         const nomeB = (b[chaveEfeito] || "").toUpperCase();
+            //         return nomeA.localeCompare(nomeB);
+            //     });
+            // }
+
+            allData = data;
             
-            // Reconstruir o mapa de cores e os campos de busca
-            buildColorMap(); 
-            updateSearchFields(); 
-            updateFilters();
-            displayResults();
-        })
-        .catch(err => showError("Erro ao trocar idioma."));
-}
-
-function loadDataEffects(lang) {
-    isPT = (lang.startsWith('PT') || lang === 'PORTUGAL' || lang === 'BRAZIL');
-    const langKey = isPT ? 'PT' : 'EN';
-    const chaveNome = isPT ? "Cor Base" : "Base Colour";
-
-    fetch(`./data/efeitos-${langKey}.json`)
-        .then(response => response.json())
-        .then(data => {                        
-            if (data.efeitos) {
-                const chaveEfeito = isPT ? "Nome do Produto" : "Product Name";
-                data.efeitos.sort((a, b) => {
-                    const nomeA = (a[chaveEfeito] || "").toUpperCase();
-                    const nomeB = (b[chaveEfeito] || "").toUpperCase();
-                    return nomeA.localeCompare(nomeB);
-                });
-            }
-
-            allDataEffects = data;            
             // Muito importante: traduzir a UI (labels, botões, select)
             applyUiTranslations(langKey);
             
@@ -204,8 +182,7 @@ function setupEventListeners() {
             this.classList.add('active');
 
             language = selectedLang; 
-            loadDataColours(selectedLang);
-            loadDataEffects(selectedLang);
+            loadData(selectedLang);
         });
     });
 
@@ -253,7 +230,7 @@ function updateSearchFields() {
     fieldSelect.innerHTML = '';
     
     let fields = [];
-    const dataRef = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
+    const dataRef = currentTab === 'cores' ? allData.cores : allData.efeitos;
 
     if (dataRef && dataRef.length > 0) {
         fields = Object.keys(dataRef[0]);
@@ -276,11 +253,11 @@ function updateSearchFields() {
 
 function buildColorMap() {
     colorMap = {};
-    if (!allDataColours.cores) return;
+    if (!allData.cores) return;
 
     const chaveNome = isPT ? "Cor Base" : "Base Colour";
     
-    allDataColours.cores.forEach(c => {
+    allData.cores.forEach(c => {
         if (c[chaveNome]) {
             colorMap[c[chaveNome].toUpperCase()] = c["Hex"] || "#ccc";
         }
@@ -289,7 +266,7 @@ function buildColorMap() {
 
 // Extrair valores únicos de um campo
 function extractUniqueValues(fieldName) {
-  const data = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
+  const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
   const values = new Set();
   data.forEach(item => {
     const fieldValue = item[fieldName];
@@ -305,33 +282,31 @@ function extractUniqueValues(fieldName) {
   return Array.from(values).sort();   
 }
 
-// Atualizar filtros com base no configFiltros
+// Atualizar filtros com checkboxes
 function updateFilters() {
     const container = document.getElementById('filtersContainer');
     if (!container) return;
     container.innerHTML = '';
 
-    // Define qual chave usar (PT ou EN)
-    const langKey = isPT ? 'PT' : 'EN';
-    const filtrosAtuais = configFiltros[langKey];
+    // Seleciona a lista de chaves correta baseada no idioma
+    const currentFilterFields = isPT ? filterFields : filterFieldsEN;
 
-    // Iteramos sobre as chaves do objeto (Temperatura, Fase, etc.)
-    Object.keys(filtrosAtuais).forEach(fieldName => {
-        const values = filtrosAtuais[fieldName]; // Pega o array de opções ['Quente', 'Frio'...]
+    currentFilterFields.forEach(fieldName => {
+        // Agora o extractUniqueValues vai procurar pela chave em inglês (ex: "Phase...")
+        const values = extractUniqueValues(fieldName); 
         
-        if (!values || values.length === 0) return;
+        if (values.length === 0) return;
 
         const filterGroup = document.createElement('div');
         filterGroup.className = 'filter-group';
-        filterGroup.innerHTML = `<label class="filter-label">${fieldName}</label>`; 
+        // Limpa o texto entre parênteses para o label ficar bonito
+        filterGroup.innerHTML = `<label class="filter-label">${fieldName.replace(/\s*\(.*/, "")}</label>`; 
 
         const checkboxesDiv = document.createElement('div');
         checkboxesDiv.className = 'filter-checkboxes';
 
         values.forEach(value => {
-            // Criar ID único para o checkbox
             const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');      
-            
             const label = document.createElement('label');
             label.className = 'checkbox-label';
             
@@ -340,8 +315,6 @@ function updateFilters() {
             checkbox.id = checkboxId;
             checkbox.value = value;
             checkbox.dataset.field = fieldName;
-            
-            // Mantém a função de busca ao clicar
             checkbox.addEventListener('change', performSearch);
 
             label.appendChild(checkbox);
@@ -357,7 +330,7 @@ function updateFilters() {
 function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     const searchField = document.getElementById('searchField').value;
-    const data = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
+    const data = currentTab === 'cores' ? allData.cores : allData.efeitos;
 
     const selectedFilters = {};
     document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
@@ -418,8 +391,7 @@ function sortResults(dataList) {
 function displayResults(results = null) {
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
-
-  data = results !== null ? results : (currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos);
+  data = results !== null ? results : (currentTab === 'cores' ? allData.cores : allData.efeitos);
   resultsInfoLabel = noResults;
   resultsContainerLabel = noResultsContainer;
   
@@ -480,7 +452,7 @@ function createCard(item) {
       let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
 
       // --- LÓGICA DA COR COMPLEMENTAR ---
-      if (key === 'Complementar' || key === 'Complementary') {
+      if (key === 'Complementar') {
         // Se o valor estiver vazio no JSON ou não existir
         if (!value || value.trim() === "") {
           displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
