@@ -7,22 +7,7 @@ Uma aplicação web estática simples para consultar um cadastro de cores e seus
 - **Pesquisa flexível**: Procure por qualquer termo em todos os campos ou num campo específico
 - **Duas abas**: Consulte cores ou efeitos separadamente
 - **Interface responsiva**: Funciona perfeitamente em desktop, tablet e mobile
-- **Sem dependências**: Aplicação 100% estática, sem necessidade de servidor
-- **GitHub Pages ready**: Faça deploy direto no GitHub Pages
 
-## Estrutura de ficheiros
-
-```
-cadastro-cores-app/
-├── index.html           # Página principal
-├── css/
-│   └── style.css        # Estilos da aplicação
-├── js/
-│   └── app.js           # Lógica da aplicação
-├── data/
-│   └── cores-efeitos.json  # Base de dados em JSON
-└── README.md            # Este ficheiro
-```
 
 ### Cores
 
