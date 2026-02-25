@@ -96,7 +96,7 @@ async function detectLanguageAndLoad() {
         language = 'Portugal'; 
     }
 
-    isPT = (language.startsWith('PT') || language === 'PORTUGAL' || language === 'BRAZIL');
+    isPT = (language.startsWith('PT') || language.toLocaleUpperCase() === 'PORTUGAL' || language.toLocaleUpperCase === 'BRAZIL');
     const selectedLanguage = isPT ? 'PT' : 'EN';
 
     applyUiTranslations(selectedLanguage);
