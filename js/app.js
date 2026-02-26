@@ -60,7 +60,7 @@ const uiTranslations = {
         searchInputLabel: 'Search',
         searchFieldLabel: 'Field',
         resultsLabel: 'results',
-        headerLabel: 'Colour and Effects Catalog',
+        headerLabel: 'Colour and Effects Catalogue',
         headerParagraph: 'Quick reference guide for paints, textures and painting techniques',
         disclaimerTitle: 'Disclaimer',
         disclaimerText: 'This application is a personal project and has no official affiliation with any brands or products. The information presented is based on research and may contain inaccuracies. Use as a reference, but always verify with official sources.',
