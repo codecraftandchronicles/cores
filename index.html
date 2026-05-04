@@ -8,7 +8,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Este evento garante que o código só corre DEPOIS de todo o HTML estar carregado
+    document.addEventListener('DOMContentLoaded', function () {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    });
+  </script>
 </head>
 <body>
 
@@ -32,9 +43,22 @@
 
     <div class="search-section">
       <!-- Abas -->
+      <!-- <div class="tabs">        
+        <button id="tab-cores-label" data-bs-toggle="tooltip" class="tab-btn active" data-tab="cores" title="Pigmentos e tintas base">...</button>
+        <button id="tab-efeitos-label" data-bs-toggle="tooltip" class="tab-btn" data-tab="efeitos" title="Envelhecimento e acabamentos">...</button>
+        <button id="tab-massa-label" data-bs-toggle="tooltip" class="tab-btn" data-tab="massa" title="Putty & Paste: Colas e preenchimentos">...</button>
+      </div> -->
+
       <div class="tabs">        
-        <button id="tab-cores-label" class="tab-btn active" data-tab="cores">...</button>
-        <button id="tab-efeitos-label" class="tab-btn" data-tab="efeitos">...</button>
+        <button id="tab-cores-label" class="tab-btn active" data-tab="cores">
+          CORES 
+        </button>        
+        <button id="tab-efeitos-label" class="tab-btn" data-tab="efeitos">
+          EFEITOS 
+        </button>        
+        <button id="tab-massa-label" class="tab-btn" data-tab="massas">
+          MASSAS 
+        </button>
       </div>
 
       <!-- Controles de pesquisa -->

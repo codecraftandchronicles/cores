@@ -100,6 +100,15 @@ header p {
   border-bottom: 2px solid #e0e0e0;
 }
 
+.bi-info-circle {
+    font-size: 1rem !important; /* Aumenta um pouco para garantir visibilidade */
+    color: #0d6efd !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 14px; /* Garante que ele não "esmaga" */
+}
+
 .tab-btn {
   padding: 12px 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -113,6 +122,12 @@ header p {
   border-bottom: 3px solid transparent;
   transition: all 0.3s;
   margin-bottom: -2px;
+  
+  /* ESTA É A PARTE CRUCIAL */
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Cria o espaço entre a palavra e o ícone */
 }
 
 .tab-btn.active {
@@ -724,4 +739,165 @@ header p {
     position: absolute; bottom: -40px; width: 200px; left: 50%; 
     transform: translateX(-50%); color: #eee; font-family: sans-serif;
     font-size: 0.8rem; letter-spacing: 1px;
+}
+
+/* Massas */
+/* 1. Container de Resultados no JS*/
+
+
+/* 2. Wrapper da Tabela - Garante o fundo escuro e o scroll no mobile */
+.medieval-table-wrapper {
+    width: 100% !important;
+    box-sizing: border-box;
+    margin: 20px 0;
+    background: #2c2c3d;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    overflow-x: auto;
+}
+
+/* 3. A Tabela em si */
+.custom-medieval-table {
+    width: 100% !important;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    table-layout: fixed; /* Força o respeito às larguras abaixo */
+}
+
+.custom-medieval-table th, 
+.custom-medieval-table td {
+    padding: 12px 15px !important;
+    white-space: normal;
+    vertical-align: middle;
+}
+
+/* Cabeçalho Dourado */
+.custom-medieval-table thead th {
+    border-bottom: 2px solid #d4af37 !important;
+    color: #d4af37;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Corpo da Tabela */
+.custom-medieval-table tbody td {
+    background-color: #38384d;
+    border: none !important;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+}
+
+/* Destaque para a primeira coluna (Características) */
+.custom-medieval-table tbody td:first-child {
+    background-color: #1a1a2e;
+    color: #d4af37;
+    font-weight: bold;
+    width: 15%;
+}
+
+/* Ajuste de larguras das colunas de dados */
+.custom-medieval-table th:nth-child(2) { width: 20%; } /* CA */
+.custom-medieval-table th:nth-child(3) { width: 25%; } /* Erro */
+.custom-medieval-table th:nth-child(4) { width: 20%; } /* Araldite */
+.custom-medieval-table th:nth-child(5) { width: 20%; } /* Putty */
+
+.custom-medieval-table .text-info { color: #0dcaf0 !important; }
+.custom-medieval-table .text-warning { color: #ffc107 !important; }
+.custom-medieval-table .text-danger { color: #dc3545 !important; }
+
+/* Utilitários de cores que você usou no HTML */
+.text-danger { color: #ff6b6b !important; }
+.fw-bold { font-weight: bold; }
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 768px) {
+    .custom-medieval-table {
+        table-layout: auto; /* No mobile, deixa as colunas expandirem */
+    }
+}
+
+#results.massa-active {
+    display: block !important;
+    width: 100% !important;
+    overflow: visible; /* Deixa a tabela respirar */
+}
+
+/* Garante que a tabela dentro do modo massa ocupe tudo */
+.massa-active .medieval-table-wrapper {
+    width: 100%;
+}
+
+/* As bordas verticais que pediste antes */
+.massa-active .custom-medieval-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.massa-active .custom-medieval-table td, 
+.massa-active .custom-medieval-table th {
+    border: 1px solid #444 !important;
+}
+
+/* Garante o modo bloco apenas na aba massa */
+#results.massa-active {
+    display: block !important;
+}
+
+.medieval-table-wrapper {
+    width: 100%;
+    background: #2c2c3d;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    box-sizing: border-box;
+    margin: 20px 0;
+}
+
+.custom-medieval-table {
+    width: 100% !important;
+    border-collapse: collapse !important; /* Une as bordas verticais */
+    table-layout: fixed;
+}
+
+/* Grelha Técnica: Linhas Verticais e Horizontais */
+.custom-medieval-table th, 
+.custom-medieval-table td {
+    border: 1px solid #444 !important; 
+    padding: 12px 8px !important;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.85rem;
+    word-wrap: break-word;
+}
+
+/* Coluna de Características */
+.custom-medieval-table tbody td:first-child {
+    background-color: #1a1a2e;
+    color: #d4af37;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Notas e Espaço para Fotos */
+.table-footer-notes {
+    margin-top: 15px;
+    padding: 12px;
+    border-top: 1px solid #555;
+    background: rgba(0,0,0,0.2);
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.photo-placeholder-zone {
+    margin-top: 10px;
+    padding: 20px;
+    border: 2px dashed #444;
+    text-align: center;
+    color: #888;
+    border-radius: 4px;
 }

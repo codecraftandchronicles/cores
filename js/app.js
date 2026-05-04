@@ -28,6 +28,7 @@ const uiTranslations = {
     'PT': {
         tabCores: 'Cores',
         tabEfeitos: 'Efeitos',
+        tabMassa: 'Massa',
         searchPlaceholder: 'Digite um termo...',
         searchField: 'Selecionar um filtro...',
         noResults: 'Nenhum resultado encontrado',
@@ -46,10 +47,14 @@ const uiTranslations = {
         helpExpand: 'Ajude a expandir este guia:',
         suggestCorrection: 'Viu algo errado ou quer sugerir uma nova tinta?',
         clickHere: 'Clique aqui para enviar uma correção ou sugestão.',
+        tooltipMassa: 'Putty & Paste: Preparação e Correção: Massas acrílicas e epóxi para preencher fendas, corrigir falhas de fundição e esculpir novos detalhes. Verifique a contração e o tempo de secagem de cada material',
+        tooltipEfeitos: 'Produtos para Weathering e Cenários: Inclui lavagens (washes) para realçar detalhes, filtros para mudar tons, e pastas de textura para criar solos realistas como concreto ou musgo',
+        tooltipCores: 'Pigmentos e tintas base',
     },
     'EN': {
         tabCores: 'Colours',
         tabEfeitos: 'Effects',
+        tabMassa: 'Putty',
         searchPlaceholder: 'Search for a term...',
         searchField: 'Select field...',
         noResults: 'No results found',
@@ -68,9 +73,201 @@ const uiTranslations = {
         helpExpand: 'Help expand this guide:',
         suggestCorrection: 'Did you spot an error or want to suggest a new paint?',
         clickHere: 'Click here to send a correction or suggestion.',
+        tooltipMassa: 'Putty & Paste: Preparation and Correction: Acrylic and epoxy putties for filling gaps, fixing casting flaws, and sculpting new details. Check each material´s shrinkage and drying time',
+        tooltipEfeitos: 'Weathering and Scenery Products: Includes washes to enhance details, filters to shift tones, and texture pastes to create realistic grounds like concrete or moss',
+        tooltipCores: 'Base pigments and paints',
     }
 };
-// Carregar dados ao iniciar  
+const htmlMassasPT = `
+<div class="medieval-table-wrapper">
+  <div class="table-intro-text">
+    <p style="padding: 20px">
+      <i class="bi bi-info-circle-fill"></i> 
+      Este guia de referência foi desenvolvido para documentar os comportamentos químicos e mecânicos observados em testes de bancada. 
+      O objetivo é otimizar a escolha entre preenchimentos estéticos e colagens estruturais, minimizando desperdícios e danos em peças impressas ou modeladas.
+    </p>
+  </div>
+
+  <table class="table table-dark custom-medieval-table">
+    <thead>
+      <tr>
+        <th style="width: 15%">Característica / Produto</th>
+        <th style="width: 20%">Cianoacrilato + Bicarbonato</th>
+        <th style="width: 25%; color: #ff6b6b;">Araldite + Bicarbonato *</th>
+        <th style="width: 20%; color: #51cf66;">Araldite (Puro)</th>
+        <th style="width: 20%">Putty / Paste</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Tempo de Trabalho</strong></td>
+        <td>Segundos (quase imediato)</td>
+        <td>Cerca de 5 minutos (Cura acelerada)</td>
+        <td>Até 10 minutos (Trabalhável)</td>
+        <td>Vários minutos a horas</td>
+      </tr>
+      <tr>
+        <td><strong>Resistência</strong></td>
+        <td>Muito alta, mas quebradiça ao impacto</td>
+        <td>Extremamente alta (Inconsistente)</td>
+        <td class="fw-bold text-info">Extremamente alta (Ligação estrutural)</td>
+        <td>Baixa a moderada (Não estrutural)</td>
+      </tr>
+      <tr>
+        <td><strong>Modelagem</strong></td>
+        <td>Difícil de modelar; só preenche</td>
+        <td>Massa bruta e instável</td>
+        <td>Fluido; difícil de modelar antes de curar</td>
+        <td>Excelente para modelar detalhes finos</td>
+      </tr>
+      <tr>
+        <td><strong>Lixagem</strong></td>
+        <td>Fácil (fica opaco e duro)</td>
+        <td class="fw-bold text-warning">Impossível à mão (Pedra)</td>
+        <td>Duro (Foco em Fixação)</td>
+        <td>Muito fácil (Acabamento liso)</td>
+      </tr>
+      <tr>
+        <td><strong>Contração</strong></td>
+        <td>Mínima</td>
+        <td>Nula (pode aquecer/expandir)</td>
+        <td>Nula</td>
+        <td>Pode contrair ligeiramente ao secar</td>
+      </tr>
+      <tr>
+        <td><strong>Aplicação Ideal</strong></td>
+        <td>Preenchimento rápido e travas</td>
+        <td class="fw-bold text-danger">NÃO RECOMENDADO</td>
+        <td>Colagem de peças principais (Estrutural)</td>
+        <td>Acabamento de fendas e poros</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="table-footer-notes">
+    <p><strong>* Referência Técnica (Araldite + Bicarbonato):</strong> A reação química acelera a cura drasticamente. Embora a dureza final seja extrema, a mistura torna-se mineral, impossibilitando o acabamento manual e gerando calor que pode deformar plásticos finos.</p>
+    
+    <div class="photo-placeholder-zone">
+      <figure class="photo-item" style="margin-bottom: 40px">
+        <img src="img/araldite_bicarbonato.png" alt="Araldite com Bicarbonato" class="placeholder-image">
+        <figcaption>Mistura Araldite + Bicarbonato: Reação exotérmica e textura mineral.</figcaption>
+      </figure>
+      
+      <figure class="photo-item">
+        <img src="img/putty.png" alt="Putty" class="placeholder-image">
+        <figcaption>Putty : Aplicação suave ideal para acabamentos finos.</figcaption>
+      </figure>
+
+      <figure class="photo-item">
+        <img src="img/putty_after_sandpaper.png" alt="Putty" class="placeholder-image">
+        <figcaption>Putty: Acabamento suave após lixamento.</figcaption>
+      </figure>
+
+      <figure class="photo-item">
+        <img src="img/ca_bicarbonato.png" alt="Cianoacrilato + Bicarbonato" class="placeholder-image">
+        <figcaption>Cianoacrilato + Bicarbonato: Utilizado para fixar a miniatura na base ao aproveitar que o efeito de neve também é obtido do uso do bicarbonato de sódio, porém com cola PVA e água.</figcaption>
+      </figure>
+      
+    </div>
+  </div>
+
+</div>`;
+
+const htmlMassasEn = `
+<div class="medieval-table-wrapper">
+  <div class="table-intro-text">
+    <p style="padding: 20px">
+      <i class="bi bi-info-circle-fill"></i> 
+      This reference guide was developed to document the chemical and mechanical behaviours observed during bench tests. 
+      The objective is to optimise the choice between aesthetic fillers and structural bonding, minimising waste and damage to printed or modelled parts.
+    </p>
+  </div>
+
+  <table class="table table-dark custom-medieval-table">
+    <thead>
+      <tr>
+        <th style="width: 15%">Feature / Product</th>
+        <th style="width: 20%">Cyanoacrylate + Baking Soda</th>
+        <th style="width: 25%; color: #ff6b6b;">Araldite + Baking Soda *</th>
+        <th style="width: 20%; color: #51cf66;">Araldite (Pure)</th>
+        <th style="width: 20%">Putty / Paste</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Working Time</strong></td>
+        <td>Immediate (almost instant)</td>
+        <td>Approx. 5 minutes (Accelerated cure)</td>
+        <td>Up to 10 minutes (Workable)</td>
+        <td>Several minutes to hours</td>
+      </tr>
+      <tr>
+        <td><strong>Strength</strong></td>
+        <td>High (brittle on impact)</td>
+        <td>Extremely high (Inconsistent)</td>
+        <td class="fw-bold text-info">Extremely high (Structural bond)</td>
+        <td>Low to moderate (Non-structural)</td>
+      </tr>
+      <tr>
+        <td><strong>Modelling</strong></td>
+        <td>Difficult to model; gap-filling only</td>
+        <td>Coarse and unstable mass</td>
+        <td>Fluid; difficult to model before curing</td>
+        <td>Excellent for fine detail modelling</td>
+      </tr>
+      <tr>
+        <td><strong>Sandability</strong></td>
+        <td>Easy (cures matte and hard)</td>
+        <td class="fw-bold text-warning">Impossible by hand (Stone-like)</td>
+        <td>Hard (Focus on Fixation)</td>
+        <td>Very easy (Smooth finish)</td>
+      </tr>
+      <tr>
+        <td><strong>Shrinkage</strong></td>
+        <td>Minimal</td>
+        <td>None (may heat/expand)</td>
+        <td>None</td>
+        <td>May shrink slightly when drying</td>
+      </tr>
+      <tr>
+        <td><strong>Ideal Application</strong></td>
+        <td>Quick filling and locking</td>
+        <td class="fw-bold text-danger">NOT RECOMMENDED</td>
+        <td>Heavy/Main part bonding (Structural)</td>
+        <td>Gap filling and surface pores</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="table-footer-notes">
+    <p><strong>* Technical Reference (Araldite + Baking Soda):</strong> The chemical reaction accelerates the curing process drastically. Although the final hardness is extreme, the mixture becomes mineral-like, making manual finishing impossible and generating heat that may deform thin plastics.</p>
+    
+    <div class="photo-placeholder-zone">
+      <figure class="photo-item" style="margin-bottom: 40px">
+        <img src="img/araldite_bicarbonato.png" alt="Araldite with Baking Soda" class="placeholder-image">
+        <figcaption>Araldite + Baking Soda mixture: Exothermic reaction and mineral-like texture.</figcaption>
+      </figure>
+      
+      <figure class="photo-item">
+        <img src="img/putty.png" alt="Putty" class="placeholder-image">
+        <figcaption>Putty: Smooth application, ideal for seamless finishing.</figcaption>
+      </figure>
+
+      <figure class="photo-item">
+        <img src="img/putty_after_sandpaper.png" alt="Putty" class="placeholder-image">
+        <figcaption>Putty: Smooth finish after sanding.</figcaption>
+      </figure>
+
+      <figure class="photo-item">
+        <img src="img/ca_bicarbonato.png" alt="Cianoacrilato + Bicarbonato" class="placeholder-image">
+        <figcaption>Cianoacrilato + Baking Soda: Utilised to fix the miniature on the base, taking advantage of the snow effect obtained from using baking soda, but with PVA glue and water.</figcaption>
+      </figure>
+
+    </div>
+  </div>
+
+</div>`;
+
 document.addEventListener('DOMContentLoaded', () => {
   detectLanguageAndLoad();
   setupEventListeners();  
@@ -108,8 +305,19 @@ async function detectLanguageAndLoad() {
 
 function applyUiTranslations(lang) {
   const texts = uiTranslations[lang];
-  document.getElementById('tab-cores-label').innerText = texts.tabCores;
-  document.getElementById('tab-efeitos-label').innerText = texts.tabEfeitos;
+  //document.getElementById('tab-cores-label').innerText = texts.tabCores;
+  document.getElementById('tab-cores-label').innerHTML = `
+      ${uiTranslations[language].tabCores} 
+      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${uiTranslations[language].tooltipCores}"></i>
+  `;
+  document.getElementById('tab-efeitos-label').innerHTML = `
+      ${uiTranslations[language].tabEfeitos} 
+      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${uiTranslations[language].tooltipEfeitos}"></i>
+  `;
+  document.getElementById('tab-massa-label').innerHTML = `
+      ${uiTranslations[language].tabMassa} 
+      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${uiTranslations[language].tooltipMassa}"></i>
+  `;
   document.getElementById('searchInputLabel').innerText = texts.searchInputLabel;
   document.getElementById('searchInput').placeholder = texts.searchPlaceholder;
   document.getElementById('searchFieldLabel').innerText = texts.searchFieldLabel;
@@ -129,7 +337,6 @@ function applyUiTranslations(lang) {
 }
 
 function loadDataColours(lang) {
-    // 1. Mostrar o Loading antes de qualquer coisa
     const loader = document.getElementById('loading-overlay');
     if (loader) {
         loader.style.display = 'flex';
@@ -151,18 +358,14 @@ function loadDataColours(lang) {
                 });
             }
                 
-            allDataColours = data;            
+            allDataColours = data;                  
             
-            // Muito importante: traduzir a UI
             applyUiTranslations(langKey);
-            
-            // Reconstruir o mapa e filtros
             buildColorMap(); 
             updateSearchFields(); 
             updateFilters();
             displayResults();
 
-            // 2. Esconder o Loading com um leve fade-out para suavizar
             if (loader) {
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.display = 'none'; }, 500);
@@ -193,10 +396,7 @@ function loadDataEffects(lang) {
             }
 
             allDataEffects = data;            
-            // Muito importante: traduzir a UI (labels, botões, select)
-            applyUiTranslations(langKey);
-            
-            // Reconstruir o mapa de cores e os campos de busca
+            applyUiTranslations(langKey);            
             buildColorMap(); 
             updateSearchFields(); 
             updateFilters();
@@ -214,33 +414,37 @@ function setupEventListeners() {
   validateSearchButton();
 
   document.querySelectorAll('.flag-container').forEach(flag => {
-        flag.addEventListener('click', function() {
-            clearSearch();  
-            const selectedLang = this.dataset.lang; 
-            
-            document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
-            this.classList.add('active');
+      flag.addEventListener('click', function() {
+          clearSearch();  
+          const selectedLang = this.dataset.lang; 
+          
+          document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
+          this.classList.add('active');
 
-            language = selectedLang; 
-            loadDataColours(selectedLang);
-            loadDataEffects(selectedLang);
-        });
-    });
+          language = selectedLang; 
+          loadDataColours(selectedLang);
+          loadDataEffects(selectedLang);
 
-  // Botões de aba
+          if (typeof switchTab === 'function') {
+            switchTab('cores'); 
+          } 
+        
+          const firstTab = document.querySelector('.tab-button[data-tab="cores"]');
+          if (firstTab) {
+              firstTab.click();
+          }
+      });
+  });
+
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       switchTab(e.target.dataset.tab);
+
     });
   });
 
-  // Botão de pesquisa
   document.getElementById('btnSearch').addEventListener('click', performSearch);
-
-  // Botão de limpar
   document.getElementById('btnClear').addEventListener('click', clearSearch);
-
-  // Enter no input de pesquisa
   document.getElementById('searchInput').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       performSearch();
@@ -250,28 +454,43 @@ function setupEventListeners() {
 
 function switchTab(tab) {
   currentTab = tab;
+  const resultsEl = document.getElementById('results');
+  const info = document.getElementById('resultsInfo');
+  const sortContainer = document.querySelector('.sort-container');
 
-  // Atualizar botões de aba
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
     if (btn.dataset.tab === tab) {
       btn.classList.add('active');
     }
   });
-
-  updateSearchFields();
-  updateFilters();
-  toggleSort();
-  clearSearch();
+      
+  if (tab === 'massas') {
+      resultsEl.classList.add('massa-active');
+      performSearch();      
+      info.style.display = 'none';
+      sortContainer.style.display = 'none';
+  } else {
+      resultsEl.classList.remove('massa-active');      
+      info.style.display = 'block';
+      sortContainer.style.display = 'block';
+      sortAsc = true; 
+      updateSearchFields();
+      updateFilters();
+      clearSearch(); 
+  }
 }
 
 function updateSearchFields() {
     const fieldSelect = document.getElementById('searchField');
     if (!fieldSelect) return;
     fieldSelect.innerHTML = '';
-    
+    let dataRef = '';
     let fields = [];
-    const dataRef = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
+    if (currentTab === 'cores') 
+      dataRef = allDataColours.cores;
+    else if (currentTab === 'efeitos')
+      dataRef = allDataEffects.efeitos;
 
     if (dataRef && dataRef.length > 0) {
         fields = Object.keys(dataRef[0]);
@@ -305,14 +524,12 @@ function buildColorMap() {
     });
 }
 
-// Extrair valores únicos de um campo
 function extractUniqueValues(fieldName) {
   const data = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
   const values = new Set();
   data.forEach(item => {
     const fieldValue = item[fieldName];
     if (fieldValue) {
-      // Dividir por / ou , para pegar valores individuais
       const parts = fieldValue.split(/[\/,]/).map(v => v.trim());
       parts.forEach(part => {
         if (part) values.add(part);
@@ -323,43 +540,32 @@ function extractUniqueValues(fieldName) {
   return Array.from(values).sort();   
 }
 
-// Atualizar filtros com base no configFiltros
 function updateFilters() {
     const container = document.getElementById('filtersContainer');
     if (!container) return;
-    container.innerHTML = '';
-
-    // Define qual chave usar (PT ou EN)
+    container.innerHTML = '';    
     const langKey = isPT ? 'PT' : 'EN';
     const filtrosAtuais = configFiltros[langKey];
 
-    // Iteramos sobre as chaves do objeto (Temperatura, Fase, etc.)
     Object.keys(filtrosAtuais).forEach(fieldName => {
-        const values = filtrosAtuais[fieldName]; // Pega o array de opções ['Quente', 'Frio'...]
-        
+        const values = filtrosAtuais[fieldName];        
         if (!values || values.length === 0) return;
 
         const filterGroup = document.createElement('div');
         filterGroup.className = 'filter-group';
         filterGroup.innerHTML = `<label class="filter-label">${fieldName}</label>`; 
-
         const checkboxesDiv = document.createElement('div');
         checkboxesDiv.className = 'filter-checkboxes';
 
         values.forEach(value => {
-            // Criar ID único para o checkbox
-            const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');      
-            
+            const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');                  
             const label = document.createElement('label');
-            label.className = 'checkbox-label';
-            
+            label.className = 'checkbox-label';            
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = checkboxId;
             checkbox.value = value;
-            checkbox.dataset.field = fieldName;
-            
-            // Mantém a função de busca ao clicar
+            checkbox.dataset.field = fieldName;          
             checkbox.addEventListener('change', performSearch);
 
             label.appendChild(checkbox);
@@ -375,7 +581,21 @@ function updateFilters() {
 function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     const searchField = document.getElementById('searchField').value;
-    const data = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
+
+    let data = 'massas';
+    if (currentTab === 'cores')
+      data = allDataColours.cores 
+    else if (currentTab === 'efeitos') {
+      data = allDataEffects.efeitos;
+    }
+
+    if (currentTab === 'massas') {
+        const resultsContainer = document.getElementById('results');  
+        resultsContainer.innerHTML = isPT ? htmlMassasPT : htmlMassasEn; 
+        resultsInfo.innerHTML = isPT ? "<p>Guia de referência técnica para massas</p>" : "<p>Technical reference guide for fillers</p>";
+                document.querySelector('.search-controls').style.display = 'none';
+        return; 
+    }
 
     const selectedFilters = {};
     document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
@@ -385,7 +605,6 @@ function performSearch() {
     });
 
     let results = data.filter(item => {
-        // Filtro de Checkboxes
         for (const [field, values] of Object.entries(selectedFilters)) {
             const itemValue = item[field];
             if (!itemValue) return false;
@@ -393,7 +612,6 @@ function performSearch() {
             if (!matches) return false;
         }
 
-        // Filtro de Texto
         if (searchTerm) {
             if (searchField) {
                 const fieldValue = item[searchField];
@@ -489,7 +707,6 @@ function createCard(item) {
       </div>
   `;
 
-    // 2. Itera sobre os campos do JSON
     Object.entries(item).forEach(([key, value]) => {
       if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto ' || key === 'Hex' && key !== 'Complementar') return;
       if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' && key !== 'Complementary') return;
@@ -497,7 +714,6 @@ function createCard(item) {
       let displayValue = value;
       let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
 
-      // --- LÓGICA DA COR COMPLEMENTAR ---
       if (key === 'Complementar' || key === 'Complementary') {
         // Se o valor estiver vazio no JSON ou não existir
         if (!value || value.trim() === "") {
@@ -520,7 +736,6 @@ function createCard(item) {
               </div>
             `;
           } else {
-            // Se tiver o nome da cor, mas o Hex não estiver no nosso mapa
             displayValue = `
               <div style="display: flex; align-items: center; gap: 8px;">
                 <span>${value}</span>
@@ -596,16 +811,12 @@ function showError(message) {
 function validateSearchButton() {
   const searchTerm = document.getElementById('searchInput').value.trim();
   const searchField = document.getElementById('searchField').value;
-  const btnSearch = document.getElementById('btnSearch');
-  
-  
+  const btnSearch = document.getElementById('btnSearch');    
   const hasText = searchTerm.length > 0;
   const hasFieldSelected = searchField !== "" && searchField !== null;
-
   const isFormReady = hasText && hasFieldSelected;
   btnSearch.disabled = !isFormReady;
-  
-  
+    
   if (btnSearch.disabled) {
     btnSearch.style.opacity = "0.5";
     btnSearch.style.cursor = "not-allowed";
@@ -621,37 +832,29 @@ function toggleSort() {
     
     if (btn) {
         btn.classList.toggle('desc', !sortAsc);
-    }
-
-    performSearch();
+        performSearch();
+    }    
 }
 
 function copyToClipboard(text, event) {
-    // Evita que o clique dispare outros eventos do card, se houver
     if (event) event.stopPropagation();
 
     navigator.clipboard.writeText(text).then(() => {
         const element = event.target;
         const originalText = element.innerText;
-
-        // Feedback visual rápido
         element.innerText = "COPIADO!";
-        element.style.transform = "scale(1.1)";
-        
+        element.style.transform = "scale(1.1)";        
         setTimeout(() => {
             element.innerText = originalText;
             element.style.transform = "scale(1.0)";
         }, 800);
     }).catch(err => {
         console.error('Erro ao copiar: ', err);
-        // Fallback básico para browsers antigos (opcional)
         alert("Erro ao copiar HEX");
     });
 }
 
-// Inicializar campos de pesquisa
  window.addEventListener('load', () => {
-  // Pequeno delay para garantir que os dados foram carregados
   setTimeout(() => {
     updateSearchFields();
     updateFilters();
