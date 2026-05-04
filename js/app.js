@@ -305,19 +305,19 @@ async function detectLanguageAndLoad() {
 
 function applyUiTranslations(lang) {
   const texts = uiTranslations[lang];
-  console.log(`Aplicando traduções para: ${lang}`, texts);
-  //document.getElementById('tab-cores-label').innerText = texts.tabCores;
   document.getElementById('tab-cores-label').innerHTML = `
-      ${uiTranslations[language].tabCores} 
-      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${uiTranslations[language].tooltipCores}"></i>
+      ${texts.tabCores} 
+      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${texts.tooltipCores}"></i>
   `;
+
   document.getElementById('tab-efeitos-label').innerHTML = `
-      ${uiTranslations[language].tabEfeitos} 
-      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${uiTranslations[language].tooltipEfeitos}"></i>
+      ${texts.tabEfeitos} 
+      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${texts.tooltipEfeitos}"></i>
   `;
+
   document.getElementById('tab-massa-label').innerHTML = `
-      ${uiTranslations[language].tabMassa} 
-      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${uiTranslations[language].tooltipMassa}"></i>
+      ${texts.tabMassa} 
+      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${texts.tooltipMassa}"></i>
   `;
   document.getElementById('searchInputLabel').innerText = texts.searchInputLabel;
   document.getElementById('searchInput').placeholder = texts.searchPlaceholder;
