@@ -305,6 +305,7 @@ async function detectLanguageAndLoad() {
 
 function applyUiTranslations(lang) {
   const texts = uiTranslations[lang];
+  console.log(`Aplicando traduções para: ${lang}`, texts);
   //document.getElementById('tab-cores-label').innerText = texts.tabCores;
   document.getElementById('tab-cores-label').innerHTML = `
       ${uiTranslations[language].tabCores} 
