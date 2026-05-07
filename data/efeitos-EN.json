@@ -1,1 +1,140 @@
-{"efeitos":[{"Product Name":"Rust Streaks","Code":"AK013","Hex":"#843E2B","Function":"Rust\/Weathering Effect (Enamel): Rust-colored liquid used to simulate rust streaks on metal vehicles, armor, or stone surfaces near metal objects. Applied in thin lines and then softened with Enamel Thinner.","Keywords":"Rust, Enamel, Streaking, Weathering, Streaks","Manufacturer":"AK"},{"Product Name":"Concrete DIORAMA","Code":"AK1229","Hex":"#959391","Function":"Concrete\/Cement Texture: Thick acrylic-based product, ready for use, simulating the texture and color of concrete. Ideal for creating foundations, floors, or walls in your diorama base.","Keywords":"Concrete, Diorama, Texture, London, Base","Manufacturer":"AK"},{"Product Name":"Pigments Dark Steel","Code":"AK080","Hex":"#3C3F41","Function":"Dark Steel Pigment (Powder): Ultrafine powder used to create dust and dirt effects, or to polish metal surfaces (like knight's chainmail), giving a realistic dark metallic shine. Applied dry or fixed with pigment fixer.","Keywords":"Pigment, Steel, Polishing, Chainmail, Realistic Metal","Manufacturer":"AK"},{"Product Name":"VIVID Green Mossy Texture","Code":"AK8259","Hex":"#4B5320","Function":"Green Moss Texture: Acrylic product that simulates moss and lichen on surfaces. Great for adding life and moisture to stones, contrasting with grey or reddish rock.","Keywords":"Moss, Moisture, Lichen, Texture","Manufacturer":"AK"},{"Product Name":"VANISH SATIN","Code":"AK11238","Hex":"#E8E8E8","Function":"Satin Varnish (Acrylic): Varnish with an intermediate finish between matte and glossy. Ideal for providing a slight 'moisture' sheen or protecting colors that should not be completely matte.","Keywords":"Varnish, Satin, Protection, Slight Sheen, Acrylic","Manufacturer":"AK"},{"Product Name":"WHITE PRIMER","Code":"AK11240","Hex":"#FFFFFF","Function":"White Primer\/Sealer (Acrylic): White base to prepare surfaces (plastic, resin, metal, stone). Essential to ensure paint adhesion and make bright colors more vibrant.","Keywords":"Primer, White, Adhesion, Vibrant Colors, Preparatory Base","Manufacturer":"AK"},{"Product Name":"BLACK PRIMER","Code":"AK11242","Hex":"#000000","Function":"Black Primer\/Sealer (Acrylic): Black base color. Great for pre-shading and dark colors. Helps define recesses and gives immediate depth to the miniature.","Keywords":"Primer, Black, Pre-shading, Zenithal, Armor","Manufacturer":"AK"},{"Product Name":"ACRYLIC THINNER ","Code":"AK11500","Hex":"#B0E0E6","Function":"Acrylic Thinner: Used to thin AK acrylic paints and primers, whether for airbrush application or to create smoother, more controlled washes with a brush.","Keywords":"Thinner, Diluent, Airbrush, Washes, Acrylic","Manufacturer":"AK"},{"Product Name":"GRAVEL & SAND FIXER ","Code":"AK118","Hex":"#FDF5E6","Function":"Gravel & Sand Fixer (Liquid): Transparent adhesive\/liquid used to fix sand, gravel, small stones, and flock on the diorama base, ensuring they don't come loose.","Keywords":"Fixer, Sand, Gravel, Diorama Glue, Base Building","Manufacturer":"AK"},{"Product Name":"REAL COLORS NATO BROWN","Code":"RC887","Hex":"#4E3B31","Function":"NATO Camouflage Color: Standard brown used in modern NATO military vehicles. Ideal for military dioramas or simulating dry mud and packed earth on bases.","Keywords":"Dry Mud, Military, NATO, Camouflage, Earth","Manufacturer":"AK"},{"Product Name":"Snow Microballoons","Code":"AK8010","Hex":"#FFFFFF","Function":"Extreme Snow Effect: White microsphere powder simulating fresh fallen snow. Can be mixed with resin or glossy varnish for melting snow.","Keywords":"Snow, Diorama, Winter, Texture, Microballoons","Manufacturer":"AK"},{"Product Name":"Blood for the Blood God","Code":"CIT-27-07","Hex":"#660000","Function":"Fresh Blood Effect: Technical paint with a glossy and viscous finish that maintains a 'wet' look even after drying.","Keywords":"Blood, Gore, Realism, Gloss, Technical","Manufacturer":"Citadel"},{"Product Name":"Reikland Fleshshade","Code":"CIT-24-16","Hex":"#8C3427","Function":"Shade for Skin and Warm Tones: Reddish-brown shading paint that adds depth and warmth to skin tones, gold, bronze, and reds.","Keywords":"Shade, Wash, Skin, Gold, Bronze, Effect","Manufacturer":"Citadel"},{"Product Name":"Black Wash","Code":"73.201","Hex":"#1a1a1a","Function":"This is the ideal choice if you want a \"real steel\" look or knightly armour. It creates deep shadows and dramatically defines the volumes of the piece. With Sterling Silver, it remains bright on the highlights, but the recesses become very dark, simulating heavy, oily metal.","Keywords":"Armour, Real steel, Weapons, Mechanical parts, etc.","Manufacturer":"Vallejo"},{"Product Name":"Blue Wash","Code":"73.207","Hex":"#1a3c6e","Function":"Widely used for metals that should appear extremely polished, new, or with a touch of energy to create a bluish metal effect or a magical\/icy appearance. The blue contrasts softly with the silver, providing a cold and clean look. Excellent for sci-fi weapons or armour for heroic characters.","Keywords":"Enchanted armour, Magic, Enchanted steel, Enchanted weapons, Polished parts, etc.","Manufacturer":"Vallejo"},{"Product Name":"Umber Wash","Code":"73.203","Hex":"#4d332d","Function":"If your goal is for the silver to look ancient, dirty, or slightly rusted. It adds an organic brownish\/yellowish tone that simulates accumulated grime. Perfect for fantasy pieces that have been through battles or are exposed to the elements.","Keywords":"Ancient metal, Aged bronze, Industrial machinery, etc.","Manufacturer":"Vallejo"}]}
+{
+   "efeitos":[
+      {
+         "Product Name":"Rust Streaks",
+         "Code":"AK013",
+         "Hex":"#843E2B",
+         "Function":"Rust\/Weathering Effect (Enamel): Rust-colored liquid used to simulate rust streaks on metal vehicles, armor, or stone surfaces near metal objects. Applied in thin lines and then softened with Enamel Thinner.",
+         "Keywords":"Rust, Enamel, Streaking, Weathering, Streaks",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"Concrete DIORAMA",
+         "Code":"AK1229",
+         "Hex":"#959391",
+         "Function":"Concrete\/Cement Texture: Thick acrylic-based product, ready for use, simulating the texture and color of concrete. Ideal for creating foundations, floors, or walls in your diorama base.",
+         "Keywords":"Concrete, Diorama, Texture, London, Base",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"Pigments Dark Steel",
+         "Code":"AK080",
+         "Hex":"#3C3F41",
+         "Function":"Dark Steel Pigment (Powder): Ultrafine powder used to create dust and dirt effects, or to polish metal surfaces (like knight's chainmail), giving a realistic dark metallic shine. Applied dry or fixed with pigment fixer.",
+         "Keywords":"Pigment, Steel, Polishing, Chainmail, Realistic Metal",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"VIVID Green Mossy Texture",
+         "Code":"AK8259",
+         "Hex":"#4B5320",
+         "Function":"Green Moss Texture: Acrylic product that simulates moss and lichen on surfaces. Great for adding life and moisture to stones, contrasting with grey or reddish rock.",
+         "Keywords":"Moss, Moisture, Lichen, Texture",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"VANISH SATIN",
+         "Code":"AK11238",
+         "Hex":"#E8E8E8",
+         "Function":"Satin Varnish (Acrylic): Varnish with an intermediate finish between matte and glossy. Ideal for providing a slight 'moisture' sheen or protecting colors that should not be completely matte.",
+         "Keywords":"Varnish, Satin, Protection, Slight Sheen, Acrylic",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"WHITE PRIMER",
+         "Code":"AK11240",
+         "Hex":"#FFFFFF",
+         "Function":"White Primer\/Sealer (Acrylic): White base to prepare surfaces (plastic, resin, metal, stone). Essential to ensure paint adhesion and make bright colors more vibrant.",
+         "Keywords":"Primer, White, Adhesion, Vibrant Colors, Preparatory Base",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"BLACK PRIMER",
+         "Code":"AK11242",
+         "Hex":"#000000",
+         "Function":"Black Primer\/Sealer (Acrylic): Black base color. Great for pre-shading and dark colors. Helps define recesses and gives immediate depth to the miniature.",
+         "Keywords":"Primer, Black, Pre-shading, Zenithal, Armor",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"ACRYLIC THINNER ",
+         "Code":"AK11500",
+         "Hex":"#B0E0E6",
+         "Function":"Acrylic Thinner: Used to thin AK acrylic paints and primers, whether for airbrush application or to create smoother, more controlled washes with a brush.",
+         "Keywords":"Thinner, Diluent, Airbrush, Washes, Acrylic",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"GRAVEL & SAND FIXER ",
+         "Code":"AK118",
+         "Hex":"#FDF5E6",
+         "Function":"Gravel & Sand Fixer (Liquid): Transparent adhesive\/liquid used to fix sand, gravel, small stones, and flock on the diorama base, ensuring they don't come loose.",
+         "Keywords":"Fixer, Sand, Gravel, Diorama Glue, Base Building",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"REAL COLORS NATO BROWN",
+         "Code":"RC887",
+         "Hex":"#4E3B31",
+         "Function":"NATO Camouflage Color: Standard brown used in modern NATO military vehicles. Ideal for military dioramas or simulating dry mud and packed earth on bases.",
+         "Keywords":"Dry Mud, Military, NATO, Camouflage, Earth",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"Snow Microballoons",
+         "Code":"AK8010",
+         "Hex":"#FFFFFF",
+         "Function":"Extreme Snow Effect: White microsphere powder simulating fresh fallen snow. Can be mixed with resin or glossy varnish for melting snow.",
+         "Keywords":"Snow, Diorama, Winter, Texture, Microballoons",
+         "Manufacturer":"AK"
+      },
+      {
+         "Product Name":"Blood for the Blood God",
+         "Code":"CIT-27-07",
+         "Hex":"#660000",
+         "Function":"Fresh Blood Effect: Technical paint with a glossy and viscous finish that maintains a 'wet' look even after drying.",
+         "Keywords":"Blood, Gore, Realism, Gloss, Technical",
+         "Manufacturer":"Citadel"
+      },
+      {
+         "Product Name":"Reikland Fleshshade",
+         "Code":"CIT-24-16",
+         "Hex":"#8C3427",
+         "Function":"Shade for Skin and Warm Tones: Reddish-brown shading paint that adds depth and warmth to skin tones, gold, bronze, and reds.",
+         "Keywords":"Shade, Wash, Skin, Gold, Bronze, Effect",
+         "Manufacturer":"Citadel"
+      },
+      {
+         "Product Name":"Black Wash",
+         "Code":"73.201",
+         "Hex":"#1a1a1a",
+         "Function":"This is the ideal choice if you want a \"real steel\" look or knightly armour. It creates deep shadows and dramatically defines the volumes of the piece. With Sterling Silver, it remains bright on the highlights, but the recesses become very dark, simulating heavy, oily metal.",
+         "Keywords":"Armour, Real steel, Weapons, Mechanical parts, etc.",
+         "Manufacturer":"Vallejo"
+      },
+      {
+         "Product Name":"Blue Wash",
+         "Code":"73.207",
+         "Hex":"#1a3c6e",
+         "Function":"Widely used for metals that should appear extremely polished, new, or with a touch of energy to create a bluish metal effect or a magical\/icy appearance. The blue contrasts softly with the silver, providing a cold and clean look. Excellent for sci-fi weapons or armour for heroic characters.",
+         "Keywords":"Enchanted armour, Magic, Enchanted steel, Enchanted weapons, Polished parts, etc.",
+         "Manufacturer":"Vallejo"
+      },
+      {
+         "Product Name":"Umber Wash",
+         "Code":"73.203",
+         "Hex":"#4d332d",
+         "Function":"If your goal is for the silver to look ancient, dirty, or slightly rusted. It adds an organic brownish\/yellowish tone that simulates accumulated grime. Perfect for fantasy pieces that have been through battles or are exposed to the elements.",
+         "Keywords":"Ancient metal, Aged bronze, Industrial machinery, etc.",
+         "Manufacturer":"Vallejo"
+      },
+      {
+         "Product Name":"Gloss Varnish",
+         "Code":"62.064",
+         "Hex":"#fafafa",
+         "Function":"Provides intense gloss and extreme protection with polyurethane resin. It is flexible, resistant to UV rays and impacts, making it ideal for handled pieces. Can be applied with a brush or airbrush, with the recommendation to respect a 4-hour interval between layers for perfect curing.",
+         "Keywords":"Varnish, Gloss, Extreme protection, Acrylic",
+         "Manufacturer":"Vallejo"
+      } 
+   ]
+}
