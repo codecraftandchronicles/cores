@@ -153,17 +153,17 @@ const htmlMassasPT = `
         <figcaption>Mistura Araldite + Bicarbonato: Reação exotérmica e textura mineral.</figcaption>
       </figure>
       
-      <figure class="photo-item">
+      <figure class="photo-item" style="margin-bottom: 40px">
         <img src="img/putty.png" alt="Putty" class="placeholder-image">
         <figcaption>Putty : Aplicação suave ideal para acabamentos finos.</figcaption>
       </figure>
 
-      <figure class="photo-item">
+      <figure class="photo-item" style="margin-bottom: 40px">
         <img src="img/putty_after_sandpaper.png" alt="Putty" class="placeholder-image">
         <figcaption>Putty: Acabamento suave após lixamento.</figcaption>
       </figure>
 
-      <figure class="photo-item">
+      <figure class="photo-item" style="margin-bottom: 40px">
         <img src="img/ca_bicarbonato.png" alt="Cianoacrilato + Bicarbonato" class="placeholder-image">
         <figcaption>Cianoacrilato + Bicarbonato: Utilizado para fixar a miniatura na base ao aproveitar que o efeito de neve também é obtido do uso do bicarbonato de sódio, porém com cola PVA e água.</figcaption>
       </figure>
@@ -248,17 +248,17 @@ const htmlMassasEn = `
         <figcaption>Araldite + Baking Soda mixture: Exothermic reaction and mineral-like texture.</figcaption>
       </figure>
       
-      <figure class="photo-item">
+      <figure class="photo-item" style="margin-bottom: 40px">
         <img src="img/putty.png" alt="Putty" class="placeholder-image">
         <figcaption>Putty: Smooth application, ideal for seamless finishing.</figcaption>
       </figure>
 
-      <figure class="photo-item">
+      <figure class="photo-item" style="margin-bottom: 40px">
         <img src="img/putty_after_sandpaper.png" alt="Putty" class="placeholder-image">
         <figcaption>Putty: Smooth finish after sanding.</figcaption>
       </figure>
 
-      <figure class="photo-item">
+      <figure class="photo-item" style="margin-bottom: 40px">
         <img src="img/ca_bicarbonato.png" alt="Cianoacrilato + Bicarbonato" class="placeholder-image">
         <figcaption>Cianoacrilato + Baking Soda: Utilised to fix the miniature on the base, taking advantage of the snow effect obtained from using baking soda, but with PVA glue and water.</figcaption>
       </figure>
