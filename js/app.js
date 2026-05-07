@@ -268,9 +268,10 @@ const htmlMassasEn = `
 
 </div>`;
 
-document.addEventListener('DOMContentLoaded', () => {
-  detectLanguageAndLoad();
+document.addEventListener('DOMContentLoaded', async () => {
+  await detectLanguageAndLoad();
   setupEventListeners();  
+  syncTabWithHash(); 
 });
 
 async function detectLanguageAndLoad() {
@@ -493,19 +494,20 @@ function switchTab(tab) {
   window.history.replaceState(null, null, `#${tab}`);
       
   if (tab === 'massas') {
-      resultsEl.classList.add('massa-active');
-      performSearch();      
-      info.style.display = 'none';
-      sortContainer.style.display = 'none';
+    resultsEl.innerHTML = '';
+    resultsEl.classList.add('massa-active');
+    performSearch();      
+    info.style.display = 'none';
+    sortContainer.style.display = 'none';
   } else {
-      document.querySelector('.search-controls').style.display = 'block';
-      resultsEl.classList.remove('massa-active');      
-      info.style.display = 'block';
-      sortContainer.style.display = 'block';
-      sortAsc = true; 
-      updateSearchFields();
-      updateFilters();
-      clearSearch(); 
+    document.querySelector('.search-controls').style.display = 'block';
+    resultsEl.classList.remove('massa-active');      
+    info.style.display = 'block';
+    sortContainer.style.display = 'block';
+    sortAsc = true; 
+    updateSearchFields();
+    updateFilters();
+    clearSearch(); 
   }
 }
 
@@ -680,6 +682,10 @@ function sortResults(dataList) {
 }
 
 function displayResults(results = null) {
+  if (currentTab === 'massas') {
+      return; 
+  }
+
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
 
@@ -897,14 +903,17 @@ window.addEventListener('hashchange', syncTabWithHash);
 
 function syncTabWithHash() {
   const hash = window.location.hash.replace('#', '');
-  const savedLang = getSavedLanguage() || 'PT'; 
-    const tabMap = {
+  if (!hash) return;
+
+  const tabMap = {
     'cores': 'cores', 'colours': 'cores',
     'efeitos': 'efeitos', 'effects': 'efeitos',
     'massas': 'massas', 'putty': 'massas'
   };
 
-  if (hash && tabMap[hash]) {
-    switchTab(tabMap[hash]);
+  if (tabMap[hash]) {
+    setTimeout(() => {
+      switchTab(tabMap[hash]);
+    }, 10);
   }
 }
