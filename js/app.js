@@ -472,6 +472,7 @@ function switchTab(tab) {
       info.style.display = 'none';
       sortContainer.style.display = 'none';
   } else {
+      document.querySelector('.search-controls').style.display = 'block';
       resultsEl.classList.remove('massa-active');      
       info.style.display = 'block';
       sortContainer.style.display = 'block';
@@ -589,13 +590,13 @@ function performSearch() {
     else if (currentTab === 'efeitos') {
       data = allDataEffects.efeitos;
     }
-
+    
     if (currentTab === 'massas') {
         const resultsContainer = document.getElementById('results');  
         resultsContainer.innerHTML = isPT ? htmlMassasPT : htmlMassasEn; 
         resultsInfo.innerHTML = isPT ? "<p>Guia de referência técnica para massas</p>" : "<p>Technical reference guide for fillers</p>";
-                document.querySelector('.search-controls').style.display = 'none';
-        return; 
+        document.querySelector('.search-controls').style.display = 'none';
+        return;
     }
 
     const selectedFilters = {};
