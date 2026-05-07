@@ -274,33 +274,54 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function detectLanguageAndLoad() {
-    const hostname = window.location.hostname;
-    const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1" || hostname.includes("192.168");
+  let savedLang = getSavedLanguage();
+  
+  if (savedLang) {
+      language = savedLang;
+      const selectedLanguage = language === 'PT' ? 'PT' : 'EN';
+      
+      applyUiTranslations(selectedLanguage);
+      loadDataColours(selectedLanguage);
+      loadDataEffects(selectedLanguage);
+      return;
+  }  
+  
+  const hostname = window.location.hostname;
+  const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1" || hostname.includes("192.168");
 
-    if (isLocalhost) {
-        language = 'PT';
-        loadDataColours(language);
-        loadDataEffects(language);
-        return; 
-    }
+  if (isLocalhost) {
+      language = 'PT';
+      loadDataColours(language);
+      loadDataEffects(language);
+      return; 
+  }
 
-    try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        language = data.country_name; 
-    } catch (error) {
-        console.error("Falha ao detectar localização:", error);
-        language = 'Portugal'; 
-    }
+  try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      language = data.country_name; 
+  } catch (error) {
+      console.error("Falha ao detectar localização:", error);
+      language = 'Portugal'; 
+  }
 
-    isPT = (language.startsWith('PT') || language.toLocaleUpperCase() === 'PORTUGAL' || language.toLocaleUpperCase === 'BRAZIL');
-    const selectedLanguage = isPT ? 'PT' : 'EN';
+  isPT = (language.startsWith('PT') || language.toLocaleUpperCase() === 'PORTUGAL' || language.toLocaleUpperCase === 'BRAZIL');
+  const selectedLanguage = isPT ? 'PT' : 'EN';
 
-    applyUiTranslations(selectedLanguage);
+  saveLanguage(selectedLanguage);
 
-    loadDataColours(selectedLanguage);
-    loadDataEffects(selectedLanguage);
-    console.log(`Idioma detectado: ${language} | Carregando dados em: ${selectedLanguage} | isPT: ${isPT}`);
+  applyUiTranslations(selectedLanguage);
+  loadDataColours(selectedLanguage);
+  loadDataEffects(selectedLanguage);
+  console.log(`Idioma detectado: ${language} | Carregando dados em: ${selectedLanguage} | isPT: ${isPT}`);
+}
+
+function getSavedLanguage() {
+    return localStorage.getItem('user_language');
+}
+
+function saveLanguage(lang) {
+    localStorage.setItem('user_language', lang);
 }
 
 function applyUiTranslations(lang) {
@@ -423,6 +444,9 @@ function setupEventListeners() {
           this.classList.add('active');
 
           language = selectedLang; 
+
+          saveLanguage(selectedLang);
+
           loadDataColours(selectedLang);
           loadDataEffects(selectedLang);
 
@@ -465,6 +489,8 @@ function switchTab(tab) {
       btn.classList.add('active');
     }
   });
+
+  window.history.replaceState(null, null, `#${tab}`);
       
   if (tab === 'massas') {
       resultsEl.classList.add('massa-active');
@@ -863,3 +889,22 @@ function copyToClipboard(text, event) {
     displayResults();
   }, 100);
 });
+
+
+window.addEventListener('load', syncTabWithHash);
+
+window.addEventListener('hashchange', syncTabWithHash);
+
+function syncTabWithHash() {
+  const hash = window.location.hash.replace('#', '');
+  const savedLang = getSavedLanguage() || 'PT'; 
+    const tabMap = {
+    'cores': 'cores', 'colours': 'cores',
+    'efeitos': 'efeitos', 'effects': 'efeitos',
+    'massas': 'massas', 'putty': 'massas'
+  };
+
+  if (hash && tabMap[hash]) {
+    switchTab(tabMap[hash]);
+  }
+}
