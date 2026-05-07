@@ -33,7 +33,7 @@
          "Manufacturer":"AK"
       },
       {
-         "Product Name":"VANISH SATIN",
+         "Product Name":"Varnish Satin",
          "Code":"AK11238",
          "Hex":"#E8E8E8",
          "Function":"Satin Varnish (Acrylic): Varnish with an intermediate finish between matte and glossy. Ideal for providing a slight 'moisture' sheen or protecting colors that should not be completely matte.",
@@ -41,7 +41,7 @@
          "Manufacturer":"AK"
       },
       {
-         "Product Name":"WHITE PRIMER",
+         "Product Name":"White Primer",
          "Code":"AK11240",
          "Hex":"#FFFFFF",
          "Function":"White Primer\/Sealer (Acrylic): White base to prepare surfaces (plastic, resin, metal, stone). Essential to ensure paint adhesion and make bright colors more vibrant.",
@@ -49,7 +49,7 @@
          "Manufacturer":"AK"
       },
       {
-         "Product Name":"BLACK PRIMER",
+         "Product Name":"Black Primer",
          "Code":"AK11242",
          "Hex":"#000000",
          "Function":"Black Primer\/Sealer (Acrylic): Black base color. Great for pre-shading and dark colors. Helps define recesses and gives immediate depth to the miniature.",
@@ -57,7 +57,7 @@
          "Manufacturer":"AK"
       },
       {
-         "Product Name":"ACRYLIC THINNER ",
+         "Product Name":"Acrylic Thinner",
          "Code":"AK11500",
          "Hex":"#B0E0E6",
          "Function":"Acrylic Thinner: Used to thin AK acrylic paints and primers, whether for airbrush application or to create smoother, more controlled washes with a brush.",
@@ -65,7 +65,7 @@
          "Manufacturer":"AK"
       },
       {
-         "Product Name":"GRAVEL & SAND FIXER ",
+         "Product Name":"Gravel & Sand Fixer",
          "Code":"AK118",
          "Hex":"#FDF5E6",
          "Function":"Gravel & Sand Fixer (Liquid): Transparent adhesive\/liquid used to fix sand, gravel, small stones, and flock on the diorama base, ensuring they don't come loose.",
@@ -73,7 +73,7 @@
          "Manufacturer":"AK"
       },
       {
-         "Product Name":"REAL COLORS NATO BROWN",
+         "Product Name":"Real Colors Nato Brown",
          "Code":"RC887",
          "Hex":"#4E3B31",
          "Function":"NATO Camouflage Color: Standard brown used in modern NATO military vehicles. Ideal for military dioramas or simulating dry mud and packed earth on bases.",
