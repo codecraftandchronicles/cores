@@ -371,8 +371,6 @@ function performSearch() {
     else if (currentTab === 'effects') {
       data = allDataEffects.effects;
     }
-
-    console.log(currentTab, data);
     
     if (currentTab === 'putty') {
         const resultsContainer = document.getElementById('results');  
