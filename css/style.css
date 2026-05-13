@@ -445,6 +445,30 @@ header p {
     transition: all 0.3s ease;
 }
 
+.btn-inventory {
+    background: #e4e9ee !important;
+    color: #1a1a1a !important; /* Texto escuro para ler bem no fundo branco */
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    
+    /* Tipografia idêntica */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.9rem !important; 
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;  
+    
+    /* Alinhamento do texto */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 25px; /* Padding lateral */
+    height: 48px;    /* Altura fixa igual aos inputs */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
 /* Alinha o select e o botão OK lado a lado */
 .search-field-wrapper {
     display: flex;
@@ -476,7 +500,7 @@ header p {
 }
 
 /* Hover idêntico */
-.btn-search:hover, .btn-clear:hover {
+.btn-search:hover, .btn-clear:hover, .btn-inventory:hover {
     color: #d4af37 !important;
     border-color: #d4af37 !important;
     background: rgba(212, 175, 55, 0.05) !important;

@@ -1,22 +1,12 @@
-
-let allDataColours = { cores: []};
-let allDataEffects = { efeitos: [] };
-let currentTab = 'cores';
-let language = 'PT'; 
-let isPT = true;
-const fieldsToIgnore = ['Hex', 'Papel do Complementar', 'Complementar', 'Temperatura','Fase','Nível de Saturação', 'Fabricante'];
-const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Temperature','Phase','Saturation Level', 'Manufacturer'];
+let allDataColours = { colours: []};
+let allDataEffects = { effects: [] };
+let currentTab = 'colours';
+const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Temperature','Phase','Saturation Level', 'Manufacturer', 'Owned'];
 let colorMap = {};
 let sortAsc = true;
 let currentFilteredResults = []; 
 let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
-const configFiltros = {
-    'PT': {
-        'Temperatura': ['Quente', 'Frio', 'Neutra'],
-        'Fase': ['Base', 'Sombra', 'Realce', 'Filtro', 'Fluorescente', 'TMM'],
-        'Saturação': ['Claro', 'Médio', 'Escuro'],
-        'Fabricante': ['AK', 'Citadel', 'Vallejo']
-    },
+const configFiltros = {    
     'EN': {
         'Temperature': ['Warm', 'Cold', 'Neutral'],
         'Phase': ['Base', 'Shadow', 'Highlight', 'Filter', 'Fluorescent', 'TMM'],
@@ -24,156 +14,8 @@ const configFiltros = {
         'Manufacturer': ['AK', 'Citadel', 'Vallejo']
     }
 };
-const uiTranslations = {
-    'PT': {
-        tabCores: 'Cores',
-        tabEfeitos: 'Efeitos',
-        tabMassa: 'Massa',
-        searchPlaceholder: 'Digite um termo...',
-        searchField: 'Selecionar um filtro...',
-        noResults: 'Nenhum resultado encontrado',
-        noResultsContainer: 'Tente ajustar os critérios de pesquisa',
-        tryAgain: 'LIMPAR',
-        showing: 'A exibir',
-        illustrative: 'Mera ilustração visual',
-        searchInputLabel: 'Pesquisar',
-        searchFieldLabel: 'Filtro',
-        resultsLabel: 'resultados',
-        headerLabel: 'Cadastro de Cores e Efeitos',
-        headerParagraph: 'Guia de consulta rápida para tintas, texturas e técnicas de pintura',
-        disclaimerTitle: 'Aviso Legal',
-        disclaimerText: 'Esta aplicação é um projeto pessoal e não tem afiliação oficial com marcas ou produtos. As informações apresentadas são baseadas em pesquisas e podem conter imprecisões. Use como referência, mas verifique sempre com fontes oficiais.',
-        footerCopyright: '© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Comunidade de Pintura de Miniaturas',
-        helpExpand: 'Ajude a expandir este guia:',
-        suggestCorrection: 'Viu algo errado ou quer sugerir uma nova tinta?',
-        clickHere: 'Clique aqui para enviar uma correção ou sugestão.',
-        tooltipMassa: 'Putty & Paste: Preparação e Correção: Massas acrílicas e epóxi para preencher fendas, corrigir falhas de fundição e esculpir novos detalhes. Verifique a contração e o tempo de secagem de cada material',
-        tooltipEfeitos: 'Produtos para Weathering e Cenários: Inclui lavagens (washes) para realçar detalhes, filtros para mudar tons, e pastas de textura para criar solos realistas como concreto ou musgo',
-        tooltipCores: 'Pigmentos e tintas base',
-    },
-    'EN': {
-        tabCores: 'Colours',
-        tabEfeitos: 'Effects',
-        tabMassa: 'Putty',
-        searchPlaceholder: 'Search for a term...',
-        searchField: 'Select field...',
-        noResults: 'No results found',
-        noResultsContainer: 'Try adjusting your search criteria',
-        tryAgain: 'RESET',
-        showing: 'Showing',
-        illustrative: 'Illustrative purposes only',
-        searchInputLabel: 'Search',
-        searchFieldLabel: 'Field',
-        resultsLabel: 'results',
-        headerLabel: 'Colour and Effects Catalogue',
-        headerParagraph: 'Quick reference guide for paints, textures and painting techniques',
-        disclaimerTitle: 'Disclaimer',
-        disclaimerText: 'This application is a personal project and has no official affiliation with any brands or products. The information presented is based on research and may contain inaccuracies. Use as a reference, but always verify with official sources.',
-        footerCopyright: '© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Miniature Painting Community',
-        helpExpand: 'Help expand this guide:',
-        suggestCorrection: 'Did you spot an error or want to suggest a new paint?',
-        clickHere: 'Click here to send a correction or suggestion.',
-        tooltipMassa: 'Putty & Paste: Preparation and Correction: Acrylic and epoxy putties for filling gaps, fixing casting flaws, and sculpting new details. Check each material´s shrinkage and drying time',
-        tooltipEfeitos: 'Weathering and Scenery Products: Includes washes to enhance details, filters to shift tones, and texture pastes to create realistic grounds like concrete or moss',
-        tooltipCores: 'Base pigments and paints',
-    }
-};
-const htmlMassasPT = `
-<div class="medieval-table-wrapper">
-  <div class="table-intro-text">
-    <p style="padding: 20px">
-      <i class="bi bi-info-circle-fill"></i> 
-      Este guia de referência foi desenvolvido para documentar os comportamentos químicos e mecânicos observados em testes de bancada. 
-      O objetivo é otimizar a escolha entre preenchimentos estéticos e colagens estruturais, minimizando desperdícios e danos em peças impressas ou modeladas.
-    </p>
-  </div>
 
-  <table class="table table-dark custom-medieval-table">
-    <thead>
-      <tr>
-        <th style="width: 15%">Característica / Produto</th>
-        <th style="width: 20%">Cianoacrilato + Bicarbonato</th>
-        <th style="width: 25%; color: #ff6b6b;">Araldite + Bicarbonato *</th>
-        <th style="width: 20%; color: #51cf66;">Araldite (Puro)</th>
-        <th style="width: 20%">Putty / Paste</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Tempo de Trabalho</strong></td>
-        <td>Segundos (quase imediato)</td>
-        <td>Cerca de 5 minutos (Cura acelerada)</td>
-        <td>Até 10 minutos (Trabalhável)</td>
-        <td>Vários minutos a horas</td>
-      </tr>
-      <tr>
-        <td><strong>Resistência</strong></td>
-        <td>Muito alta, mas quebradiça ao impacto</td>
-        <td>Extremamente alta (Inconsistente)</td>
-        <td class="fw-bold text-info">Extremamente alta (Ligação estrutural)</td>
-        <td>Baixa a moderada (Não estrutural)</td>
-      </tr>
-      <tr>
-        <td><strong>Modelagem</strong></td>
-        <td>Difícil de modelar; só preenche</td>
-        <td>Massa bruta e instável</td>
-        <td>Fluido; difícil de modelar antes de curar</td>
-        <td>Excelente para modelar detalhes finos</td>
-      </tr>
-      <tr>
-        <td><strong>Lixagem</strong></td>
-        <td>Fácil (fica opaco e duro)</td>
-        <td class="fw-bold text-warning">Impossível à mão (Pedra)</td>
-        <td>Duro (Foco em Fixação)</td>
-        <td>Muito fácil (Acabamento liso)</td>
-      </tr>
-      <tr>
-        <td><strong>Contração</strong></td>
-        <td>Mínima</td>
-        <td>Nula (pode aquecer/expandir)</td>
-        <td>Nula</td>
-        <td>Pode contrair ligeiramente ao secar</td>
-      </tr>
-      <tr>
-        <td><strong>Aplicação Ideal</strong></td>
-        <td>Preenchimento rápido e travas</td>
-        <td class="fw-bold text-danger">NÃO RECOMENDADO</td>
-        <td>Colagem de peças principais (Estrutural)</td>
-        <td>Acabamento de fendas e poros</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="table-footer-notes">
-    <p><strong>* Referência Técnica (Araldite + Bicarbonato):</strong> A reação química acelera a cura drasticamente. Embora a dureza final seja extrema, a mistura torna-se mineral, impossibilitando o acabamento manual e gerando calor que pode deformar plásticos finos.</p>
-    
-    <div class="photo-placeholder-zone">
-      <figure class="photo-item" style="margin-bottom: 40px">
-        <img src="img/araldite_bicarbonato.png" alt="Araldite com Bicarbonato" class="placeholder-image">
-        <figcaption>Mistura Araldite + Bicarbonato: Reação exotérmica e textura mineral.</figcaption>
-      </figure>
-      
-      <figure class="photo-item" style="margin-bottom: 40px">
-        <img src="img/putty.png" alt="Putty" class="placeholder-image">
-        <figcaption>Putty : Aplicação suave ideal para acabamentos finos.</figcaption>
-      </figure>
-
-      <figure class="photo-item" style="margin-bottom: 40px">
-        <img src="img/putty_after_sandpaper.png" alt="Putty" class="placeholder-image">
-        <figcaption>Putty: Acabamento suave após lixamento.</figcaption>
-      </figure>
-
-      <figure class="photo-item" style="margin-bottom: 40px">
-        <img src="img/ca_bicarbonato.png" alt="Cianoacrilato + Bicarbonato" class="placeholder-image">
-        <figcaption>Cianoacrilato + Bicarbonato: Utilizado para fixar a miniatura na base ao aproveitar que o efeito de neve também é obtido do uso do bicarbonato de sódio, porém com cola PVA e água.</figcaption>
-      </figure>
-      
-    </div>
-  </div>
-
-</div>`;
-
-const htmlMassasEn = `
+const htmlPutty = `
 <div class="medieval-table-wrapper">
   <div class="table-intro-text">
     <p style="padding: 20px">
@@ -269,121 +111,37 @@ const htmlMassasEn = `
 </div>`;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await detectLanguageAndLoad();
+  await PageLoad();
   setupEventListeners();  
   syncTabWithHash(); 
 });
 
-async function detectLanguageAndLoad() {
-  let savedLang = getSavedLanguage();
-  
-  if (savedLang) {
-      language = savedLang;
-      const selectedLanguage = language === 'PT' ? 'PT' : 'EN';
-      
-      applyUiTranslations(selectedLanguage);
-      loadDataColours(selectedLanguage);
-      loadDataEffects(selectedLanguage);
-      return;
-  }  
-  
-  const hostname = window.location.hostname;
-  const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1" || hostname.includes("192.168");
-
-  if (isLocalhost) {
-      language = 'PT';
-      loadDataColours(language);
-      loadDataEffects(language);
-      return; 
-  }
-
-  try {
-      const response = await fetch('https://ipapi.co/json/');
-      const data = await response.json();
-      language = data.country_name; 
-  } catch (error) {
-      console.error("Falha ao detectar localização:", error);
-      language = 'Portugal'; 
-  }
-
-  isPT = (language.startsWith('PT') || language.toLocaleUpperCase() === 'PORTUGAL' || language.toLocaleUpperCase === 'BRAZIL');
-  const selectedLanguage = isPT ? 'PT' : 'EN';
-
-  saveLanguage(selectedLanguage);
-
-  applyUiTranslations(selectedLanguage);
-  loadDataColours(selectedLanguage);
-  loadDataEffects(selectedLanguage);
-  console.log(`Idioma detectado: ${language} | Carregando dados em: ${selectedLanguage} | isPT: ${isPT}`);
+async function PageLoad() {  
+  loadDataColours();
+  loadDataEffects();
 }
 
-function getSavedLanguage() {
-    return localStorage.getItem('user_language');
-}
 
-function saveLanguage(lang) {
-    localStorage.setItem('user_language', lang);
-}
-
-function applyUiTranslations(lang) {
-  const texts = uiTranslations[lang];
-  document.getElementById('tab-cores-label').innerHTML = `
-      ${texts.tabCores} 
-      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${texts.tooltipCores}"></i>
-  `;
-
-  document.getElementById('tab-efeitos-label').innerHTML = `
-      ${texts.tabEfeitos} 
-      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${texts.tooltipEfeitos}"></i>
-  `;
-
-  document.getElementById('tab-massa-label').innerHTML = `
-      ${texts.tabMassa} 
-      <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" onclick="event.stopPropagation();" title="${texts.tooltipMassa}"></i>
-  `;
-  document.getElementById('searchInputLabel').innerText = texts.searchInputLabel;
-  document.getElementById('searchInput').placeholder = texts.searchPlaceholder;
-  document.getElementById('searchFieldLabel').innerText = texts.searchFieldLabel;
-  document.getElementById('btnClear').innerText = texts.tryAgain;
-  searchField = texts.searchField;
-  noResults = texts.noResults;
-  showing = texts.showing;
-  illustrative = texts.illustrative;
-  noResultsContainer = texts.noResultsContainer;
-  resultsLabel = texts.resultsLabel;  
-  document.getElementById('headerLabel').innerText = texts.headerLabel;
-  document.getElementById('headerParagraph').innerText = texts.headerParagraph;
-  document.getElementById('helpExpand').innerText = texts.helpExpand;
-  document.getElementById('helpExpandButton').innerText = texts.clickHere;
-  document.getElementById('footer').innerText = texts.footerCopyright;
-  document.getElementById('disclaimer').innerText = texts.disclaimerText;
-}
-
-function loadDataColours(lang) {
+function loadDataColours() {
     const loader = document.getElementById('loading-overlay');
     if (loader) {
         loader.style.display = 'flex';
         loader.style.opacity = '1';
-    }
+    }    
 
-    isPT = (lang.startsWith('PT') || lang === 'PORTUGAL' || lang === 'BRAZIL');
-    const langKey = isPT ? 'PT' : 'EN';
-    const chaveNome = isPT ? "Cor Base" : "Base Colour";
-
-    fetch(`./data/cores-${langKey}.json`)
+    fetch(`./data/colours.json`)
         .then(response => response.json())
         .then(data => {
-            if (data.cores) {
-                data.cores.sort((a, b) => {
-                    const nomeA = (a[chaveNome] || "").toUpperCase();
-                    const nomeB = (b[chaveNome] || "").toUpperCase();
+            if (data.colours) {
+                data.colours.sort((a, b) => {
+                    const nomeA = (a["Base Colour"] || "").toUpperCase();
+                    const nomeB = (b["Base Colour"] || "").toUpperCase();
                     return nomeA.localeCompare(nomeB);
                 });
             }
                 
             allDataColours = data;                  
             
-            applyUiTranslations(langKey);
             buildColorMap(); 
             updateSearchFields(); 
             updateFilters();
@@ -402,30 +160,26 @@ function loadDataColours(lang) {
 }
 
 function loadDataEffects(lang) {
-    isPT = (lang.startsWith('PT') || lang === 'PORTUGAL' || lang === 'BRAZIL');
-    const langKey = isPT ? 'PT' : 'EN';
-    const chaveNome = isPT ? "Cor Base" : "Base Colour";
+    const chaveNome = "Base Colour";
 
-    fetch(`./data/efeitos-${langKey}.json`)
+    fetch(`./data/effects.json`)
         .then(response => response.json())
         .then(data => {                        
-            if (data.efeitos) {
-                const chaveEfeito = isPT ? "Nome do Produto" : "Product Name";
-                data.efeitos.sort((a, b) => {
-                    const nomeA = (a[chaveEfeito] || "").toUpperCase();
-                    const nomeB = (b[chaveEfeito] || "").toUpperCase();
+            if (data.effects) {
+                data.effects.sort((a, b) => {
+                    const nomeA = (a["Product Name"] || "").toUpperCase();
+                    const nomeB = (b["Product Name"] || "").toUpperCase();
                     return nomeA.localeCompare(nomeB);
                 });
             }
 
-            allDataEffects = data;            
-            applyUiTranslations(langKey);            
+            allDataEffects = data;
             buildColorMap(); 
             updateSearchFields(); 
             updateFilters();
             displayResults();
         })
-        .catch(err => showError("Erro ao trocar idioma."));
+        .catch(err => showError("Error to load the data."));
 }
 
 function setupEventListeners() {
@@ -438,24 +192,17 @@ function setupEventListeners() {
 
   document.querySelectorAll('.flag-container').forEach(flag => {
       flag.addEventListener('click', function() {
-          clearSearch();  
-          const selectedLang = this.dataset.lang; 
-          
+          clearSearch();           
           document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
           this.classList.add('active');
-
-          language = selectedLang; 
-
-          saveLanguage(selectedLang);
-
-          loadDataColours(selectedLang);
-          loadDataEffects(selectedLang);
+          loadDataColours();
+          loadDataEffects();
 
           if (typeof switchTab === 'function') {
-            switchTab('cores'); 
+            switchTab('colours'); 
           } 
         
-          const firstTab = document.querySelector('.tab-button[data-tab="cores"]');
+          const firstTab = document.querySelector('.tab-button[data-tab="colours"]');
           if (firstTab) {
               firstTab.click();
           }
@@ -464,7 +211,7 @@ function setupEventListeners() {
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      switchTab(e.target.dataset.tab);
+    switchTab(e.target.dataset.tab);
 
     });
   });
@@ -478,36 +225,43 @@ function setupEventListeners() {
   });
 }
 
+
 function switchTab(tab) {
   currentTab = tab;
   const resultsEl = document.getElementById('results');
   const info = document.getElementById('resultsInfo');
   const sortContainer = document.querySelector('.sort-container');
+  const searchControls = document.querySelector('.search-controls');
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if (btn.dataset.tab === tab) {
-      btn.classList.add('active');
-    }
+    btn.classList.toggle('active', btn.dataset.tab === tab);
   });
 
   window.history.replaceState(null, null, `#${tab}`);
       
-  if (tab === 'massas') {
-    resultsEl.innerHTML = '';
-    resultsEl.classList.add('massa-active');
-    performSearch();      
-    info.style.display = 'none';
-    sortContainer.style.display = 'none';
+  if (tab === 'putty') {
+    if (resultsEl) {
+      resultsEl.innerHTML = '';
+      resultsEl.classList.add('massa-active');
+    }
+    if (searchControls) searchControls.style.setProperty('display', 'none', 'important');
+    if (info) info.style.display = 'none';
+    if (sortContainer) sortContainer.style.display = 'none';
+    
+    performSearch(); 
   } else {
-    document.querySelector('.search-controls').style.display = 'block';
-    resultsEl.classList.remove('massa-active');      
-    info.style.display = 'block';
-    sortContainer.style.display = 'block';
-    sortAsc = true; 
+    if (searchControls) {
+      searchControls.style.setProperty('display', 'grid', 'important');
+    }
+    
+    if (resultsEl) resultsEl.classList.remove('massa-active');      
+    if (info) info.style.display = 'block';
+    if (sortContainer) sortContainer.style.display = 'block';
+    
+    // Atualiza a UI sem resetar o scroll ou o estado
     updateSearchFields();
     updateFilters();
-    clearSearch(); 
+    displayResults(); 
   }
 }
 
@@ -517,14 +271,14 @@ function updateSearchFields() {
     fieldSelect.innerHTML = '';
     let dataRef = '';
     let fields = [];
-    if (currentTab === 'cores') 
-      dataRef = allDataColours.cores;
-    else if (currentTab === 'efeitos')
-      dataRef = allDataEffects.efeitos;
+    if (currentTab === 'colours') 
+      dataRef = allDataColours.colours;
+    else if (currentTab === 'effects')
+      dataRef = allDataEffects.effects;
 
     if (dataRef && dataRef.length > 0) {
         fields = Object.keys(dataRef[0]);
-        const ignoreList = isPT ? fieldsToIgnore : fieldsToIgnoreEN;
+        const ignoreList = fieldsToIgnoreEN;
         fields = fields.filter(field => !ignoreList.includes(field));
     }
 
@@ -543,11 +297,11 @@ function updateSearchFields() {
 
 function buildColorMap() {
     colorMap = {};
-    if (!allDataColours.cores) return;
+    if (!allDataColours.colours) return;
 
-    const chaveNome = isPT ? "Cor Base" : "Base Colour";
+    const chaveNome = "Base Colour";
     
-    allDataColours.cores.forEach(c => {
+    allDataColours.colours.forEach(c => {
         if (c[chaveNome]) {
             colorMap[c[chaveNome].toUpperCase()] = c["Hex"] || "#ccc";
         }
@@ -555,7 +309,7 @@ function buildColorMap() {
 }
 
 function extractUniqueValues(fieldName) {
-  const data = currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos;
+  const data = currentTab === 'colours' ? allDataColours.colours : allDataEffects.effects;
   const values = new Set();
   data.forEach(item => {
     const fieldValue = item[fieldName];
@@ -574,8 +328,7 @@ function updateFilters() {
     const container = document.getElementById('filtersContainer');
     if (!container) return;
     container.innerHTML = '';    
-    const langKey = isPT ? 'PT' : 'EN';
-    const filtrosAtuais = configFiltros[langKey];
+    const filtrosAtuais = configFiltros['EN'];
 
     Object.keys(filtrosAtuais).forEach(fieldName => {
         const values = filtrosAtuais[fieldName];        
@@ -612,17 +365,19 @@ function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     const searchField = document.getElementById('searchField').value;
 
-    let data = 'massas';
-    if (currentTab === 'cores')
-      data = allDataColours.cores 
-    else if (currentTab === 'efeitos') {
-      data = allDataEffects.efeitos;
+    let data = 'putty';
+    if (currentTab === 'colours')
+      data = allDataColours.colours 
+    else if (currentTab === 'effects') {
+      data = allDataEffects.effects;
     }
+
+    console.log(currentTab, data);
     
-    if (currentTab === 'massas') {
+    if (currentTab === 'putty') {
         const resultsContainer = document.getElementById('results');  
-        resultsContainer.innerHTML = isPT ? htmlMassasPT : htmlMassasEn; 
-        resultsInfo.innerHTML = isPT ? "<p>Guia de referência técnica para massas</p>" : "<p>Technical reference guide for fillers</p>";
+        resultsContainer.innerHTML = htmlPutty; 
+        resultsInfo.innerHTML = "<p>Technical reference guide for fillers</p>";
         document.querySelector('.search-controls').style.display = 'none';
         return;
     }
@@ -670,28 +425,23 @@ function clearSearch() {
 function sortResults(dataList) {
     if (!dataList || dataList.length === 0) return;
 
-    const chaveNome = isPT ? "Cor Base" : "Base Colour";
-    const chaveEfeito = isPT ? "Nome do Produto" : "Product Name";
-
     dataList.sort((a, b) => {
-        const valA = (a[chaveNome] || a[chaveEfeito] || "").toUpperCase();
-        const valB = (b[chaveNome] || b[chaveEfeito] || "").toUpperCase();
+        const valA = (a["Base Colour"] || a["Product Name"] || "").toUpperCase();
+        const valB = (b["Base Colour"] || b["Product Name"] || "").toUpperCase();
         
         return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
     });
 }
 
 function displayResults(results = null) {
-  if (currentTab === 'massas') {
+  if (currentTab === 'putty') {
       return; 
   }
 
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
 
-  data = results !== null ? results : (currentTab === 'cores' ? allDataColours.cores : allDataEffects.efeitos);
-  resultsInfoLabel = noResults;
-  resultsContainerLabel = noResultsContainer;
+  data = results !== null ? results : (currentTab === 'colours' ? allDataColours.colours : allDataEffects.effects);  
   
   const resultsContainer = document.getElementById('results');
   const resultsInfo = document.getElementById('resultsInfo');
@@ -701,16 +451,16 @@ function displayResults(results = null) {
     resultsContainer.innerHTML = `
       <div class="empty-state">
         <div class="empty-state-icon">🔍</div>
-        <h3>${resultsInfoLabel}</h3>
-        <p>${resultsContainerLabel}</p>
+        <h3>No results found</h3>
+        <p>Try adjusting your search criteria</p>
       </div>
     `;
     return;
   }
 
   let tabName = "";
-  tabName = currentTab === 'cores' ? 'cores' : 'efeitos';
-  resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> ${resultsLabel}</p>`;
+  tabName = currentTab === 'colours' ? 'colours' : 'effects';
+  resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> results</p>`;
   resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
 }
 
@@ -723,16 +473,16 @@ function createCard(item) {
     let cardHTML = `
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${(item['Cor Base'] || item['Nome do Produto'] || item['Base Colour'] || item['Product Name'] || '').toUpperCase()}</span>          
+          <span class="card-title">${(item['Base Colour'] || item['Product Name'] || '').toUpperCase()}</span>          
           <span class="card-hex ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}" onclick="copyToClipboard('${mainHex}', event)"
       title="Clique para copiar HEX">
             ${item['Hex'].toUpperCase() || ''}
           </span>
         </div>
-        <span class="card-code">${(item['Código'] || item['Code'] || '').toUpperCase()}</span>        
+        <span class="card-code">${(item['Code'] || '').toUpperCase()}</span>        
     `;
 
-  const hexColor = item.Hex || '#ccc'; // Fallback caso não haja cor
+  const hexColor = item.Hex || '#ccc';
 
   cardHTML += `
       <div class="dilution-container">
@@ -742,14 +492,12 @@ function createCard(item) {
   `;
 
     Object.entries(item).forEach(([key, value]) => {
-      if (key === 'Cor Base' || key === 'Código' || key === 'Keywords' || key === 'Nome do Produto ' || key === 'Hex' && key !== 'Complementar') return;
-      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' && key !== 'Complementary') return;
+      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' || key === 'Owned' && key !== 'Complementary') return;
 
       let displayValue = value;
-      let displayKey = key.replace(/\s*\(.*/, ""); // Limpa os parênteses (ex: Temperatura)
+      let displayKey = key.replace(/\s*\(.*/, ""); 
 
-      if (key === 'Complementar' || key === 'Complementary') {
-        // Se o valor estiver vazio no JSON ou não existir
+      if (key === 'Complementary') {
         if (!value || value.trim() === "") {
           displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
         } else {
@@ -876,16 +624,56 @@ function copyToClipboard(text, event) {
     navigator.clipboard.writeText(text).then(() => {
         const element = event.target;
         const originalText = element.innerText;
-        element.innerText = "COPIADO!";
+        element.innerText = "COPIED!";
         element.style.transform = "scale(1.1)";        
         setTimeout(() => {
             element.innerText = originalText;
             element.style.transform = "scale(1.0)";
         }, 800);
     }).catch(err => {
-        console.error('Erro ao copiar: ', err);
-        alert("Erro ao copiar HEX");
+        console.error('Error to copy HEX: ', err);
+        alert("Error to copy HEX");
     });
+}
+
+function exportInventoryToCSV() {
+    const ownedColours = allDataColours.colours.filter(colour => colour.Owned === "True" || colour.Owned === true);    
+    const ownedEffects = allDataEffects.effects.filter(effects => effects.Owned === "True" || effects.Owned === true);
+
+    if (ownedColours.length === 0 && ownedEffects.length === 0) {
+        alert("No items marked as owned in inventory.");
+        return;
+    }
+
+    let csvContent = "\uFEFF"; 
+    csvContent += ["Base Colour", "Code"].join(",") + "\n";
+
+    ownedColours.forEach(colour => {
+        const row = [
+            `"${colour["Base Colour"]}"`, 
+            `"${colour["Code"]}"`
+        ];
+        csvContent += row.join(",") + "\n";
+    });
+
+    ownedEffects.forEach(e => {
+        const row = [
+            `"${e["Product Name"]}"`, 
+            `"${e["Code"]}"`
+        ];
+        csvContent += row.join(",") + "\n";
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute("href", url);
+    link.setAttribute("download", `meu_inventario_tintas.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
  window.addEventListener('load', () => {
@@ -906,9 +694,7 @@ function syncTabWithHash() {
   if (!hash) return;
 
   const tabMap = {
-    'cores': 'cores', 'colours': 'cores',
-    'efeitos': 'efeitos', 'effects': 'efeitos',
-    'massas': 'massas', 'putty': 'massas'
+    'colours': 'colours','effects': 'effects','putty': 'putty'
   };
 
   if (tabMap[hash]) {

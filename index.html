@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Cores e Efeitos</title>
+  <title>Colour and Effects Catalogue</title>
   <link rel="stylesheet" href="./css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Este evento garante que o código só corre DEPOIS de todo o HTML estar carregado
     document.addEventListener('DOMContentLoaded', function () {
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -24,47 +23,29 @@
 <body>
 
   <div class="container">
-
-    <div class="top-language-bar">
-        <div class="language-selector">
-            <div class="flag-container active" data-lang="PT" title="Português (Portugal)">
-                <span class="fi fi-pt"></span>
-            </div>
-            <div class="flag-container" data-lang="EN" title="English">
-                <span class="fi fi-gb"></span>
-            </div>
-        </div>
-    </div>
   
     <header>
-        <h1 id="headerLabel">Cadastro de Cores e Efeitos</h1>
-        <p id="headerParagraph">Guia de consulta rápida para tintas, texturas e técnicas de pintura</p>
+        <h1 id="headerLabel">Colour and Effects Catalogue</h1>
+        <p id="headerParagraph">Quick reference guide for paints, textures and painting techniques</p>
     </header>
 
     <div class="search-section">
-      <!-- Abas -->
-      <!-- <div class="tabs">        
-        <button id="tab-cores-label" data-bs-toggle="tooltip" class="tab-btn active" data-tab="cores" title="Pigmentos e tintas base">...</button>
-        <button id="tab-efeitos-label" data-bs-toggle="tooltip" class="tab-btn" data-tab="efeitos" title="Envelhecimento e acabamentos">...</button>
-        <button id="tab-massa-label" data-bs-toggle="tooltip" class="tab-btn" data-tab="massa" title="Putty & Paste: Colas e preenchimentos">...</button>
-      </div> -->
-
       <div class="tabs">        
-        <button id="tab-cores-label" class="tab-btn active" data-tab="cores">
-          CORES 
+        <button id="tab-cores-label" class="tab-btn active" data-tab="colours">
+          COLOURS 
         </button>        
-        <button id="tab-efeitos-label" class="tab-btn" data-tab="efeitos">
-          EFEITOS 
+        <button id="tab-efeitos-label" class="tab-btn" data-tab="effects">
+          EFFECTS 
         </button>        
-        <button id="tab-massa-label" class="tab-btn" data-tab="massas">
-          MASSAS 
+        <button id="tab-massa-label" class="tab-btn" data-tab="putty">
+          PUTTY
         </button>
       </div>
 
       <!-- Controles de pesquisa -->
       <div class="search-controls">
         <div class="form-group">
-          <label for="searchInput" id="searchInputLabel">...</label>
+          <label for="searchInput" id="searchInputLabel">Search for a term...</label>
           <input 
             type="text" 
             id="searchInput" 
@@ -73,7 +54,7 @@
         </div>
 
         <div class="form-group">
-          <label for="searchField" id="searchFieldLabel">...</label>
+          <label for="searchField" id="searchFieldLabel">Select field...</label>
           <select id="searchField"></select>
         </div>
 
@@ -84,9 +65,11 @@
         <!-- Filtros com Checkboxes -->
         <div id="filtersContainer" class="filters-container"></div>
 
-        <div>          
-          <button class="btn-clear" id="btnClear">...</button>
+        <div class="d-flex gap-2 align-items-center">         
+          <button class="btn-clear" id="btnClear">Clear</button>
+          <button class="btn-inventory" id="btnInventory" onclick="exportInventoryToCSV()">Export Inventory</button>
         </div>
+
       </div>
     </div>
 
@@ -99,23 +82,23 @@
           </button>
       </div>
       <div class="results-info" id="resultsInfo">
-        <p>A carregar dados...</p>
+        <p>Loading data...</p>
       </div>
       <div class="results-grid" id="results">
         <div class="loading">
           <div class="spinner"></div>
-          <p>A carregar dados...</p>
+          <p>Loading data...</p>
         </div>
       </div>
     </div>
 
   <div class="disclaimer-container">
       <p class="disclaimer-text">
-          <strong>Disclaimer:</strong> <span id="disclaimer">Esta aplicação é um projeto pessoal e não tem afiliação oficial com marcas ou produtos. As informações apresentadas são baseadas em pesquisas e podem conter imprecisões. Use como referência, mas verifique sempre com fontes oficiais.</span>
+          <strong>Disclaimer:</strong> <span id="disclaimer">This application is a personal project and has no official affiliation with any brands or products. The information presented is based on research and may contain inaccuracies. Use as a reference, but always verify with official sources.</span>
       </p>
       
       <footer class="main-footer">
-          <p id="footer">© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Comunidade de Pintura de Miniaturas</p>
+          <p id="footer">© 2026 | Medieval Crafts Forge & Code, Craft & Chronicles | Miniature Painting Community</p>
       </footer>
       
     <div class="footer-links">
@@ -129,9 +112,9 @@
 
     <div class="contribution-section">
       <p class="contribution-text">
-          <span id="helpExpand"><strong>Ajude a expandir este guia:</strong> Viu algo errado ou quer sugerir uma nova tinta?</span>
+          <span id="helpExpand"><strong>Help expand this guide:</strong> Did you spot an error or want to suggest a new paint?</span>
           <br>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdvYqQ_blMh9Hv9zoBXsFK-5m0VHjzR57XkcEzq4WSeBBLsNQ/viewform?usp=publish-editor" target="_blank" id="helpExpandButton">Clique aqui para enviar uma correção ou sugestão</a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdvYqQ_blMh9Hv9zoBXsFK-5m0VHjzR57XkcEzq4WSeBBLsNQ/viewform?usp=publish-editor" target="_blank" id="helpExpandButton">Click here to send a correction or suggestion</a>
       </p>
     </div>
   </div>
