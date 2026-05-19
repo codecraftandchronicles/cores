@@ -1,0 +1,145 @@
+{
+  "tools": [
+    {
+      "ID": "MIX",
+      "Name": "DIY Texture Paste (Óbidos Mix)",
+      "Category": "Consumables / DIY",
+      "Ingredients": "Cornstarch, Egg carton fibers, Grout (Rejunte)",
+      "Application": "Ground texture and stone walls",
+      "Owned": "True"
+    },
+    {
+      "ID": "X-ACTO",
+      "Name": "Precision Nipper",
+      "Category": "Cutting",
+      "Function": "Removing parts from sprues",
+      "Owned": "True"
+    },
+    {
+      "ID": "MASKING",
+      "Name": "Masking Tape",
+      "Category": "Preparation",
+      "Function": "Protecting surfaces during painting",
+      "Owned": "True"
+    },
+    {
+      "ID": "PLASTER",
+      "Name": "Modelling Plaster (Plaster of Paris)",      
+      "Category": "Groundwork / Sculpting",
+      "Function": "A quick-setting gypsum plaster used to build landscape volume, sculpt terrain contours, and integrate natural rocks into the diorama base. Provides a solid, carvable foundation for groundwork.",
+      "Owned": "True"
+    },
+    {
+      "ID": "DRAGONSTONE",
+      "Name": "Dragon Stone Rock",      
+      "Category": "Hardscape Material",
+      "Function": "A porous, textured stone commonly used in aquascaping. Ideal for creating naturalistic rocky terrain in diorama bases. Its rough surface provides excellent adhesion for plaster and paint, making it perfect for simulating weathered stone or ancient relics.",
+      "Owned": "True"
+    },
+    {
+      "ID": "ABRASIVES",
+      "Name": "Abrasives (Wet Sanding)",
+      "Category": "Preparation",
+      "Function": "Used for smoothing and finishing surfaces before painting.",
+      "Owned": "True"
+    },
+    {
+      "ID": "WHITEPLA",
+      "Name": "White PLA",
+      "Category": "Materials",
+      "Function": "A lightweight, easy-to-use plastic commonly used for 3D printing miniature figures and parts.",
+      "Owned": "True"
+    },
+    {
+      "ID": "BLUELED",
+      "Name": "Blue LEDs",
+      "Category": "Electronics",
+      "Function": "Used for creating illuminated effects in miniature projects.",
+      "Owned": "True"
+    },
+    {
+      "ID": "BATTERY",
+      "Name": "CR2032/Battery setup",
+      "Category": "Electronics",
+      "Function": "Power source for LED installations.",
+      "Owned": "True"
+    },
+    {
+      "ID": "DIFFUSER",
+      "Name": "Recycled Acrylic Light Diffuser (LED Panel)",
+      "Category": "Lighting",
+      "Function": "Salvaged frosted acrylic sheet used to cover visor and eye slits in illuminated miniatures. It eliminates harsh LED hotspots by scattering the light evenly, creating a solid, realistic, and supernatural glow effect across the opening.",
+      "Owned": "True"
+    },
+    {
+      "ID": "Putty",
+      "Name": "Modeling White Putty",
+      "Category": "Modeling / Gap Filling",
+      "Function": "A versatile, air-drying putty used for filling gaps, sculpting details, and repairing imperfections in miniatures and diorama bases. It can be easily shaped and sanded once dry, making it ideal for creating seamless transitions between parts or adding custom textures.",
+      "Owned": "True"
+    },
+    {
+      "ID": "TREESUPPORTS",
+      "Name": "Repurposed Ender 3 Tree Supports",
+      "Category": "Structural Support",
+      "Function": "In this case it was used to create the main organic trunk for the alien flora.",
+      "Owned": "True"
+    },
+    {
+      "ID": "EPOXY",
+      "Name": "Durepoxi Epoxy Putty",
+      "Category": "Structural Support",
+      "Function": "A two-part epoxy resin used for creating strong, durable bonds and filling gaps in miniature projects. Ideal for repairing damage and adding structural integrity to delicate parts.",
+      "Owned": "True"
+    },
+    {
+      "ID": "WIRE08",
+      "Name": "0.8mm Modeling Wire (Roots & Structure)",  
+      "Category": "Structural Support / Detailing",
+      "Function": "Fine, flexible wire used to shape structural armatures or bend into realistic creeping root systems, vines, and exposed cabling on diorama and wargaming bases.",
+      "Owned": "True"
+    },
+    {
+      "ID": "RICEFLOWER",
+      "Name": "Artificial Rice Flower",
+      "Category": "Decorative Elements",
+      "Function": "Used for adding realistic floral details to diorama bases.",
+      "Owned": "True"
+    },
+    {
+      "ID": "FISHTANKTERRAIN",
+      "Name": "Fish Tank Terrain",
+      "Category": "Decorative Elements",
+      "Function": "Used for adding realistic terrain details to diorama bases.",
+      "Owned": "True"
+    },
+    {
+      "ID": "BITS-SKULL",
+      "Name": "Skull Bits",
+      "Category": "Decorative Elements",
+      "Function": "Used for adding realistic bone and skull details to diorama bases.",
+      "Owned": "True"
+    },
+    {
+      "ID": "WOODEN-STICKS",
+      "Name": "Wooden Sticks",
+      "Category": "Decorative Elements",
+      "Function": "Used for adding realistic twig and branch details to diorama bases.",
+      "Owned": "True"
+    },
+    {
+      "ID": "RIVER-ROCKS",
+      "Name": "River Rocks",
+      "Category": "Decorative Elements",
+      "Function": "Used for adding realistic rock and stone details to diorama bases.",
+      "Owned": "True"
+    },
+    {
+      "ID": "GREEN-TUFTS",
+      "Name": "Green Tufts",
+      "Category": "Decorative Elements",
+      "Function": "Used for adding realistic vegetation details to diorama bases.",
+      "Owned": "True"
+    }
+  ]
+}

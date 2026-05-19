@@ -167,7 +167,7 @@
       },
       {
          "Base Colour":"BLACK",
-         "Code":"AK 1109",
+         "Code":"AK11029",
          "Hex":"#0A0A0A",
          "Manufacturer":"AK",
          "Temperature":"Neutral",
@@ -241,8 +241,8 @@
          "Owned":"True"
       },
       {
-         "Base Colour":"Fluorescent Blue",
-         "Code":"GM 72.160",
+         "Base Colour":"FLUORESCENT BLUE",
+         "Code":"GM72160",
          "Hex":"#00FFFF",
          "Manufacturer":"Vallejo",
          "Temperature":"Cold",
@@ -256,7 +256,7 @@
       {
          "Base Colour":"LIGHT YELLOW",
          "Code":"AK17014",
-         "Hex":"#FFFFED",
+         "Hex":"#f3e601",
          "Manufacturer":"AK",
          "Temperature":"Warm",
          "Phase":"Highlight",
@@ -270,7 +270,7 @@
       },
       {
          "Base Colour":"WASH UMBER",
-         "Code":"GM 73.203",
+         "Code":"GMM73203",
          "Hex":"#635147",
          "Manufacturer":"Vallejo",
          "Temperature":"Warm",
@@ -390,7 +390,7 @@
       },
       {
          "Base Colour":"STERLING SILVER",
-         "Code":"TMM 77.716",
+         "Code":"TMM77716",
          "Hex":"#B8B8B8",
          "Manufacturer":"Vallejo",
          "Temperature":"Cold",
@@ -405,7 +405,7 @@
       },
       {
          "Base Colour":"IMPERIAL GOLD",
-         "Code":"TMM 77.723",
+         "Code":"TMM77723",
          "Hex":"#D4AF37",
          "Manufacturer":"Vallejo",
          "Temperature":"Warm",
@@ -540,6 +540,22 @@
          "Strategic Use":"Use as a basecoat for any bone or parchment elements. Shade with Agrax Earthshade or Seraphim Sepia for an aged look. Highlight with Pallid Wych Flesh.",
          "Keywords":"Bone, Parchment, Pale Skin, Stone, Base",
          "Owned":"False"
+      }
+      ,
+      {
+         "Base Colour": "Scarlet Red",
+         "Code": "GM72012",
+         "Hex": "#A6141C",
+         "Manufacturer": "Vallejo",
+         "Temperature": "Warm",
+         "Phase": "Base Coat",
+         "Saturation": "High",
+         "Primary Function": "Midtone / Main Colour",
+         "Strategic Use": "Layering and gradients on cloth, sci-fi armour, or heraldry",
+         "Complementary":"DARK GREEN",
+         "Role of Complementary":"Dark Green (AK11146) — The ideal choice for Shadows OR Grass Green (AK11140) — The environmental contrast OR Mint Green (AK11143) — Only for cold light effects",
+         "Keywords": "Vibrant, Intense, Game Color, Acrylic, Drop Bottle",
+         "Owned":"True"
       }
    ]
 }

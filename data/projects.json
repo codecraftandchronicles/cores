@@ -1,0 +1,100 @@
+{
+  "projects": [
+    {
+      "ProjectName": "Tower of Óbidos",
+      "Status": "To Do",
+      "Pct": "0%",
+      "Description": "<strong>Reclaiming History – The Tower of Óbidos Diorama (Pre-Production)</strong>\nEvery great diorama begins not with the first brushstroke, but with a vision and a carefully curated workbench. This upcoming project marks the beginning of a dedicated build: recreating a realistic, atmospheric miniature scene centered around the historic Tower of Óbidos, a legendary Portuguese landmark.\n\nThe Catalyst:\nThe centerpiece of this project is a traditional resin tower souvenir purchased in the medieval village of Óbidos. While it captures the general architecture, it currently sits as a flat, dark plastic-like object. The goal of this build is to ground it in a living, breathing landscape, giving it the scale, grime, and history it deserves.\n\nThe Alchemist's Workbench (Materials & DIY Recipes):\nBefore the assembly begins, a unique selection of orthodox and unorthodox materials has been gathered, setting the stage for some heavy texture experimentation:\n\nThe Foundation: High-density XPS foam will be carved to create the rugged terrain elevation and rocky outcrops where the tower will stand.\n\nThe Custom Structural Paste: Instead of relying on expensive off-the-shelf textures, a homemade, high-strength compound will be mixed. This unique recipe combines shredded egg carton cardboard, PVA glue, and Axton flexible tile grout. This creates an ultra-durable, easily moldable plaster paste perfect for realistic groundwork, stone filling, and organic transitions.\n\nOrganic Textures: Finely dried coffee grounds will be used to simulate organic earth, rich soil, and historical debris accumulated at the base of the fortress.\n\nWeathering & Flora: A massive array of AK Interactive technical paints (including rust and grime streaks), static grass tufts, and dried flora are standing by to turn this clean workbench into a weathered, ancient outpost. \n\nThe materials are gathered, the recipes are set, and the workbench is ready. The next step is getting our hands dirty to turn raw foam, cardboard, and resin into a piece of medieval history.",
+      "FinishDate": "",
+      "Materials": {
+        "Colours": [],
+        "Effects": [],
+        "Tools": []
+      },
+      "ProjectImage": ["obidos_tower.png", "obidos_tower2.png"]
+    },
+    {
+      "ProjectName": "Greek Helmet",
+      "Status": "Done",
+      "Pct": "100%",
+      "Description": "<strong>Roman Galea Inspired by the Greek Corinthian Tradition.</strong> \n\n An aged bronze decorative piece inspired by ceremonial helmets of the Greco-Roman world. \n\n Its overall structure clearly echoes the classical Greek Corinthian helmet, recognised by its fixed nasal guard and narrow almond-shaped eye openings, while the ornate reliefs and visual richness lean towards later Roman and Hellenistic ceremonial aesthetics. Although not intended as an exact archaeological reproduction, the piece pays tribute to the historical evolution of Mediterranean military helmets ...  a period in which Roman armour and military culture absorbed, adapted and reinterpreted many Greek influences. \n\nThe paintwork was designed to preserve the original metallic appearance of the bronze, using translucent layers of imperial red, deep blue and gold accents to evoke the visual language of ceremonial officers, elite guards and parade armour associated with the classical imagination. The elevated crest, traditionally linked to rank and battlefield distinction, was treated with textured brushwork to suggest natural fibres and organic movement, reinforcing the monumental character of the helmet. More than a decorative miniature, this galea stands as an artistic interpretation of the military and symbolic heritage of the ancient classical world.",
+      "FinishDate": "08/05/2026",
+      "Materials": {
+        "Colours": ["AK11186", "GM72012", "TMM77723", "AK11075", "AK11077", "AK11088"],
+        "Effects": ["V62064", "AK1301"],
+        "Tools": ["DIY-MIX-01", "X-ACTO-01"]
+      },
+      "ProjectImage": ["greek_helmet.png", "greek_helmet2.png"]
+    },
+    {
+      "ProjectName": "Teutonic Knight",
+      "Status": "Done",
+      "Pct": "100%",
+      "Description": "<strong>From Grey to the Glacial Order – A Teutonic Knight Rises</strong>\n\nThis project details the extensive transformation and historical restoration of a simple, grey souvenir miniature into a legendary Knight of the Teutonic Order.\n\nThe Heritage:\nThe Order of Saint Mary of the Germans, founded in Acre in 1190, originated in the Kingdom of Jerusalem and became legendary. Their black cross on a white field struck both fear and awe.\n\nThe Óbidos Transformation:\nThis miniature was a souvenir from the historic Portuguese village of Óbidos. However, while it had the spirit of a warrior, it bore incorrect heraldry. Both the shape of the hand-held shield and the cross painted on its cloak were not consistent with a Teutonic Knight.\n\nThe Restoration (Putty and 3D Print):\nThe correction of this legendary figure required both traditional and digital craft:\nThe Cloak: The existing, incorrect cross was laboriously reshaped using specialized modeler's putty, converting the generic insignia into the precise, flared form of the Kreuz des Deutschen Ordens.\n\nThe Shield: The original, non-knight shield was discarded. Using Tinkercad, I designed a completely new, historically accurate, large heater shield model featuring the correct relief cross. This new model was sliced and printed on the Ender 3 V3 SE. The new, custom-engineered shield was then assembled and primed, ready to be mounted in battle.\n\nThe newly minted knight was not destined for a clean display shelf. To ground it in its true historical and dark fantasy context, the figure was subjected to an extreme glacial theme. The new shield, cloak, and horned helmet are now caked in heavy snowdrifts and rime, simulating a warrior arriving from the frozen battlegrounds of the Baltic Crusades.\n\nThis piece is no longer a generic souvenir; it is a dedicated tribute to the Glacial Order, balancing custom engineering, traditional restoration, and supernatural weathering.",
+      "FinishDate": "20/04/2026",
+      "Materials": {
+        "Colours": ["AK11172", "AK11179", "AK11186", "AK11189", "AK11024","AK11001","AK11029", "TMM77723", "TMM77716"],
+        "Effects": ["PVA", "Putty", "V62064", "AK118", "BASODA"],
+        "Tools": ["WHITEPLA", "GREEN-TUFTS", "ABRASIVES"]
+      },
+      "ProjectImage": ["teutonic_knight.png", "teutonic_knight2.png"],
+      "URL": "https://www.instagram.com/p/DXkMxsAja5L/"
+    },
+    {
+      "ProjectName": "Alien base",
+      "Status": "Done",
+      "Pct": "100%",
+      "Description": "<strong>Alien Infestation Base</strong> marks the first official entry in the Challenge series, focusing on pushing the boundaries of miniature basing through custom 3D printing, chemical texture reactions, and unorthodox material blending. The core objective was to forge a highly organic, cohesive sci-fi environment designed specifically to host a Tyranid Venomthrope, based on an original concept by @mzminiatures.\n\nThe project stands on an 80mm base sliced and printed on the Ender 3 V3 SE. To construct the alien flora, natural Dragon Stones were combined with repurposed Ender 3 tree supports, which were cleverly inverted to act as the main organic trunk. Additional biological details, specialized textures, and microscopic pores were hand-sculpted using Durepoxi epoxy putty.\n\nThe true breakthrough of this experiment lies in its chemical and structural finishes. To simulate gross, wrinkled alien skin, a volatile chemical reaction was triggered by blending PVA Glue and Cyanoacrylate (Super Glue) over wet paint. For the final hyper-organic details, UHU Glue was pulled and stretched to create stringy, viscous slime lines across the plant life, while AK Interactive Puddles was poured into open pods to achieve a wet, humid, and deeply stagnant biological effect. The color scheme features striking yellow highlights designed to simulate natural bioluminescence, paving the way for future fluorescent experimentation.",
+      "FinishDate": "02/04/2026",
+      "Materials": {
+        "Colours": ["AK11088", "AK11097", "AK11092", "AK11085", "AK11077", "AK11001", "AK11074", "AK11029", "AK17014", "GM72160"],
+        "Effects": ["PVA", "CYANO", "AK8028","UHU", "AK11238", "AK118"],
+        "Tools": ["DRAGONSTONE", "TREESUPPORTS", "EPOXY", "WIRE08", "RICEFLOWER"]
+      },
+      "ProjectImage": ["alien_base.png", "alien_base2.png"],
+      "URL": "https://www.instagram.com/p/DWo6LwkDROz/"
+    },
+    {
+      "ProjectName": "Templar Knight",
+      "Status": "Done",
+      "Pct": "100%",
+      "Description": "<strong>The Black Knight</strong> is an ambitious grimdark kitbash that breathes new life into a traditional medieval Templar figure... originally acquired as a local souvenir from the historic village of Óbidos. This project completely reimagines the historical piece, pivoting it into a dark, sci-fi fantasy aesthetic heavily inspired by the Warhammer 40,000 Black Templars chapter.\n\nThe conversion process utilized custom-engineered bits, including iconic Space Marine style pauldrons and a heavy shield, both sliced and printed on the Ender 3 V3 SE. The miniature stands atop a rugged, custom-sculpted battlefield base built from modelling plaster to provide dramatic elevation. The groundwork blends natural terrain elements... including genuine sand, gravel, and real wood twigs for battlefield debris... with AK Interactive Puddles to simulate a stagnant, dirty mire.\n\nThe true highlight of the piece is the dynamic energy discharge surging from the sword. Crafted using fine wire, the lightning bolts were painted with Vallejo Game Color Fluorescent Blue. This creates an intense visual effect that genuinely <i>vibrates</i> and glows with supernatural energy when exposed to UV light, perfectly balancing historical heritage with extreme dark fantasy.",
+      "FinishDate": "25/01/2026",
+      "Materials": {
+        "Colours": ["GM72160", "AK11186", "AK11189", "AK11183", "AK11172","AK11179", "AK11092", "AK17014", "AK11001", "AK11097", "AK11055", "AK11029", "AK11085", "AK11024", "AK11002"],
+        "Effects": ["AK8028","GM73201", "AK458", "V62064", "AK118"],
+        "Tools": ["FISHTANKTERRAIN", "BITS-SKULL", "WOODEN-STICKS", "RIVER-ROCKS", "WIRE08", "WHITEPLA"]
+      },
+      "ProjectImage": ["templar_knight.png", "templar_knight2.png"],
+      "URL": "https://www.instagram.com/p/DULlWziDLre/"
+    },
+    {
+      "ProjectName": "Templar Helmet",
+      "Status": "Done",
+      "Pct": "100%",
+      "Description": "<strong>From PLA to Steel</strong> marks a milestone project that beautifully bridges the gap between digital fabrication, traditional miniature painting, and DIY hardware hacking. Inspired by the rich lore of the Knights Templar and the gritty historical chronicles of Bernard Cornwell, this project transforms a lightweight, white PLA 3D print into a heavy, supernatural medieval artifact.\n\nThe journey began with an iconic Templar Helm model from Thingiverse, printed on the Ender 3 V3 SE. To turn a static bookshelf piece into a <i>living</i> entity, custom internal structural parts... including LED mounts, support pins, and a bottom cover... were engineered from scratch using Tinkercad.\n\nThe realism of the piece lies in its meticulous metalization process. After a thorough wet-sanding progression up to 2000 grit, a deep black primer was applied to create shadow and depth. The helm was then treated with wax-based metallic pastes, hand-polished to give the plastic the undeniable sheen and weight of forged steel. To contrast the cold iron, the front crucifix was finished in rich gold, aged with a custom brown wash, and detailed with a high-gloss gold pen on the rivets.\n\nFinally, stepping away from the software compiler to the soldering iron, a custom circuit of blue LEDs was installed inside the helm. The resulting glow escapes through the breathing vents and visor, evoking the aura of a magical entity or a warrior imbued with ancient energy.",
+      "FinishDate": "01/10/2025",
+      "Materials": {
+        "Colours": [],
+        "Effects": ["AK1009","AK086", "AK458", "AK450", "AK1301", "AK73203", "AK11238", "V62064"],
+        "Tools": ["ABRASIVES", "WHITEPLA", "BLUELED", "BATTERY", "DIFFUSER"]
+      },
+      "ProjectImage": ["templar_helmet.png", "templar_helmet2.png"],
+      "URL": "https://codecraftandchronicles.wordpress.com/2025/10/19/738/"
+    },
+    {
+      "ProjectName": "Snow base",
+      "Status": "Done",
+      "Pct": "100%",
+      "Description": "<strong>The Northern Relic</strong> is the debut piece in the Medieval Forge Xperiments saga, focusing on pushing the boundaries of texture, extreme weathering, and realism. Inspired by the harsh, glacial landscapes found <i>Beyond the Wall</i> in Game of Thrones, this project successfully transforms a porous, natural Dragon Stone (traditionally used in aquascaping) into a frozen, ancient relic fit for a Knight of the North.\n\nThe process began by selecting a highly textured piece of Dragon Stone and blending it into the terrain using modelling plaster to build volume and simulate heavy snowdrifts.\n\nA plaster foundation and white primer were applied, followed by a heavy <i>Frozen Blue</i> wash to establish a deep, cold chromatic undertone in the crevices.\n\nTo achieve realistic environmental effects, two DIY techniques were tested: a PVA glue and baking soda paste to recreate high-volume, budget-friendly fresh snow accumulation, and a PVA-based crackle effect to simulate shifting, fractured ice. The entire piece was finalized with a Satin Varnish, giving the relic a realistic, wet, icy sheen.",
+      "FinishDate": "25/11/2025",
+      "Materials": {
+        "Colours": ["AK11001","AK11186"],
+        "Effects": ["PVA", "BASODA", "AK11238"],
+        "Tools": ["MASKING", "PLASTER","DRAGONSTONE"]
+      },
+      "ProjectImage": ["snow_base.png"],
+      "URL": "https://codecraftandchronicles.wordpress.com/2025/11/25/medieval-forge-xperiments-2/"
+    }
+  ]
+}

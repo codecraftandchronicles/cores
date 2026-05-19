@@ -4,7 +4,7 @@
          "Product Name":"Rust Streaks",
          "Code":"AK013",
          "Hex":"#843E2B",
-         "Function":"Rust\/Weathering Effect (Enamel): Rust-colored liquid used to simulate rust streaks on metal vehicles, armor, or stone surfaces near metal objects. Applied in thin lines and then softened with Enamel Thinner.",
+         "Function":"Rust\/Weathering Effect (Enamel): Rust-colored liquid used to simulate rust streaks on metal vehicles, armor, or stone surfaces near metal objects Applied in thin lines and then softened with Enamel Thinner.",
          "Keywords":"Rust, Enamel, Streaking, Weathering, Streaks",
          "Manufacturer":"AK",
          "Owned":"True"
@@ -20,7 +20,7 @@
       },
       {
          "Product Name":"Pigments Dark Steel",
-         "Code":"AK080",
+         "Code":"AK086",
          "Hex":"#3C3F41",
          "Function":"Dark Steel Pigment (Powder): Ultrafine powder used to create dust and dirt effects, or to polish metal surfaces (like knight's chainmail), giving a realistic dark metallic shine. Applied dry or fixed with pigment fixer.",
          "Keywords":"Pigment, Steel, Polishing, Chainmail, Realistic Metal",
@@ -119,7 +119,7 @@
       },
       {
          "Product Name":"Black Wash",
-         "Code":"73.201",
+         "Code":"GM73201",
          "Hex":"#1a1a1a",
          "Function":"This is the ideal choice if you want a \"real steel\" look or knightly armour. It creates deep shadows and dramatically defines the volumes of the piece. With Sterling Silver, it remains bright on the highlights, but the recesses become very dark, simulating heavy, oily metal.",
          "Keywords":"Armour, Real steel, Weapons, Mechanical parts, etc.",
@@ -128,7 +128,7 @@
       },
       {
          "Product Name":"Blue Wash",
-         "Code":"73.207",
+         "Code":"GM73207",
          "Hex":"#1a3c6e",
          "Function":"Widely used for metals that should appear extremely polished, new, or with a touch of energy to create a bluish metal effect or a magical\/icy appearance. The blue contrasts softly with the silver, providing a cold and clean look. Excellent for sci-fi weapons or armour for heroic characters.",
          "Keywords":"Enchanted armour, Magic, Enchanted steel, Enchanted weapons, Polished parts, etc.",
@@ -137,7 +137,7 @@
       },
       {
          "Product Name":"Umber Wash",
-         "Code":"73.203",
+         "Code":"GM73203",
          "Hex":"#4d332d",
          "Function":"If your goal is for the silver to look ancient, dirty, or slightly rusted. It adds an organic brownish\/yellowish tone that simulates accumulated grime. Perfect for fantasy pieces that have been through battles or are exposed to the elements.",
          "Keywords":"Ancient metal, Aged bronze, Industrial machinery, etc.",
@@ -146,12 +146,93 @@
       },
       {
          "Product Name":"Gloss Varnish",
-         "Code":"62.064",
+         "Code":"V62064",
          "Hex":"#fafafa",
          "Function":"Provides intense gloss and extreme protection with polyurethane resin. It is flexible, resistant to UV rays and impacts, making it ideal for handled pieces. Can be applied with a brush or airbrush, with the recommendation to respect a 4-hour interval between layers for perfect curing.",
          "Keywords":"Varnish, Gloss, Extreme protection, Acrylic",
          "Manufacturer":"Vallejo",
          "Owned":"True"
-      } 
+      },
+      {
+         "Product Name": "PVA Glue (White Glue)",
+         "Code": "PVA",
+         "Hex": "#ffffff",
+         "Function": "Polyvinyl acetate adhesive used as a versatile foundation for terrain building. Ideal for creating DIY snow pastes when mixed with baking soda, generating subtle cracking/iced ground effects when applied over a painted base, and securely bonding raw landscape assets like sand, gravel, or foam.",
+         "Keywords": "Glue, PVA, White Glue, Adhesive, DIY, Snow Recipe, Crackle",
+         "Manufacturer": "Uhu",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "Baking Soda (Sodium Bicarbonate)",
+         "Code": "BASODA",
+         "Hex": "#f0f0f0",
+         "Function": "Fine chemical powder used in hobby modeling to simulate realistic weather effects. When mixed with PVA glue and water, it creates a budget-friendly, high-volume paste that perfectly replicates the texture and accumulation of fresh, crisp snow.",
+         "Keywords": "Baking Soda, Bicarbonate, Snow Recipe, DIY, Texture, Powder",
+         "Manufacturer": "N/A",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "Cianoacrylate Glue (Super Glue)",
+         "Code": "CYANO",
+         "Hex": "#f0f0f0",
+         "Function": "A strong, fast-acting adhesive used for quick bonding of small parts and details in miniature assembly. Ideal for attaching delicate pieces or creating instant bonds between materials like plastic, metal, or resin.",
+         "Keywords": "Cianoacrylate, Super Glue, Adhesive, Bonding, DIY",
+         "Manufacturer": "N/A",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "Fine Primer Black Spray",
+         "Code": "AK1009",
+         "Hex": "#1a1a1a",
+         "Function": "A high-quality black primer designed for use on various surfaces, providing an excellent base for subsequent painting layers.",
+         "Keywords": "Primer, Black, Base Coat, Painting",
+         "Manufacturer": "AK",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "True Metal Silver",
+         "Code": "AK458",
+         "Hex": "#C4C4C4",
+         "Function": "Metallic paint created from a wax base. Made from high quality pigments, achieving extremely realistic effects. Specially designed for modelers, these waxes can be applied by brush, with the fingertip, with a cotton swab or ever with airbrush diluted with our Thinner (white spirit) and getting a fine surface. Once dried, it can be polished to achieve a metallic finish. Recommended to prime first and can be varnish with acrylic too. This is a wax base so It is recommended allow 48h to be completely dry.",
+         "Keywords": "Silver, Painting, Metallic, Wax Base, Realistic",
+         "Manufacturer": "AK",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "True Metal Gold",
+         "Code": "AK450",
+         "Hex": "#FFD700",
+         "Function": "Metallic paint created from a wax base. Made from high quality pigments, achieving extremely realistic effects. Specially designed for modelers, these waxes can be applied by brush, with the fingertip, with a cotton swab or ever with airbrush diluted with our Thinner (white spirit) and getting a fine surface. Once dried, it can be polished to achieve a metallic finish. Recommended to prime first and can be varnish with acrylic too. This is a wax base so It is recommended allow 48h to be completely dry.",
+         "Keywords": "Gold, Painting, Metallic, Wax Base, Realistic",
+         "Manufacturer": "AK",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "Mettalic Marker Gold",
+         "Code": "AK1301",
+         "Hex": "#FFD700",
+         "Function": "Highly pigmented special gold paint, which can present a realistic gold finish on almost all smooth surfaces (such as plastic, glass, wood and rubber). The special precision tip is perfect for detailing all types of figures and parts in any scale. The formulation allows for subsequent antiquing treatments.",
+         "Keywords": "Gold, Painting, Pen, Metallic, Realistic, Detailing",
+         "Manufacturer": "AK",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "Puddles",
+         "Code": "AK8028",
+         "Hex": "#0000FF",
+         "Function": "Puddles is a slightly tinted especially liquid crystalline product designed to replicate small puddles and standing dirty water on your dioramas and vignettes.",
+         "Keywords": "Puddles, Water, Dirty, Diorama, Vignette",
+         "Manufacturer": "AK",
+         "Owned": "True"
+      },
+      {
+         "Product Name": "UHU Universal Glue",
+         "Code": "UHU",
+         "Hex": "#f0f0f0",
+         "Function": "UHU Universal Glue is a versatile, high-strength adhesive suitable for a wide range of materials including plastic, metal, wood, and fabric.",
+         "Keywords": "UHU, Universal Glue, Adhesive, Bonding, DIY",
+         "Manufacturer": "UHU",
+         "Owned": "True"
+      }
    ]
 }

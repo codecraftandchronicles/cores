@@ -1,5 +1,7 @@
 let allDataColours = { colours: []};
 let allDataEffects = { effects: [] };
+let allDataProjects = { projects: [] };
+let allDataTools = { tools: [] };
 let currentTab = 'colours';
 const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Temperature','Phase','Saturation Level', 'Manufacturer', 'Owned'];
 let colorMap = {};
@@ -119,8 +121,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function PageLoad() {  
   loadDataColours();
   loadDataEffects();
+  loadDataProjects();
+  loadDataTools();
 }
-
 
 function loadDataColours() {
     const loader = document.getElementById('loading-overlay');
@@ -182,6 +185,83 @@ function loadDataEffects(lang) {
         .catch(err => showError("Error to load the data."));
 }
 
+function loadDataProjects() {
+    fetch(`./data/projects.json`)
+        .then(response => response.json())
+        .then(data => {                        
+            if (data.projects) {
+                const statusPriority = {
+                    "to do": 1,
+                    "in progress": 2,
+                    "on the bench": 2,
+                    "done": 3,
+                    "completed": 3,
+                    "parking lot": 4
+                };
+
+                data.projects.sort((a, b) => {
+                    const statusA = (a["Status"] || "").toLowerCase().trim();
+                    const statusB = (b["Status"] || "").toLowerCase().trim();
+
+                    const priorityA = statusPriority[statusA] || 99;
+                    const priorityB = statusPriority[statusB] || 99;
+
+                    if (priorityA !== priorityB) {
+                        return priorityA - priorityB;
+                    }
+                    
+                    if (statusA === "done" || statusA === "completed") {
+                        const dateA = parseDate(a["FinishDate"]);
+                        const dateB = parseDate(b["FinishDate"]);
+                        return dateB - dateA; 
+                    }
+
+                    const nomeA = (a["ProjectName"] || "").toUpperCase();
+                    const nomeB = (b["ProjectName"] || "").toUpperCase();
+                    return nomeA.localeCompare(nomeB);
+                });
+            }
+
+            allDataProjects = data;
+            buildColorMap(); 
+            updateSearchFields(); 
+            updateFilters();
+            displayResults();
+        })
+        .catch(err => showError("Error to load the projects data."));
+}
+
+function parseDate(dateString) {
+    if (!dateString) return new Date(0);
+    
+    const parts = dateString.split('/');
+    if (parts.length === 3) {
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+    return new Date(0);
+}
+
+function loadDataTools() {
+    fetch(`./data/tools.json`)
+        .then(response => response.json())
+        .then(data => {                        
+            if (data.tools) {
+                data.tools.sort((a, b) => {
+                    const nomeA = (a["Name"] || "").toUpperCase();
+                    const nomeB = (b["Name"] || "").toUpperCase();
+                    return nomeA.localeCompare(nomeB);
+                });
+            }
+
+            allDataTools = data;
+            buildColorMap(); 
+            updateSearchFields(); 
+            updateFilters();
+            displayResults();
+        })
+        .catch(err => showError("Error to load the tools data."));
+}
+
 function setupEventListeners() {
   const searchInput = document.getElementById('searchInput'); 
   const searchFieldSelect = document.getElementById('searchField'); 
@@ -197,6 +277,7 @@ function setupEventListeners() {
           this.classList.add('active');
           loadDataColours();
           loadDataEffects();
+          loadDataProjects();
 
           if (typeof switchTab === 'function') {
             switchTab('colours'); 
@@ -239,7 +320,7 @@ function switchTab(tab) {
 
   window.history.replaceState(null, null, `#${tab}`);
       
-  if (tab === 'putty') {
+  if (tab === 'putty' || tab === 'projects') {
     if (resultsEl) {
       resultsEl.innerHTML = '';
       resultsEl.classList.add('massa-active');
@@ -275,6 +356,8 @@ function updateSearchFields() {
       dataRef = allDataColours.colours;
     else if (currentTab === 'effects')
       dataRef = allDataEffects.effects;
+    else if (currentTab === 'projects')
+      dataRef = allDataProjects.projects;
 
     if (dataRef && dataRef.length > 0) {
         fields = Object.keys(dataRef[0]);
@@ -362,6 +445,17 @@ function updateFilters() {
 }
 
 function performSearch() {
+    if (currentTab === 'projects') {
+        document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+
+        const searchFieldDDL = document.getElementById('searchField');
+        if (searchFieldDDL) searchFieldDDL.value = '';
+
+        document.getElementById('searchInput').value = '';
+    }
+
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     const searchField = document.getElementById('searchField').value;
 
@@ -371,7 +465,10 @@ function performSearch() {
     else if (currentTab === 'effects') {
       data = allDataEffects.effects;
     }
-    
+    else if (currentTab === 'projects') {
+      data = allDataProjects.projects;
+    }    
+
     if (currentTab === 'putty') {
         const resultsContainer = document.getElementById('results');  
         resultsContainer.innerHTML = htmlPutty; 
@@ -385,7 +482,7 @@ function performSearch() {
         const field = checkbox.dataset.field;
         if (!selectedFilters[field]) selectedFilters[field] = [];
         selectedFilters[field].push(checkbox.value);
-    });
+    });       
 
     let results = data.filter(item => {
         for (const [field, values] of Object.entries(selectedFilters)) {
@@ -394,7 +491,7 @@ function performSearch() {
             const matches = values.some(value => itemValue.includes(value));
             if (!matches) return false;
         }
-
+        
         if (searchTerm) {
             if (searchField) {
                 const fieldValue = item[searchField];
@@ -439,7 +536,7 @@ function displayResults(results = null) {
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
 
-  data = results !== null ? results : (currentTab === 'colours' ? allDataColours.colours : allDataEffects.effects);  
+  data = results !== null ? results : (currentTab === 'colours' ? allDataColours.colours : (currentTab === 'effects' ? allDataEffects.effects : allDataProjects.projects));  
   
   const resultsContainer = document.getElementById('results');
   const resultsInfo = document.getElementById('resultsInfo');
@@ -457,9 +554,14 @@ function displayResults(results = null) {
   }
 
   let tabName = "";
-  tabName = currentTab === 'colours' ? 'colours' : 'effects';
+  tabName = currentTab === 'colours' ? 'colours' : (currentTab === 'effects' ? 'effects' : 'projects');
   resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> results</p>`;
-  resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
+
+  if (currentTab === 'projects') {
+    resultsContainer.innerHTML = data.map(item => createProjectCard(item)).join('');
+  } else {
+    resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
+  }
 }
 
 function createCard(item) {
@@ -471,10 +573,10 @@ function createCard(item) {
     let cardHTML = `
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${(item['Base Colour'] || item['Product Name'] || '').toUpperCase()}</span>          
+          <span class="card-title">${(item['Base Colour'] || item['Product Name'] || item['ProjectName'] || '').toUpperCase()}</span>          
           <span class="card-hex ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}" onclick="copyToClipboard('${mainHex}', event)"
       title="Clique para copiar HEX">
-            ${item['Hex'].toUpperCase() || ''}
+            ${item['Hex']?.toUpperCase() || item['Status'] || ''}
           </span>
         </div>
         <span class="card-code">${(item['Code'] || '').toUpperCase()}</span>        
@@ -482,18 +584,20 @@ function createCard(item) {
 
   const hexColor = item.Hex || '#ccc';
 
+  if (currentTab != 'projects') {
   cardHTML += `
       <div class="dilution-container">
           <div class="dilution-rule ${mainSpecialClass}" style="--paint-color: ${hexColor};"></div>
           <div class="dilution-disclaimer">${illustrative}</div>
       </div>
   `;
-
+  }
+  
     Object.entries(item).forEach(([key, value]) => {
-      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' || key === 'Owned' && key !== 'Complementary') return;
+      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' || key === 'Owned' || key === 'ProjectName' || key === 'Status' && key !== 'Complementary')  return;
 
       let displayValue = value;
-      let displayKey = key.replace(/\s*\(.*/, ""); 
+      let displayKey = key.replace(/\s*\(.*/, "");       
 
       if (key === 'Complementary') {
         if (!value || value.trim() === "") {
@@ -527,8 +631,6 @@ function createCard(item) {
           }
         }
       }
-      // ----------------------------------
-
       cardHTML += `
         <div class="card-field">
           <div class="card-label">${displayKey}</div>
@@ -544,6 +646,165 @@ function createCard(item) {
 
     cardHTML += `</div>`;
     return cardHTML;  
+}
+
+function createProjectCard(item) {  
+    const isInProgress = item.Status && (item.Status.toLowerCase().trim() === 'in progress' || item.Status.toLowerCase().trim() === 'to do');
+    const buttonClass = isInProgress ? "accordion-button" : "accordion-button collapsed";
+    const bodyStyle = isInProgress ? 'style="display: block;"' : 'style="display: none;"';
+    const statusClass = getStatusClass(item.Status);
+
+    let urlLine = "";
+    if (item.URL) {
+        urlLine = `
+          <div class="project-more-info">
+            <span class="info-label">✨ More information:</span>
+            <a href="${item.URL}" target="_blank" rel="noopener noreferrer" class="project-link">
+              Read full project log <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
+            </a>
+          </div>
+        `;
+    }
+
+    let cardHTML = `
+      <div class="projects-accordion">
+        <div class="accordion-item backend-border">
+          <button class="${buttonClass}" type="button" onclick="toggleAccordion(this)">
+            <div class="project-header-main">
+              <span class="project-title">${(item.ProjectName || '').toUpperCase()}</span>
+              <div class="project-badges">
+                <span class="badge ${statusClass}">${(item.Status || '').toUpperCase()}</span>
+                <span class="badge project-pct">${(item.Pct || '0%').toUpperCase()}</span>
+              </div>
+            </div>
+          </button>
+
+          <div class="accordion-body" ${bodyStyle}>
+            <p class="project-desc">${item.Description || ''}</p>   
+            ${urlLine}       
+    `;
+      
+
+    if (item.Materials && typeof item.Materials === 'object') {
+    cardHTML += `<div class="project-dependencies-grid">`;
+    Object.entries(item.Materials).forEach(([subKey, subArray]) => {
+        if (Array.isArray(subArray) && subArray.length > 0) {
+            
+            // Dicionário para traduzir ou enriquecer o nome da coluna no ecrã
+            const displayTitles = {
+                "Colours": "Colours",
+                "Effects": "Effects",
+                "Putty": "Putty",
+                "Tools": "Tools & Materials" // Altera aqui para o nome que preferir!
+            };
+
+            // Se a subKey existir no dicionário, usa o nome bonito. Se não, usa a própria chave.
+            const columnTitle = displayTitles[subKey] || subKey;
+
+            cardHTML += `
+              <div class="dep-column">
+                <h5>${columnTitle.toUpperCase()}</h5> <div class="dep-mini-list">
+            `;
+            subArray.forEach(id => {
+                const details = getMaterialDetails(subKey, id);
+                const borderStyle = `style="border-left: 4px solid ${details.hex};"`;
+                cardHTML += `
+                    <span class="mini-chip" ${borderStyle}>
+                        <small style="color: #888; font-size: 0.75rem; display:block;">${id} ${details.manufacturer}</small>
+                        <strong>${details.name}</strong>
+                    </span>
+                `;
+            });
+            cardHTML += `</div></div>`;
+            }
+        });
+        cardHTML += `</div>`; 
+    }
+    
+    // --- NOVO CONTAINER DO CARROSSEL DO CANVA ---
+    if (item.ProjectImage && Array.isArray(item.ProjectImage) && item.ProjectImage.length > 0) {
+    cardHTML += `
+      <div class="canva-carousel-container" onclick="event.stopPropagation();" style="display: flex; flex-direction: column; gap: 15px;">
+    `;
+    
+    // Faz um loop por cada imagem dentro do Array
+    item.ProjectImage.forEach(imgName => {
+        if (imgName) {
+            cardHTML += `
+                <img src="img/projects/${imgName}" alt="Canva Showcase" class="canva-long-strip">
+            `;
+        }
+    });
+    
+    cardHTML += `</div>`;
+    } 
+    // Fallback de segurança: Caso o JSON antigo ainda tenha apenas uma string em vez de array
+    else if (item.ProjectImage && typeof item.ProjectImage === 'string') {
+        cardHTML += `
+          <div class="canva-carousel-container" onclick="event.stopPropagation();">
+              <img src="img/projects/${item.ProjectImage}" alt="Canva Showcase" class="canva-long-strip">
+          </div>
+        `;
+    }
+    
+    // FECHO SEGURO DAS TAGS (Garante que o corpo envelopa tudo)
+    cardHTML += `
+          </div> </div> </div> `; 
+    
+    return cardHTML;  
+}
+
+function getStatusClass(status) {
+    if (!status) return 'status-todo';
+    
+    const s = status.toLowerCase().trim();
+    if (s === 'done' || s === 'completed' || s === 'finished') return 'status-done';
+    if (s === 'in progress' || s === 'on the bench') return 'status-progress';
+    if (s === 'parking lot' || s === 'paused') return 'status-parking';
+    
+    return 'status-todo'; // Fallback padrão para "To Do"
+}
+
+function getMaterialDetails(subKey, id) {
+    let name = id; 
+    let hex = "#555";
+    let manufacturer = "";
+
+    const searchId = id.toUpperCase().trim();
+
+    if (subKey === 'Colours' && allDataColours && allDataColours.colours) {
+        const found = allDataColours.colours.find(c => c.Code && c.Code.toUpperCase().trim() === searchId);
+        if (found) {
+            name = found["Base Colour"] || searchId;
+            hex = found.Hex || "#555";
+            manufacturer = found.Manufacturer ? `[${found.Manufacturer}] ` : "";
+        }
+    } else if (subKey === 'Effects' && allDataEffects && allDataEffects.effects) {
+        const found = allDataEffects.effects.find(e => e.Code && e.Code.toUpperCase().trim() === searchId);
+        if (found) {
+            name = found["Product Name"] || searchId;
+            hex = found.Hex || "#555";
+            manufacturer = found.Manufacturer ? `[${found.Manufacturer}] ` : "";
+        }
+    } else if (subKey === 'Tools' && typeof allDataTools !== 'undefined' && allDataTools.tools) {
+        const found = allDataTools.tools.find(t => t.ID && t.ID.toUpperCase().trim() === searchId);
+        if (found) {
+            name = found.Name || searchId;
+        }
+    }
+
+    return { name, hex, manufacturer };
+}
+
+function toggleAccordion(button) {
+    button.classList.toggle('collapsed');
+    const body = button.nextElementSibling;
+    
+    if (window.getComputedStyle(body).display === "block") {
+        body.style.display = "none";
+    } else {
+        body.style.display = "block";
+    }
 }
 
 function getSpecialClass(hexColor) {
@@ -692,7 +953,7 @@ function syncTabWithHash() {
   if (!hash) return;
 
   const tabMap = {
-    'colours': 'colours','effects': 'effects','putty': 'putty'
+    'colours': 'colours','effects': 'effects','putty': 'putty','projects': 'projects'
   };
 
   if (tabMap[hash]) {

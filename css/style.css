@@ -925,3 +925,224 @@ header p {
     color: #888;
     border-radius: 4px;
 }
+
+/* Container Geral */
+.projects-accordion {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.project-desc {
+    white-space: pre-line; 
+}
+
+/* Item Individual */
+.accordion-item {
+  background-color: #2a2b36; /* Tom escuro dos teus cards */
+  border: 1px solid #3f4052;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Botão de Disparo (Header) */
+.accordion-button {
+  width: 100%;
+  background-color: #21222d;
+  color: #fff;
+  border: none;
+  padding: 18px 20px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.accordion-button:hover {
+  background-color: #282936;
+}
+
+/* Alinhamento dos Títulos e Badges */
+.project-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 20px;
+}
+
+.project-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  color: #ffc107; /* Destaque dourado medieval */
+}
+
+/* Badges Estilizados */
+.project-badges {
+  display: flex;
+  gap: 10px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.status-progress { background-color: #fd7e14; color: #fff; } /* Laranja para "In Progress" */
+.project-pct { background-color: #4f5063; color: #fff; }
+
+/* Corpo do Accordion (Escondido por padrão via JS ou CSS) */
+.accordion-body {
+  padding: 20px;
+  border-top: 1px solid #3f4052;
+  display: block;
+  background-color: #1f2029;
+}
+
+.project-desc {
+  color: #b9bac7;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+/* Grid de Dependências Interiores */
+.project-dependencies-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  margin-top: 15px;
+}
+
+.dep-column {
+  background: #21222d;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #3f4052;
+}
+
+.dep-column h5 {
+  color: #03a9f4;
+  border-bottom: 1px solid #3f4052;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.mini-chip {
+  display: block !important;
+  background-color: #2a2b36 !important;
+  padding: 8px 12px !important;
+  margin-bottom: 8px !important;
+  border-radius: 4px !important;
+  font-size: 0.85rem !important;
+  color: #e1e1e6 !important;
+  border-left: 3px solid #555; /* Borda padrão caso não venha do colorMap */
+}
+
+/* --- CORES DOS BADGES DE ESTADO --- */
+
+/* In Progress - Laranja (Já tens) */
+.status-progress { 
+    background-color: #fd7e14 !important; 
+    color: #fff !important; 
+}
+
+/* Done - Verde Sucesso */
+.status-done { 
+    background-color: #28a745 !important; 
+    color: #fff !important; 
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4); /* Leve brilho de conclusão */
+}
+
+/* To Do - Azul de Planeamento */
+.status-todo { 
+    background-color: #007bff !important; 
+    color: #fff !important; 
+}
+
+/* Parking Lot - Cinzento de Ideia Guardada */
+.status-parking { 
+    background-color: #6c757d !important; 
+    color: #e1e1e6 !important; 
+}
+
+
+/* Container que abraça a tua arte do Canva */
+.canva-carousel-container {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0; /* Zerado para colar perfeitamente nas laterais se quiseres */
+    background-color: #1f2029;
+    border: 1px solid #3f4052;
+    border-radius: 6px;
+    overflow: hidden; /* Garante que os cantos da imagem não herdem bicos */
+}
+
+/* A tua regra de ouro: Largura total e altura fluida */
+.canva-long-strip {
+    width: 100% !important;   /* Ocupa a largura total do pai */
+    height: auto !important;   /* Calcula a altura proporcional com base nos 1070x350 */
+    display: block;            /* Remove espaçamentos fantasmas de elementos inline */
+}
+
+/* --- BLINDAGEM DO PAI (Garante o sumiço ao fechar) --- */
+.accordion-item {
+    background-color: #2a2b36;
+    border: 1px solid #3f4052;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    overflow: hidden; /* ESSENCIAL: Se o pai fechar, a imagem some a 100% */
+}
+
+.accordion-body {
+    padding: 20px;
+    border-top: 1px solid #3f4052;
+    background-color: #1f2029;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Container da linha de informações adicionais */
+.project-more-info {
+    margin-top: -5px; /* Ajusta a proximidade com a descrição anterior */
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background-color: #252632; /* Tom ligeiramente mais claro que o fundo do corpo */
+    border-left: 3px solid #ffc107; /* Um detalhe em dourado/amarelo para chamar o clique */
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+/* O texto estático da etiqueta */
+.project-more-info .info-label {
+    color: #a0a2b7;
+    font-weight: 500;
+}
+
+/* Estilização do Link (O "Botão" de âncora) */
+.project-link {
+    color: #4da6ff !important; /* Um azul vibrante mas elegante para o tema escuro */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease-in-out, text-decoration 0.2s;
+}
+
+/* Efeito de destaque ao passar o rato (Hover) */
+.project-link:hover {
+    color: #80bfff !important; /* Clareia o azul no hover */
+    text-decoration: underline; /* Dá o feedback visual clássico de clique */
+}
