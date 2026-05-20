@@ -1146,3 +1146,180 @@ header p {
     color: #80bfff !important; /* Clareia o azul no hover */
     text-decoration: underline; /* Dá o feedback visual clássico de clique */
 }
+
+/* ==========================================
+   🚨 RESPONSIVIDADE MOBILE (Ecrãs até 768px)
+   ========================================== */
+@media (max-width: 768px) {
+
+    .placeholder-image
+    {
+        width: 100% !important;
+        height: auto !important;
+    } 
+    
+    /* 1. CORREÇÃO DA GRID DE MATERIAIS */
+    .project-dependencies-grid {
+        display: flex !important;
+        flex-direction: column !important; /* Empilha as colunas verticalmente */
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    .dep-column {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* 2. CORREÇÃO DO CABEÇALHO DO ACCORDION */
+    .accordion-button {
+        padding: 12px 15px !important;
+    }
+
+    .project-header-main {
+        display: flex !important;
+        flex-direction: column !important; /* Título em cima, metadados em baixo */
+        align-items: flex-start !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    .project-title {
+        font-size: 1.1rem !important; /* Ajusta o tamanho da fonte do título */
+        white-space: normal !important; /* Permite que quebre linha se o nome for gigante */
+    }
+
+    .project-badges {
+        display: flex !important;
+        flex-wrap: wrap !important; /* Se faltar espaço, joga os badges para a linha de baixo */
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    /* 3. AJUSTE DO MENU DE TABS SUPERIOR */
+    .tabs-container { /* Altera para a classe real que envelopa os teus botões do menu */
+        display: flex !important;
+        overflow-x: auto !important; /* Permite arrastar para o lado se o ecrã for minúsculo */
+        white-space: nowrap !important;
+        justify-content: flex-start !important;
+        padding-bottom: 5px !important;
+    }
+
+    .tab-button {
+        padding: 10px 15px !important;
+        font-size: 0.85rem !important; /* Encolhe ligeiramente o texto dos botões */
+    }
+
+
+    /* SOLUÇÃO 2 REFINADA COM HEADER */
+    .medieval-table-wrapper table, 
+    .medieval-table-wrapper thead, 
+    .medieval-table-wrapper tbody, 
+    .medieval-table-wrapper th, 
+    .medieval-table-wrapper td, 
+    .medieval-table-wrapper tr { 
+        display: block !important; 
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Esconde o cabeçalho rígido original da tabela */
+    .medieval-table-wrapper thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    /* O Card do Produto */
+    .medieval-table-wrapper tr { 
+        background: #1f2029 !important; /* Fundo escuro padrão do corpo */
+        border: 1px solid #3f4052 !important;
+        border-radius: 8px !important;
+        margin-bottom: 20px !important;
+        padding: 0 !important; /* Zerado para o Header colar nas bordas */
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 🥇 ESTILIZAÇÃO DO HEADER DO CARD (Primeira coluna: Product Name) */
+    .medieval-table-wrapper td:nth-of-type(1) {
+        background-color: #2a2b36 !important; /* Tom mais claro para destacar como Header */
+        border-bottom: 2px solid #ffc107 !important; /* Linha dourada medieval */
+        padding: 12px 15px !important;
+        font-size: 1.1rem !important;
+        font-weight: bold !important;
+        color: #ffc107 !important; /* Nome do produto brilha em dourado */
+        display: block !important;
+        text-align: left !important; /* Alinhado à esquerda como um título real */
+    }
+    /* Oculta o prefixo "Product:" na primeira coluna, já que ela própria é o cabeçalho */
+    .medieval-table-wrapper td:nth-of-type(1)::before { 
+        content: "" !important; 
+    }
+
+    /* As outras células de dados técnicos */
+    .medieval-table-wrapper td:not(:nth-of-type(1)) { 
+        border: none !important;
+        border-bottom: 1px solid #2e2f3d !important; 
+        position: relative !important;
+        padding: 10px 15px 10px 45% !important; /* Abre 45% de espaço na esquerda para a label */
+        text-align: right !important; /* Dados alinhados à direita */
+        font-size: 0.9rem !important;
+        color: #e3e4e8 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        min-height: 40px;
+    }
+
+    .medieval-table-wrapper td:last-child {
+        border-bottom: none !important;
+    }
+
+    /* Injeta os rótulos automáticos à esquerda de cada dado */
+    .medieval-table-wrapper td:nth-of-type(2)::before { content: "Type:"; font-weight: bold; color: #a0a2b7; }
+    .medieval-table-wrapper td:nth-of-type(3)::before { content: "Drying Time:"; font-weight: bold; color: #a0a2b7; }
+    .medieval-table-wrapper td:nth-of-type(4)::before { content: "Shrinkage:"; font-weight: bold; color: #a0a2b7; }
+    .medieval-table-wrapper td:nth-of-type(5)::before { content: "Notes:"; font-weight: bold; color: #a0a2b7; }
+    
+    /* Posicionamento absoluto das labels à esquerda */
+    .medieval-table-wrapper td::before {
+        position: absolute !important;
+        left: 15px !important;
+        width: 40% !important;
+        text-align: left !important;
+        white-space: nowrap;
+    }
+
+    /* 📱 CORREÇÃO COMPLETA DO MENU DE ABAS */   
+    /* 📱 TABS ULTRA COMPACTAS EM MOBILE (SEM SCROLL) */
+    .tabs {
+        display: flex !important;
+        justify-content: space-between !important; /* Distribui as 4 abas igualmente na largura do ecrã */
+        overflow: hidden !important;             /* Mata o scroll, já não é preciso */
+        white-space: nowrap !important;
+        padding: 8px 10px !important;            /* Padding vertical e horizontal reduzido no container */
+        gap: 0px !important;                     /* Espaço mínimo de segurança entre os botões */
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .tab-button {
+        flex: 1 1 0% !important;                 /* Força cada botão a ter EXATAMENTE o mesmo tamanho (25% do ecrã cada) */
+        padding: 8px 4px !important;             /* Padding interno super encolhido para o texto não quebrar */
+        font-size: 0.78rem !important;           /* Letra ligeiramente menor para caber em qualquer telemóvel */
+        letter-spacing: 0px !important;          /* Junta as letras um pentelhésimo para poupar espaço */
+        text-align: center !important;
+        text-transform: uppercase;
+        
+        /* Proteção extra para garantir que o texto longo não quebre a linha interna */
+        display: inline-block !important;
+        overflow: hidden;
+        text-overflow: clip; 
+    }
+
+    .tab-btn{
+        padding: 10px 10px;
+    }
+}
