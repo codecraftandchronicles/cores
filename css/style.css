@@ -158,6 +158,51 @@ header p {
   gap: 20px;
 }
 
+/* Virtual Scrolling Styles */
+.virtual-scroll-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.virtual-scroll-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.virtual-scroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+/* Ensure smooth scrolling on all devices */
+.virtual-scroll-viewport::-webkit-scrollbar {
+  width: 8px;
+}
+
+.virtual-scroll-viewport::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.virtual-scroll-viewport::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.virtual-scroll-viewport::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .card {
   background: #f8f9fa;
   border: 2px solid #e0e0e0;
@@ -293,6 +338,29 @@ header p {
   font-size: 0.95rem;
 }
 
+.empty-state .suggestions {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.empty-state .suggestions h4 {
+  color: #667eea;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.empty-state .suggestions ul {
+  padding-left: 20px;
+}
+
+.empty-state .suggestions li {
+  margin-bottom: 8px;
+  color: #555;
+}
+
 .loading {
   text-align: center;
   padding: 40px;
@@ -338,11 +406,17 @@ header p {
 
   .results-grid {
     grid-template-columns: 1fr;
+    overflow-x: hidden;
   }
 
   .search-section,
   .results-section {
     padding: 20px;
+  }
+
+  .card {
+    width: 100%;
+    overflow-x: hidden;
   }
 }
 
@@ -592,6 +666,28 @@ header p {
     color: whitesmoke;
     font-size: 1.8rem;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+}
+
+.footer-links a:before {
+    font-family: "Font Awesome 6 Brands";
+    font-weight: 900;
+}
+
+.footer-links a[title="Instagram"]:before {
+    content: "\f16d"; /* Instagram icon */
+}
+
+.footer-links a[title="Blog"]:before {
+    content: "\f198"; /* WordPress icon */
+}
+
+.footer-links a i {
+    display: none; /* Hide the original icon element */
 }
 
 .footer-links a:hover {

@@ -1,0 +1,30 @@
+{
+  "name": "cores",
+  "version": "1.0.0",
+  "description": "Uma aplicação web estática simples para consultar um cadastro de cores e seus efeitos/utilizações estratégicas. Perfeita para pintores, artistas e entusiastas de pintura de miniaturas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:install": "playwright install",
+    "test:all": "npm run test:install && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codecraftandchronicles/cores.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/codecraftandchronicles/cores/issues"
+  },
+  "homepage": "https://github.com/codecraftandchronicles/cores#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1"
+  }
+}
