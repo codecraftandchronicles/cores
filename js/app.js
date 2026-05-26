@@ -104,7 +104,7 @@ const DataService = (function() {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
             
-            return fetch(`./data/colours.json`, { signal: controller.signal })
+            return fetch(`./data/colours.json?v=1.0.0`, { signal: controller.signal })
                 .then(response => {
                     clearTimeout(timeoutId);
                     if (!response.ok) {
@@ -131,7 +131,7 @@ const DataService = (function() {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
             
-            return fetch(`./data/effects.json`, { signal: controller.signal })
+            return fetch(`./data/effects.json?v=1.0.0`, { signal: controller.signal })
                 .then(response => {
                     clearTimeout(timeoutId);
                     if (!response.ok) {
@@ -158,7 +158,7 @@ const DataService = (function() {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
             
-            return fetch(`./data/projects.json`, { signal: controller.signal })
+            return fetch(`./data/projects.json?v=1.0.0`, { signal: controller.signal })
                 .then(response => {
                     clearTimeout(timeoutId);
                     if (!response.ok) {
@@ -185,7 +185,7 @@ const DataService = (function() {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
             
-            return fetch(`./data/tools.json`, { signal: controller.signal })
+            return fetch(`./data/tools.json?v=1.0.0`, { signal: controller.signal })
                 .then(response => {
                     clearTimeout(timeoutId);
                     if (!response.ok) {
