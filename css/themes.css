@@ -1,0 +1,223 @@
+/* ==========================================================================
+   SISTEMA DE PRIMERS DINÂMICOS (PALETA VALLEJO MODEL COLOR)
+   ========================================================================== */
+
+/* 
+   Instruções de Uso no HTML/JS:
+   Ao renderizar ou alternar o primer do card, basta injetar a classe correspondente no card da tinta.
+   Exemplo: <div class="paint-card primer-v-white"> ... </div>
+*/
+
+/* --- 1. PRIMERS CLAROS (Injetam texto escuro para total legibilidade) --- */
+
+.primer-v-white {
+    --primer-bg: #FFFFFF;
+    --primer-text-main: #1A1A24;
+    --primer-text-muted: #4A4B5A;
+    --primer-accent: #B38600; /* Tom de ouro escurecido para contraste no branco */
+    --primer-border: #D1D2DC;
+    --gradient-mix-blend: multiply; /* Faz o degradê da tinta reagir realisticamente ao fundo */
+}
+
+.primer-v-yellow-ice {
+    --primer-bg: #E3A813;
+    --primer-text-main: #100B00;
+    --primer-text-muted: #423005;
+    --primer-accent: #800000;
+    --primer-border: #B88204;
+    --gradient-mix-blend: multiply;
+}
+
+.primer-v-desert-sand {
+    --primer-bg: #D2B48C;
+    --primer-text-main: #1C150C;
+    --primer-text-muted: #4F3E2B;
+    --primer-accent: #781D1D;
+    --primer-border: #B39674;
+    --gradient-mix-blend: multiply;
+}
+
+.primer-v-dark-yellow {
+    --primer-bg: #A38760;
+    --primer-text-main: #0F0D0A;
+    --primer-text-muted: #383024;
+    --primer-accent: #FFE066;
+    --primer-border: #806A4B;
+    --gradient-mix-blend: multiply;
+}
+
+.primer-v-silvergrey {
+    --primer-bg: #A3ADB8;
+    --primer-text-main: #0B1014;
+    --primer-text-muted: #333C45;
+    --primer-accent: #801414;
+    --primer-border: #828C96;
+    --gradient-mix-blend: multiply;
+}
+
+.primer-v-light-grey {
+    --primer-bg: #8A959E;
+    --primer-text-main: #05080A;
+    --primer-text-muted: #272E33;
+    --primer-accent: #FFD54F;
+    --primer-border: #6B767F;
+    --gradient-mix-blend: multiply;
+}
+
+
+/* --- 2. PRIMERS MÉDIOS E ESCUROS (Mantêm ou adaptam fontes claras) --- */
+
+.primer-v-vermilion {
+    --primer-bg: #A81D1D;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #FFCDCD;
+    --primer-accent: #FFE082;
+    --primer-border: #D32F2F;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-ultramarine {
+    --primer-bg: #212F8A;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #CCD1FF;
+    --primer-accent: #FFCA28;
+    --primer-border: #303F9F;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-nato-green {
+    --primer-bg: #3B4436;
+    --primer-text-main: #F5F5F5;
+    --primer-text-muted: #B0BEC5;
+    --primer-accent: #FFD54F;
+    --primer-border: #262C23;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-chestnut-brown {
+    --primer-bg: #735943;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #E0D4C5;
+    --primer-accent: #FFD54F;
+    --primer-border: #544131;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-oxford-blue {
+    --primer-bg: #444941;
+    --primer-text-main: #F5F5F5;
+    --primer-text-muted: #B3BCB0;
+    --primer-accent: #FFCA28;
+    --primer-border: #2D302B;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-usmc-green {
+    --primer-bg: #4A4E39;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #C2C7B3;
+    --primer-accent: #FFD54F;
+    --primer-border: #333627;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-venetian-red {
+    --primer-bg: #5C3D37;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #DEC9C5;
+    --primer-accent: #FFE082;
+    --primer-border: #422C27;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-german-green {
+    --primer-bg: #363D32;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #B2BDB0;
+    --primer-accent: #FFCA28;
+    --primer-border: #242921;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-bronze-green {
+    --primer-bg: #2E3B36;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #AEBCB6;
+    --primer-accent: #FFCA28;
+    --primer-border: #1B2421;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-grey {
+    --primer-bg: #535E63;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #CFD8DC;
+    --primer-accent: #FFD54F;
+    --primer-border: #3C4447;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-dark-grey {
+    --primer-bg: #3A4042;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #B0BEC5;
+    --primer-accent: #FFCA28;
+    --primer-border: #25292A;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-basalt-grey {
+    --primer-bg: #4A535C;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #D1D7DC;
+    --primer-accent: #FFCA28;
+    --primer-border: #32393F;
+    --gradient-mix-blend: normal;
+}
+
+.primer-v-black {
+    --primer-bg: #1A1C1E;
+    --primer-text-main: #FFFFFF;
+    --primer-text-muted: #90A4AE;
+    --primer-accent: #FFC107; /* O teu amarelo ouro original */
+    --primer-border: #2D3134;
+    --gradient-mix-blend: normal;
+}
+
+
+/* ==========================================================================
+   APLICAÇÃO DAS VARIÁVEIS NO CARD DA TINTA
+   ========================================================================== */
+
+/* Configuração Padrão do Card (Caso nenhum primer seja selecionado, herda o Dark padrão) */
+.paint-card {
+    background-color: var(--primer-bg, #232332) !important;
+    border: 1px solid var(--primer-border, #3f4052) !important;
+    transition: all 0.3s ease;
+}
+
+/* Títulos das Tintas (Ex: WHITE, WASH UMBER) */
+.paint-card .paint-title {
+    color: var(--primer-text-main, #FFFFFF) !important;
+}
+
+/* Subtítulos e Labels (Ex: MANUFACTURER, TEMPERATURE, PHASE) */
+.paint-card .info-label {
+    color: var(--primer-accent, #ffc107) !important;
+}
+
+/* Valores de texto (Ex: AK, Neutral, Highlight) */
+.paint-card .info-value {
+    color: var(--primer-text-main, #FFFFFF) !important;
+}
+
+/* Descrições longas ou textos secundários */
+.paint-card .primary-function-text {
+    color: var(--primer-text-muted, #9e9eb4) !important;
+}
+
+/* A MÁGICA DO DEGRADÊ: O bloco que mostra a cor pura da tinta */
+.paint-card .color-gradient-bar {
+    mix-blend-mode: var(--gradient-mix-blend, normal);
+    border: 1px solid var(--primer-border, rgba(255,255,255,0.1));
+}

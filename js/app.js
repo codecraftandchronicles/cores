@@ -443,12 +443,12 @@ function validateColourData(data) {
     return true;
 }
 
-function loadDataColours() {
-    const loader = document.getElementById('loading-overlay');
-    if (loader) {
-        loader.style.display = 'flex';
-        loader.style.opacity = '1';
-    }    
+function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
+  const loader = document.getElementById('loading-overlay');
+  if (loader && endpoint === 'colours') {
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
+  }
 
     fetch(`./data/colours.json`)
         .then(response => {
@@ -716,15 +716,16 @@ function setupEventListeners() {
           clearSearch();           
           document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
           this.classList.add('active');
-          loadDataColours();
-          loadDataEffects();
-          loadDataProjects();
+          loadData('colours', 'colours', 'Base Colour', 'allDataColours');
+          loadData('effects', 'effects', FIELD_KEYS.PRODUCT_NAME, 'allDataEffects');
+          loadData('projects', 'projects', null, 'allDataProjects', projectSortFunc);
+          loadData('tools', 'tools', 'Name', 'allDataTools');
 
           if (typeof switchTab === 'function') {
             switchTab('colours'); 
           } 
         
-          const firstTab = document.querySelector('.tab-button[data-tab="colours"]');
+          const firstTab = document.querySelector(`.tab-button[data-tab="${TAB_NAMES.COLOURS}"]`);
           if (firstTab) {
               firstTab.click();
           }
@@ -733,8 +734,7 @@ function setupEventListeners() {
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-    switchTab(e.target.dataset.tab);
-
+      switchTab(e.target.dataset.tab);
     });
   });
 
@@ -909,7 +909,7 @@ function buildColorMap() {
     const colours = DataService.getColours();
     if (!colours || colours.length === 0) return;
 
-    const chaveNome = "Base Colour";
+    const chaveNome = FIELD_KEYS.BASE_COLOUR;
     
     colours.forEach(c => {
         if (c[chaveNome]) {
@@ -998,7 +998,7 @@ function updateFilters() {
 }
 
 function performSearch() {
-    if (currentTab === 'projects') {
+    if (currentTab === TAB_NAMES.PROJECTS) {
         document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
             checkbox.checked = false;
         });
@@ -1024,14 +1024,14 @@ function performSearch() {
     let data = 'putty';
     if (currentTab === 'colours')
       data = allDataColours.colours 
-    else if (currentTab === 'effects') {
+    else if (currentTab === TAB_NAMES.EFFECTS) {
       data = allDataEffects.effects;
     }
-    else if (currentTab === 'projects') {
+    else if (currentTab === TAB_NAMES.PROJECTS) {
       data = allDataProjects.projects;
     }    
 
-    if (currentTab === 'putty') {
+    if (currentTab === TAB_NAMES.PUTTY) {
         const resultsContainer = document.getElementById('results');  
         resultsContainer.innerHTML = htmlPutty; 
         resultsInfo.innerHTML = "<p>Technical reference guide for fillers</p>";
@@ -1094,15 +1094,15 @@ function sortResults(dataList) {
     if (!dataList || dataList.length === 0) return;
 
     dataList.sort((a, b) => {
-        const valA = (a["Base Colour"] || a["Product Name"] || "").toUpperCase();
-        const valB = (b["Base Colour"] || b["Product Name"] || "").toUpperCase();
+        const valA = (a[FIELD_KEYS.BASE_COLOUR] || a[FIELD_KEYS.PRODUCT_NAME] || "").toUpperCase();
+        const valB = (b[FIELD_KEYS.BASE_COLOUR] || b[FIELD_KEYS.PRODUCT_NAME] || "").toUpperCase();
         
         return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
     });
 }
 
 function displayResults(results = null) {
-  if (currentTab === 'putty') {
+  if (currentTab === TAB_NAMES.PUTTY) {
       return; 
   }
 
@@ -1146,7 +1146,7 @@ function displayResults(results = null) {
   }
 
   let tabName = "";
-  tabName = currentTab === 'colours' ? 'colours' : (currentTab === 'effects' ? 'effects' : 'projects');
+  tabName = currentTab === TAB_NAMES.COLOURS ? TAB_NAMES.COLOURS : (currentTab === TAB_NAMES.EFFECTS ? TAB_NAMES.EFFECTS : TAB_NAMES.PROJECTS);
   resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> results</p>`;
 
   // Implement virtualization for large datasets
@@ -1262,28 +1262,29 @@ function createCard(item) {
     let cardHTML = `
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${(item['Base Colour'] || item['Product Name'] || item['ProjectName'] || '').toUpperCase()}</span>          
+          <span class="card-title">${escapeHtml((item[FIELD_KEYS.BASE_COLOUR] || item[FIELD_KEYS.PRODUCT_NAME] || item[FIELD_KEYS.PROJECT_NAME] || '').toUpperCase())}</span>          
           <span class="card-hex ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}" onclick="copyToClipboard('${mainHex}', event)"
       title="Clique para copiar HEX">
-            ${item['Hex']?.toUpperCase() || item['Status'] || ''}
+            ${escapeHtml(item[FIELD_KEYS.HEX]?.toUpperCase() || item[FIELD_KEYS.STATUS] || '')}
           </span>
         </div>
-        <span class="card-code">${(item['Code'] || '').toUpperCase()}</span>        
+        <span class="card-code">${escapeHtml((item[FIELD_KEYS.CODE] || '').toUpperCase())}</span>        
     `;
 
-  const hexColor = item.Hex || '#ccc';
+  const hexColor = item[FIELD_KEYS.HEX] || '#ccc';
 
-  if (currentTab != 'projects') {
+  if (currentTab != TAB_NAMES.PROJECTS) {
   cardHTML += `
       <div class="dilution-container">
           <div class="dilution-rule ${mainSpecialClass}" style="--paint-color: ${hexColor};"></div>
-          <div class="dilution-disclaimer">${illustrative}</div>
+          <div class="dilution-disclaimer">${escapeHtml(illustrative)}</div>
       </div>
   `;
   } 
   
     Object.entries(item).forEach(([key, value]) => {
-      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' || key === 'Owned' || key === 'ProjectName' || key === 'Status' && key !== 'Complementary')  return;
+      // Skip these fields - they're handled separately or already displayed
+      if (key === FIELD_KEYS.BASE_COLOUR || key === FIELD_KEYS.CODE || key === FIELD_KEYS.KEYWORDS || key === FIELD_KEYS.PRODUCT_NAME || key === FIELD_KEYS.HEX || key === FIELD_KEYS.OWNED || key === FIELD_KEYS.PROJECT_NAME || key === FIELD_KEYS.STATUS || key === FIELD_KEYS.COMPLEMENTARY) return;
 
       let displayValue = value;
       let displayKey = key.replace(/\s*\(.*/, "");       
@@ -1335,15 +1336,56 @@ function createCard(item) {
       }
       cardHTML += `
         <div class="card-field">
-          <div class="card-label">${displayKey}</div>
-          <div class="card-value">${displayValue}</div>
+          <div class="card-label">${escapeHtml(displayKey)}</div>
+          <div class="card-value">${escapeHtml(displayValue?.toString() || '')}</div>
         </div>
         
       `;    
     });
     
+    // Handle Complementary field separately to preserve HTML structure with escaped data
+    if (item[FIELD_KEYS.COMPLEMENTARY]) {
+      const compValue = item[FIELD_KEYS.COMPLEMENTARY];
+      if (compValue && compValue.trim() !== "") {
+        const compHex = colorMap[compValue.toUpperCase()];
+        if (compHex) {
+          const compContrast = getContrastColor(compHex);
+          const compSpecialClass = getSpecialClass(compHex);
+          cardHTML += `
+            <div class="card-field">
+              <div class="card-label">${escapeHtml(FIELD_KEYS.COMPLEMENTARY)}</div>
+              <div class="card-value">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span>${escapeHtml(compValue)}</span>
+                  <span class="card-code ${compSpecialClass}" 
+                        style="background-color: ${compHex}; color: ${compContrast}; 
+                              padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
+                    ${escapeHtml(compHex)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          cardHTML += `
+            <div class="card-field">
+              <div class="card-label">${escapeHtml(FIELD_KEYS.COMPLEMENTARY)}</div>
+              <div class="card-value">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span>${escapeHtml(compValue)}</span>
+                  <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
+                    Hex N/A
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+     
      cardHTML += `
-        <div class="card-keywords">${item['Keywords'] || ''}</div>
+        <div class="card-keywords">${escapeHtml(item[FIELD_KEYS.KEYWORDS] || '')}</div>
       `;    
 
     cardHTML += `</div>`;
@@ -1359,14 +1401,14 @@ function createProjectCard(item) {
     const isInProgress = item.Status && (item.Status.toLowerCase().trim() === 'in progress' || item.Status.toLowerCase().trim() === 'to do');
     const buttonClass = isInProgress ? "accordion-button" : "accordion-button collapsed";
     const bodyStyle = isInProgress ? 'style="display: block;"' : 'style="display: none;"';
-    const statusClass = getStatusClass(item.Status);
+    const statusClass = getStatusClass(item[FIELD_KEYS.STATUS]);
 
     let urlLine = "";
-    if (item.URL) {
+    if (item[FIELD_KEYS.URL] && isValidUrl(item[FIELD_KEYS.URL])) {
         urlLine = `
           <div class="project-more-info">
             <span class="info-label">✨ More information:</span>
-            <a href="${item.URL}" target="_blank" rel="noopener noreferrer" class="project-link">
+            <a href="${item[FIELD_KEYS.URL]}" target="_blank" rel="noopener noreferrer" class="project-link">
               Read full project log <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
             </a>
           </div>
@@ -1378,23 +1420,23 @@ function createProjectCard(item) {
         <div class="accordion-item backend-border">
           <button class="${buttonClass}" type="button" onclick="toggleAccordion(this)">
             <div class="project-header-main">
-              <span class="project-title">${(item.ProjectName || '').toUpperCase()}</span>
+              <span class="project-title">${escapeHtml((item[FIELD_KEYS.PROJECT_NAME] || '').toUpperCase())}</span>
               <div class="project-badges">
-                <span class="badge ${statusClass}">${(item.Status || '').toUpperCase()}</span>
-                <span class="badge project-pct">${(item.Pct || '0%').toUpperCase()}</span>
+                <span class="badge ${statusClass}">${escapeHtml((item[FIELD_KEYS.STATUS] || '').toUpperCase())}</span>
+                <span class="badge project-pct">${escapeHtml((item[FIELD_KEYS.PCT] || '0%').toUpperCase())}</span>
               </div>
             </div>
           </button>
 
           <div class="accordion-body" ${bodyStyle}>
-            <p class="project-desc">${item.Description || ''}</p>   
+            <p class="project-desc">${item[FIELD_KEYS.DESCRIPTION] || ''}</p>   
             ${urlLine}       
     `;
       
 
-    if (item.Materials && typeof item.Materials === 'object') {
+    if (item[FIELD_KEYS.MATERIALS] && typeof item[FIELD_KEYS.MATERIALS] === 'object') {
     cardHTML += `<div class="project-dependencies-grid">`;
-    Object.entries(item.Materials).forEach(([subKey, subArray]) => {
+    Object.entries(item[FIELD_KEYS.MATERIALS]).forEach(([subKey, subArray]) => {
         if (Array.isArray(subArray) && subArray.length > 0) {
             
             // Dicionário para traduzir ou enriquecer o nome da coluna no ecrã
@@ -1417,8 +1459,8 @@ function createProjectCard(item) {
                 const borderStyle = `style="border-left: 4px solid ${details.hex};"`;
                 cardHTML += `
                     <span class="mini-chip" ${borderStyle}>
-                        <small style="color: #888; font-size: 0.75rem; display:block;">${id} ${details.manufacturer}</small>
-                        <strong>${details.name}</strong>
+                        <small style="color: #888; font-size: 0.75rem; display:block;">${escapeHtml(id)} ${escapeHtml(details.manufacturer || '')}</small>
+                        <strong>${escapeHtml(details.name)}</strong>
                     </span>
                 `;
             });
@@ -1429,7 +1471,7 @@ function createProjectCard(item) {
     }
     
     // --- NOVO CONTAINER DO CARROSSEL DO CANVA ---
-    if (item.ProjectImage && Array.isArray(item.ProjectImage) && item.ProjectImage.length > 0) {
+    if (item[FIELD_KEYS.PROJECT_IMAGE] && Array.isArray(item[FIELD_KEYS.PROJECT_IMAGE]) && item[FIELD_KEYS.PROJECT_IMAGE].length > 0) {
     cardHTML += `
       <div class="canva-carousel-container" onclick="event.stopPropagation();" style="display: flex; flex-direction: column; gap: 15px;">
     `;
@@ -1447,10 +1489,10 @@ function createProjectCard(item) {
     cardHTML += `</div>`;
     } 
     // Fallback de segurança: Caso o JSON antigo ainda tenha apenas uma string em vez de array
-    else if (item.ProjectImage && typeof item.ProjectImage === 'string') {
+    else if (item[FIELD_KEYS.PROJECT_IMAGE] && typeof item[FIELD_KEYS.PROJECT_IMAGE] === 'string' && isValidImageFilename(item[FIELD_KEYS.PROJECT_IMAGE])) {
         cardHTML += `
           <div class="canva-carousel-container" onclick="event.stopPropagation();">
-              <img src="img/projects/${item.ProjectImage}" alt="Canva Showcase" class="canva-long-strip">
+              <img src="img/projects/${escapeHtml(item[FIELD_KEYS.PROJECT_IMAGE])}" alt="Canva Showcase" class="canva-long-strip">
           </div>
         `;
     }
@@ -1499,17 +1541,17 @@ function getMaterialDetails(subKey, id) {
         const colours = DataService.getColours();
         const found = colours.find(c => c.Code && c.Code.toUpperCase().trim() === searchId);
         if (found) {
-            name = found["Base Colour"] || searchId;
-            hex = found.Hex || "#555";
-            manufacturer = found.Manufacturer ? `[${found.Manufacturer}] ` : "";
+            name = found[FIELD_KEYS.BASE_COLOUR] || searchId;
+            hex = found[FIELD_KEYS.HEX] || "#555";
+            manufacturer = found[FIELD_KEYS.MANUFACTURER] ? `[${found[FIELD_KEYS.MANUFACTURER]}] ` : "";
         }
     } else if (subKey === 'Effects') {
         const effects = DataService.getEffects();
         const found = effects.find(e => e.Code && e.Code.toUpperCase().trim() === searchId);
         if (found) {
-            name = found["Product Name"] || searchId;
-            hex = found.Hex || "#555";
-            manufacturer = found.Manufacturer ? `[${found.Manufacturer}] ` : "";
+            name = found[FIELD_KEYS.PRODUCT_NAME] || searchId;
+            hex = found[FIELD_KEYS.HEX] || "#555";
+            manufacturer = found[FIELD_KEYS.MANUFACTURER] ? `[${found[FIELD_KEYS.MANUFACTURER]}] ` : "";
         }
     } else if (subKey === 'Tools') {
         const tools = DataService.getTools();
@@ -1580,6 +1622,25 @@ function escapeHtml(text) {
   return escaped;
 }
 
+function isValidUrl(urlString) {
+  if (!urlString || typeof urlString !== 'string') return false;
+  try {
+    const url = new URL(urlString);
+    return ['http:', 'https:'].includes(url.protocol);
+  } catch (err) {
+    return false;
+  }
+}
+
+function isValidImageFilename(filename) {
+  if (!filename || typeof filename !== 'string') return false;
+  // Block path traversal attempts and absolute paths
+  if (filename.includes('/') || filename.includes('\\') || filename.includes('..')) return false;
+  // Only allow alphanumeric, dots, hyphens, underscores
+  const SAFE_FILENAME_REGEX = /^[a-zA-Z0-9._-]+$/;
+  return SAFE_FILENAME_REGEX.test(filename);
+}
+
 function showError(message) {
   const resultsContainer = document.getElementById('results');
   const safeMessage = escapeHtml(message);
@@ -1590,6 +1651,7 @@ function showError(message) {
       <p>${safeMessage}</p>
     </div>
   `;
+  console.error(`[App Error] ${message}`);
 }
 
 function validateSearchButton() {
@@ -1620,6 +1682,49 @@ function toggleSort() {
     }    
 }
 
+function applyPrimerToCards(primerClass) {
+  // Update state
+  currentPrimerClass = primerClass || 'primer-v-white';
+  
+  // Get all paint cards
+  const cards = document.querySelectorAll('.card');
+  
+  // Get primer selector container (for label color)
+  const primerContainer = document.querySelector('.primer-selector-container');
+  
+  // List of all possible primer classes for removal
+  const allPrimerClasses = [
+    'primer-v-white', 'primer-v-yellow-ice', 'primer-v-desert-sand', 'primer-v-dark-yellow',
+    'primer-v-silvergrey', 'primer-v-light-grey', 'primer-v-vermilion', 'primer-v-ultramarine',
+    'primer-v-nato-green', 'primer-v-chestnut-brown', 'primer-v-oxford-blue', 'primer-v-usmc-green',
+    'primer-v-venetian-red', 'primer-v-german-green', 'primer-v-bronze-green', 'primer-v-grey',
+    'primer-v-dark-grey', 'primer-v-basalt-grey', 'primer-v-black'
+  ];
+  
+  // Apply new primer to each card
+  cards.forEach(card => {
+    // Remove all existing primer classes
+    allPrimerClasses.forEach(primer => {
+      card.classList.remove(primer);
+    });
+    
+    // Add new primer class
+    if (primerClass && primerClass.trim() !== '') {
+      card.classList.add(primerClass);
+    }
+  });
+  
+  // Apply primer class to container to update label color
+  if (primerContainer) {
+    allPrimerClasses.forEach(primer => {
+      primerContainer.classList.remove(primer);
+    });
+    if (primerClass && primerClass.trim() !== '') {
+      primerContainer.classList.add(primerClass);
+    }
+  }
+}
+
 function copyToClipboard(text, event) {
     if (event) event.stopPropagation();
 
@@ -1627,14 +1732,15 @@ function copyToClipboard(text, event) {
         const element = event.target;
         const originalText = element.innerText;
         element.innerText = "COPIED!";
-        element.style.transform = "scale(1.1)";        
+        element.style.transform = "scale(1.1)";
+        console.log(`✓ Copied to clipboard: ${text}`);
         setTimeout(() => {
             element.innerText = originalText;
             element.style.transform = "scale(1.0)";
         }, 800);
     }).catch(err => {
-        console.error('Error to copy HEX: ', err);
-        alert("Error to copy HEX");
+        console.error('✗ Failed to copy to clipboard:', err);
+        alert("Unable to copy HEX code. Please try again.");
     });
 }
 
@@ -1657,7 +1763,7 @@ function exportInventoryToCSV() {
     }
 
     let csvContent = "\uFEFF"; 
-    csvContent += ["Base Colour", "Code"].join(",") + "\n";
+    csvContent += [FIELD_KEYS.BASE_COLOUR, FIELD_KEYS.CODE].join(",") + "\n";
 
     ownedColours.forEach(colour => {
         const row = [
@@ -1705,7 +1811,10 @@ function syncTabWithHash() {
   if (!hash) return;
 
   const tabMap = {
-    'colours': 'colours','effects': 'effects','putty': 'putty','projects': 'projects'
+    [TAB_NAMES.COLOURS]: TAB_NAMES.COLOURS,
+    [TAB_NAMES.EFFECTS]: TAB_NAMES.EFFECTS,
+    [TAB_NAMES.PUTTY]: TAB_NAMES.PUTTY,
+    [TAB_NAMES.PROJECTS]: TAB_NAMES.PROJECTS
   };
 
   if (tabMap[hash]) {

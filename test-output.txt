@@ -1,0 +1,98 @@
+
+Running 12 tests using 1 worker
+
+[WebServer] (node:3336) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+[WebServer] (Use `node --trace-deprecation ...` to show where the warning was created)
+  Ô£ô   1 tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid (4.0s)
+  Ô£ô   2 tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card (3.5s)
+  Ô£ô   3 tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results (2.8s)
+  Ô£ô   4 tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads (2.8s)
+  Ô£ô   5 tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders (2.5s)
+  Ô£ô   6 tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders (2.8s)
+  Ô£ÿ   7 tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered (3.0s)
+  Ô£ÿ   8 tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters (3.4s)
+  Ô£ô   9 tests\search-form.spec.js:225:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses (4.2s)
+  Ô£ÿ  10 tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body (4.2s)
+  Ô£ô  11 tests\search-form.spec.js:288:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header again to collapse accordion body (3.8s)
+  Ô£ô  12 tests\search-form.spec.js:322:3 ÔÇ║ Data load overlay ÔÇ║ verify loading overlay appears and disappears during page load (2.7s)
+
+
+  1) tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.filter-group')
+    Expected: visible
+    Error: strict mode violation: locator('.filter-group') resolved to 4 elements:
+        1) <div class="filter-group">ÔÇª</div> aka getByText('TemperatureWarmColdNeutral')
+        2) <div class="filter-group">ÔÇª</div> aka getByText('PhaseBaseShadowHighlightFilterFluorescentTMM')
+        3) <div class="filter-group">ÔÇª</div> aka getByText('SaturationLightMediumDark')
+        4) <div class="filter-group">ÔÇª</div> aka getByText('ManufacturerAKCitadelVallejo')
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.filter-group')[22m
+
+
+      142 |     await expect(page.locator('#tab-cores-label')).toHaveClass(/active/);
+      143 |     // Wait for filters to be loaded
+    > 144 |     await expect(page.locator('.filter-group')).toBeVisible({ timeout: 5000 });
+          |                                                 ^
+      145 |   });
+      146 |
+      147 |   test('click Temperature filter checkbox and verify results are filtered', async ({ page }) => {
+        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:144:49
+
+    Error Context: test-results\search-form-Filter-functio-ce703-verify-results-are-filtered\error-context.md
+
+  2) tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.filter-group')
+    Expected: visible
+    Error: strict mode violation: locator('.filter-group') resolved to 4 elements:
+        1) <div class="filter-group">ÔÇª</div> aka getByText('TemperatureWarmColdNeutral')
+        2) <div class="filter-group">ÔÇª</div> aka getByText('PhaseBaseShadowHighlightFilterFluorescentTMM')
+        3) <div class="filter-group">ÔÇª</div> aka getByText('SaturationLightMediumDark')
+        4) <div class="filter-group">ÔÇª</div> aka getByText('ManufacturerAKCitadelVallejo')
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.filter-group')[22m
+
+
+      142 |     await expect(page.locator('#tab-cores-label')).toHaveClass(/active/);
+      143 |     // Wait for filters to be loaded
+    > 144 |     await expect(page.locator('.filter-group')).toBeVisible({ timeout: 5000 });
+          |                                                 ^
+      145 |   });
+      146 |
+      147 |   test('click Temperature filter checkbox and verify results are filtered', async ({ page }) => {
+        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:144:49
+
+    Error Context: test-results\search-form-Filter-functio-f1a34-y-results-match-all-filters\error-context.md
+
+  3) tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"block"[39m
+    Received: [31m"none"[39m
+
+      280 |     accordionBody = page.locator('.projects-accordion .accordion-body').first();
+      281 |     const displayAfterClick = await accordionBody.evaluate((el) => window.getComputedStyle(el).display);
+    > 282 |     expect(displayAfterClick).toBe('block');
+          |                               ^
+      283 |
+      284 |     // Verify accordion button no longer has 'collapsed' class
+      285 |     await expect(accordionButton).not.toHaveClass(/collapsed/);
+        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:282:31
+
+    Error Context: test-results\search-form-Project-accord-3eb68-er-to-expand-accordion-body\error-context.md
+
+  3 failed
+    tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered 
+    tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters 
+    tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body 
+  9 passed (1.2m)

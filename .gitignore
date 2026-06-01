@@ -16,6 +16,16 @@ node_modules/
 package-lock.json
 yarn.lock
 
+# C# / .NET build artifacts
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.nupkg
+*.nuspec
+*.csproj.user
+
 # Ficheiros temporários
 *.tmp
 *.log

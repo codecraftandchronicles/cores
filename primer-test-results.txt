@@ -1,0 +1,10 @@
+
+Running 14 tests using 1 worker
+
+  Ô£ô   1 tests\primer-selector.spec.js:12:3 ÔÇ║ Primer selector feature ÔÇ║ primer selector exists and has correct label (7.1s)
+  Ô£ÿ   2 tests\primer-selector.spec.js:20:3 ÔÇ║ Primer selector feature ÔÇ║ primer selector has all 19 primer options (8.7s)
+  Ô£ÿ   3 tests\primer-selector.spec.js:42:3 ÔÇ║ Primer selector feature ÔÇ║ primer selector has tooltip with correct text (7.9s)
+  Ô£ô   4 tests\primer-selector.spec.js:49:3 ÔÇ║ Primer selector feature ÔÇ║ default primer (white) is applied on page load (2.5s)
+  Ô£ô   5 tests\primer-selector.spec.js:58:3 ÔÇ║ Primer selector feature ÔÇ║ selecting a primer applies the correct CSS class to all cards (2.4s)
+  Ô£ô   6 tests\primer-selector.spec.js:81:3 ÔÇ║ Primer selector feature ÔÇ║ selecting different primers updates card styling (2.1s)
+  Ô£ô   7 tests\primer-selector.spec.js:103:3 ÔÇ║ Primer selector feature ÔÇ║ primer selector is visible on colours tab (1.9s)
