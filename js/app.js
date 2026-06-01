@@ -1,19 +1,94 @@
+// ============ CONSTANTS ============
+// Tab identifiers
+const TAB_NAMES = Object.freeze({
+  COLOURS: 'colours',
+  EFFECTS: 'effects',
+  PUTTY: 'putty',
+  PROJECTS: 'projects'
+});
+
+// Field names
+const FIELD_KEYS = Object.freeze({
+  BASE_COLOUR: 'Base Colour',
+  PRODUCT_NAME: 'Product Name',
+  CODE: 'Code',
+  HEX: 'Hex',
+  TEMPERATURE: 'Temperature',
+  PHASE: 'Phase',
+  SATURATION: 'Saturation',
+  MANUFACTURER: 'Manufacturer',
+  COMPLEMENTARY: 'Complementary',
+  ROLE_OF_COMPLEMENTARY: 'Role of Complementary',
+  FUNCTION: 'Function',
+  KEYWORDS: 'Keywords',
+  OWNED: 'Owned',
+  STATUS: 'Status',
+  PROJECT_NAME: 'ProjectName',
+  PCT: 'Pct',
+  FINISH_DATE: 'FinishDate',
+  DESCRIPTION: 'Description',
+  MATERIALS: 'Materials',
+  PROJECT_IMAGE: 'ProjectImage',
+  URL: 'URL'
+});
+
+// ============ STATE ============
 let allDataColours = { colours: []};
 let allDataEffects = { effects: [] };
 let allDataProjects = { projects: [] };
 let allDataTools = { tools: [] };
-let currentTab = 'colours';
-const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Temperature','Phase','Saturation Level', 'Manufacturer', 'Owned'];
+// ============ PROJECT SORT FUNCTION ============
+// Unified sort logic: by status priority, then by finish date (desc for done), then by name
+const PROJECT_SORT_ORDER = {
+  "to do": 1,
+  "in progress": 2,
+  "on the bench": 2,
+  "done": 3,
+  "completed": 3,
+  "parking lot": 4
+};
+
+function projectSortFunc(a, b) {
+  const statusA = (a[FIELD_KEYS.STATUS] || "").toLowerCase().trim();
+  const statusB = (b[FIELD_KEYS.STATUS] || "").toLowerCase().trim();
+  
+  const priorityA = PROJECT_SORT_ORDER[statusA] || 99;
+  const priorityB = PROJECT_SORT_ORDER[statusB] || 99;
+  
+  if (priorityA !== priorityB) {
+    return priorityA - priorityB;
+  }
+  
+  if (statusA === "done" || statusA === "completed") {
+    const dateA = parseDate(a[FIELD_KEYS.FINISH_DATE]);
+    const dateB = parseDate(b[FIELD_KEYS.FINISH_DATE]);
+    return dateB - dateA;
+  }
+  
+  const nameA = (a[FIELD_KEYS.PROJECT_NAME] || "").toUpperCase();
+  const nameB = (b[FIELD_KEYS.PROJECT_NAME] || "").toUpperCase();
+  return nameA.localeCompare(nameB);
+}
+
+// ============ GLOBAL VARIABLES ============
+let currentTab = TAB_NAMES.COLOURS;
+let currentPrimerClass = 'primer-v-white'; // Default primer
+const fieldsToIgnoreEN = [FIELD_KEYS.HEX, FIELD_KEYS.ROLE_OF_COMPLEMENTARY, FIELD_KEYS.COMPLEMENTARY, FIELD_KEYS.TEMPERATURE, FIELD_KEYS.PHASE, 'Saturation Level', FIELD_KEYS.MANUFACTURER, FIELD_KEYS.OWNED];
 let colorMap = {};
 let sortAsc = true;
-let currentFilteredResults = []; 
+let currentFilteredResults = [];
 let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
 const configFiltros = {    
     'EN': {
-        'Temperature': ['Warm', 'Cold', 'Neutral'],
-        'Phase': ['Base', 'Shadow', 'Highlight', 'Filter', 'Fluorescent', 'TMM'],
-        'Saturation': ['Light', 'Medium', 'Dark'],
-        'Manufacturer': ['AK', 'Citadel', 'Vallejo']
+        [TAB_NAMES.COLOURS]: {
+            [FIELD_KEYS.TEMPERATURE]: ['Warm', 'Cold', 'Neutral'],
+            [FIELD_KEYS.PHASE]: ['Base', 'Shadow', 'Highlight', 'Filter', 'Fluorescent', 'TMM'],
+            [FIELD_KEYS.SATURATION]: ['Light', 'Medium', 'Dark'],
+            [FIELD_KEYS.MANUFACTURER]: ['AK', 'Citadel', 'Vallejo']
+        },
+        [TAB_NAMES.EFFECTS]: {
+            [FIELD_KEYS.MANUFACTURER]: ['AK', 'Citadel', 'Vallejo']
+        }
     }
 };
 
@@ -118,117 +193,75 @@ document.addEventListener('DOMContentLoaded', async () => {
   syncTabWithHash(); 
 });
 
-async function PageLoad() {  
-  loadDataColours();
-  loadDataEffects();
-  loadDataProjects();
-  loadDataTools();
+async function PageLoad() {
+  // Load all data using the generic loader
+  loadData('colours', 'colours', FIELD_KEYS.BASE_COLOUR, 'allDataColours');
+  loadData('effects', 'effects', FIELD_KEYS.PRODUCT_NAME, 'allDataEffects');
+  loadData('projects', 'projects', null, 'allDataProjects', projectSortFunc);
+  loadData('tools', 'tools', 'Name', 'allDataTools');
 }
 
-function loadDataColours() {
-    const loader = document.getElementById('loading-overlay');
-    if (loader) {
-        loader.style.display = 'flex';
-        loader.style.opacity = '1';
-    }    
+function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
+  const loader = document.getElementById('loading-overlay');
+  if (loader && endpoint === 'colours') {
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
+  }
 
-    fetch(`./data/colours.json`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.colours) {
-                data.colours.sort((a, b) => {
-                    const nomeA = (a["Base Colour"] || "").toUpperCase();
-                    const nomeB = (b["Base Colour"] || "").toUpperCase();
-                    return nomeA.localeCompare(nomeB);
-                });
-            }
-                
-            allDataColours = data;                  
-            
-            buildColorMap(); 
-            updateSearchFields(); 
-            updateFilters();
-            displayResults();
+  fetch(`./data/${endpoint}.json`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (!data || !data[dataKey]) {
+        throw new Error(`Invalid data structure: missing '${dataKey}' key`);
+      }
 
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => { loader.style.display = 'none'; }, 500);
-            }
-        })
-        .catch(err => {
-            showError("Erro ao trocar idioma.");
-            // 3. Garantir que o loader suma mesmo se der erro
-            if (loader) loader.style.display = 'none';
+      if (customSort) {
+        data[dataKey].sort(customSort);
+      } else if (sortField) {
+        data[dataKey].sort((a, b) => {
+          const valA = (a[sortField] || "").toUpperCase();
+          const valB = (b[sortField] || "").toUpperCase();
+          return valA.localeCompare(valB);
         });
-}
+      }
 
-function loadDataEffects(lang) {
-    const chaveNome = "Base Colour";
+      // Assign data to the appropriate global variable
+      switch (globalName) {
+        case 'allDataColours':
+          allDataColours = data;
+          break;
+        case 'allDataEffects':
+          allDataEffects = data;
+          break;
+        case 'allDataProjects':
+          allDataProjects = data;
+          break;
+        case 'allDataTools':
+          allDataTools = data;
+          break;
+      }
 
-    fetch(`./data/effects.json`)
-        .then(response => response.json())
-        .then(data => {                        
-            if (data.effects) {
-                data.effects.sort((a, b) => {
-                    const nomeA = (a["Product Name"] || "").toUpperCase();
-                    const nomeB = (b["Product Name"] || "").toUpperCase();
-                    return nomeA.localeCompare(nomeB);
-                });
-            }
+      console.log(`✓ Loaded ${endpoint}: ${data[dataKey].length} items`);
+      buildColorMap();
+      updateSearchFields();
+      updateFilters();
+      displayResults();
 
-            allDataEffects = data;
-            buildColorMap(); 
-            updateSearchFields(); 
-            updateFilters();
-            displayResults();
-        })
-        .catch(err => showError("Error to load the data."));
-}
-
-function loadDataProjects() {
-    fetch(`./data/projects.json`)
-        .then(response => response.json())
-        .then(data => {                        
-            if (data.projects) {
-                const statusPriority = {
-                    "to do": 1,
-                    "in progress": 2,
-                    "on the bench": 2,
-                    "done": 3,
-                    "completed": 3,
-                    "parking lot": 4
-                };
-
-                data.projects.sort((a, b) => {
-                    const statusA = (a["Status"] || "").toLowerCase().trim();
-                    const statusB = (b["Status"] || "").toLowerCase().trim();
-
-                    const priorityA = statusPriority[statusA] || 99;
-                    const priorityB = statusPriority[statusB] || 99;
-
-                    if (priorityA !== priorityB) {
-                        return priorityA - priorityB;
-                    }
-                    
-                    if (statusA === "done" || statusA === "completed") {
-                        const dateA = parseDate(a["FinishDate"]);
-                        const dateB = parseDate(b["FinishDate"]);
-                        return dateB - dateA; 
-                    }
-
-                    const nomeA = (a["ProjectName"] || "").toUpperCase();
-                    const nomeB = (b["ProjectName"] || "").toUpperCase();
-                    return nomeA.localeCompare(nomeB);
-                });
-            }
-
-            allDataProjects = data;
-            buildColorMap(); 
-            updateSearchFields(); 
-            updateFilters();
-            displayResults();
-        })
-        .catch(err => showError("Error to load the projects data."));
+      if (loader && endpoint === 'colours') {
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 500);
+      }
+    })
+    .catch(err => {
+      console.error(`✗ Failed to load ${endpoint}:`, err);
+      showError(`Unable to load ${endpoint}. Please refresh the page.`);
+      if (loader) loader.style.display = 'none';
+    });
 }
 
 function parseDate(dateString) {
@@ -241,26 +274,7 @@ function parseDate(dateString) {
     return new Date(0);
 }
 
-function loadDataTools() {
-    fetch(`./data/tools.json`)
-        .then(response => response.json())
-        .then(data => {                        
-            if (data.tools) {
-                data.tools.sort((a, b) => {
-                    const nomeA = (a["Name"] || "").toUpperCase();
-                    const nomeB = (b["Name"] || "").toUpperCase();
-                    return nomeA.localeCompare(nomeB);
-                });
-            }
 
-            allDataTools = data;
-            buildColorMap(); 
-            updateSearchFields(); 
-            updateFilters();
-            displayResults();
-        })
-        .catch(err => showError("Error to load the tools data."));
-}
 
 function setupEventListeners() {
   const searchInput = document.getElementById('searchInput'); 
@@ -275,15 +289,16 @@ function setupEventListeners() {
           clearSearch();           
           document.querySelectorAll('.flag-container').forEach(f => f.classList.remove('active'));
           this.classList.add('active');
-          loadDataColours();
-          loadDataEffects();
-          loadDataProjects();
+          loadData('colours', 'colours', 'Base Colour', 'allDataColours');
+          loadData('effects', 'effects', FIELD_KEYS.PRODUCT_NAME, 'allDataEffects');
+          loadData('projects', 'projects', null, 'allDataProjects', projectSortFunc);
+          loadData('tools', 'tools', 'Name', 'allDataTools');
 
           if (typeof switchTab === 'function') {
             switchTab('colours'); 
           } 
         
-          const firstTab = document.querySelector('.tab-button[data-tab="colours"]');
+          const firstTab = document.querySelector(`.tab-button[data-tab="${TAB_NAMES.COLOURS}"]`);
           if (firstTab) {
               firstTab.click();
           }
@@ -292,8 +307,7 @@ function setupEventListeners() {
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-    switchTab(e.target.dataset.tab);
-
+      switchTab(e.target.dataset.tab);
     });
   });
 
@@ -304,6 +318,17 @@ function setupEventListeners() {
       performSearch();
     }
   });
+
+  // Primer selector event listener - set up with delay to ensure DOM is ready
+  setTimeout(() => {
+    const primerSelect = document.getElementById('primerSelect');
+    if (primerSelect) {
+      primerSelect.addEventListener('change', (e) => {
+        const selectedPrimer = e.target.value || 'primer-v-white';
+        applyPrimerToCards(selectedPrimer);
+      });
+    }
+  }, 100);
 }
 
 
@@ -312,6 +337,7 @@ function switchTab(tab) {
   const resultsEl = document.getElementById('results');
   const info = document.getElementById('resultsInfo');
   const sortContainer = document.querySelector('.sort-container');
+  const primerSelectorContainer = document.querySelector('.primer-selector-container');
   const searchControls = document.querySelector('.search-controls');
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -320,7 +346,7 @@ function switchTab(tab) {
 
   window.history.replaceState(null, null, `#${tab}`);
       
-  if (tab === 'putty' || tab === 'projects') {
+  if (tab === TAB_NAMES.PUTTY || tab === TAB_NAMES.PROJECTS) {
     if (resultsEl) {
       resultsEl.innerHTML = '';
       resultsEl.classList.add('massa-active');
@@ -328,6 +354,7 @@ function switchTab(tab) {
     if (searchControls) searchControls.style.setProperty('display', 'none', 'important');
     if (info) info.style.display = 'none';
     if (sortContainer) sortContainer.style.display = 'none';
+    if (primerSelectorContainer) primerSelectorContainer.style.display = 'none';
     
     performSearch(); 
   } else {
@@ -338,6 +365,7 @@ function switchTab(tab) {
     if (resultsEl) resultsEl.classList.remove('massa-active');      
     if (info) info.style.display = 'block';
     if (sortContainer) sortContainer.style.display = 'block';
+    if (primerSelectorContainer) primerSelectorContainer.style.display = 'flex';
     
     // Atualiza a UI sem resetar o scroll ou o estado
     updateSearchFields();
@@ -352,11 +380,11 @@ function updateSearchFields() {
     fieldSelect.innerHTML = '';
     let dataRef = '';
     let fields = [];
-    if (currentTab === 'colours') 
+    if (currentTab === TAB_NAMES.COLOURS) 
       dataRef = allDataColours.colours;
-    else if (currentTab === 'effects')
+    else if (currentTab === TAB_NAMES.EFFECTS)
       dataRef = allDataEffects.effects;
-    else if (currentTab === 'projects')
+    else if (currentTab === TAB_NAMES.PROJECTS)
       dataRef = allDataProjects.projects;
 
     if (dataRef && dataRef.length > 0) {
@@ -382,7 +410,7 @@ function buildColorMap() {
     colorMap = {};
     if (!allDataColours.colours) return;
 
-    const chaveNome = "Base Colour";
+    const chaveNome = FIELD_KEYS.BASE_COLOUR;
     
     allDataColours.colours.forEach(c => {
         if (c[chaveNome]) {
@@ -411,7 +439,7 @@ function updateFilters() {
     const container = document.getElementById('filtersContainer');
     if (!container) return;
     container.innerHTML = '';    
-    const filtrosAtuais = configFiltros['EN'];
+    const filtrosAtuais = configFiltros['EN'][currentTab] || {};
 
     Object.keys(filtrosAtuais).forEach(fieldName => {
         const values = filtrosAtuais[fieldName];        
@@ -445,7 +473,7 @@ function updateFilters() {
 }
 
 function performSearch() {
-    if (currentTab === 'projects') {
+    if (currentTab === TAB_NAMES.PROJECTS) {
         document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
             checkbox.checked = false;
         });
@@ -459,17 +487,17 @@ function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     const searchField = document.getElementById('searchField').value;
 
-    let data = 'putty';
-    if (currentTab === 'colours')
+    let data = TAB_NAMES.PUTTY;
+    if (currentTab === TAB_NAMES.COLOURS)
       data = allDataColours.colours 
-    else if (currentTab === 'effects') {
+    else if (currentTab === TAB_NAMES.EFFECTS) {
       data = allDataEffects.effects;
     }
-    else if (currentTab === 'projects') {
+    else if (currentTab === TAB_NAMES.PROJECTS) {
       data = allDataProjects.projects;
     }    
 
-    if (currentTab === 'putty') {
+    if (currentTab === TAB_NAMES.PUTTY) {
         const resultsContainer = document.getElementById('results');  
         resultsContainer.innerHTML = htmlPutty; 
         resultsInfo.innerHTML = "<p>Technical reference guide for fillers</p>";
@@ -502,7 +530,7 @@ function performSearch() {
         }
         return true;
     });
-    currentFilteredResults = results; 
+    currentFilteredResults = results;
     sortResults(currentFilteredResults);
     displayResults(currentFilteredResults);
 }
@@ -521,22 +549,22 @@ function sortResults(dataList) {
     if (!dataList || dataList.length === 0) return;
 
     dataList.sort((a, b) => {
-        const valA = (a["Base Colour"] || a["Product Name"] || "").toUpperCase();
-        const valB = (b["Base Colour"] || b["Product Name"] || "").toUpperCase();
+        const valA = (a[FIELD_KEYS.BASE_COLOUR] || a[FIELD_KEYS.PRODUCT_NAME] || "").toUpperCase();
+        const valB = (b[FIELD_KEYS.BASE_COLOUR] || b[FIELD_KEYS.PRODUCT_NAME] || "").toUpperCase();
         
         return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
     });
 }
 
 function displayResults(results = null) {
-  if (currentTab === 'putty') {
+  if (currentTab === TAB_NAMES.PUTTY) {
       return; 
   }
 
   let data = "";
   let resultsInfoLabel, resultsContainerLabel = "";
 
-  data = results !== null ? results : (currentTab === 'colours' ? allDataColours.colours : (currentTab === 'effects' ? allDataEffects.effects : allDataProjects.projects));  
+  data = results !== null ? results : (currentTab === TAB_NAMES.COLOURS ? allDataColours.colours : (currentTab === TAB_NAMES.EFFECTS ? allDataEffects.effects : allDataProjects.projects));  
   
   const resultsContainer = document.getElementById('results');
   const resultsInfo = document.getElementById('resultsInfo');
@@ -554,18 +582,20 @@ function displayResults(results = null) {
   }
 
   let tabName = "";
-  tabName = currentTab === 'colours' ? 'colours' : (currentTab === 'effects' ? 'effects' : 'projects');
+  tabName = currentTab === TAB_NAMES.COLOURS ? TAB_NAMES.COLOURS : (currentTab === TAB_NAMES.EFFECTS ? TAB_NAMES.EFFECTS : TAB_NAMES.PROJECTS);
   resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> results</p>`;
 
-  if (currentTab === 'projects') {
+  if (currentTab === TAB_NAMES.PROJECTS) {
     resultsContainer.innerHTML = data.map(item => createProjectCard(item)).join('');
   } else {
     resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
+    // Apply current primer to all cards after rendering
+    applyPrimerToCards(currentPrimerClass);
   }
 }
 
 function createCard(item) {
-  const mainHex = item['Hex'] || '#ccc';
+  const mainHex = item[FIELD_KEYS.HEX] || '#ccc';
   const mainContrast = getContrastColor(mainHex);
   const mainSpecialClass = getSpecialClass(mainHex);
 
@@ -573,75 +603,85 @@ function createCard(item) {
     let cardHTML = `
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${(item['Base Colour'] || item['Product Name'] || item['ProjectName'] || '').toUpperCase()}</span>          
+          <span class="card-title">${escapeHtml((item[FIELD_KEYS.BASE_COLOUR] || item[FIELD_KEYS.PRODUCT_NAME] || item[FIELD_KEYS.PROJECT_NAME] || '').toUpperCase())}</span>          
           <span class="card-hex ${mainSpecialClass}" style="background-color: ${mainHex}; color: ${mainContrast}" onclick="copyToClipboard('${mainHex}', event)"
       title="Clique para copiar HEX">
-            ${item['Hex']?.toUpperCase() || item['Status'] || ''}
+            ${escapeHtml(item[FIELD_KEYS.HEX]?.toUpperCase() || item[FIELD_KEYS.STATUS] || '')}
           </span>
         </div>
-        <span class="card-code">${(item['Code'] || '').toUpperCase()}</span>        
+        <span class="card-code">${escapeHtml((item[FIELD_KEYS.CODE] || '').toUpperCase())}</span>        
     `;
 
-  const hexColor = item.Hex || '#ccc';
+  const hexColor = item[FIELD_KEYS.HEX] || '#ccc';
 
-  if (currentTab != 'projects') {
+  if (currentTab != TAB_NAMES.PROJECTS) {
   cardHTML += `
       <div class="dilution-container">
           <div class="dilution-rule ${mainSpecialClass}" style="--paint-color: ${hexColor};"></div>
-          <div class="dilution-disclaimer">${illustrative}</div>
+          <div class="dilution-disclaimer">${escapeHtml(illustrative)}</div>
       </div>
   `;
   }
   
     Object.entries(item).forEach(([key, value]) => {
-      if (key === 'Base Colour' || key === 'Code' || key === 'Keywords' || key === 'Product Name' || key === 'Hex' || key === 'Owned' || key === 'ProjectName' || key === 'Status' && key !== 'Complementary')  return;
+      // Skip these fields - they're handled separately or already displayed
+      if (key === FIELD_KEYS.BASE_COLOUR || key === FIELD_KEYS.CODE || key === FIELD_KEYS.KEYWORDS || key === FIELD_KEYS.PRODUCT_NAME || key === FIELD_KEYS.HEX || key === FIELD_KEYS.OWNED || key === FIELD_KEYS.PROJECT_NAME || key === FIELD_KEYS.STATUS || key === FIELD_KEYS.COMPLEMENTARY) return;
 
       let displayValue = value;
-      let displayKey = key.replace(/\s*\(.*/, "");       
-
-      if (key === 'Complementary') {
-        if (!value || value.trim() === "") {
-          displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
-        } else {
-          const compHex = colorMap[value.toUpperCase()];
-          
-          if (compHex) {
-            const compContrast = getContrastColor(compHex);
-            const compSpecialClass = getSpecialClass(compHex);
-            
-            displayValue = `
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span>${value}</span>
-                <span class="card-code ${compSpecialClass}" 
-                      style="background-color: ${compHex}; color: ${compContrast}; 
-                            padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
-                  ${compHex}
-                </span>
-              </div>
-            `;
-          } else {
-            displayValue = `
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span>${value}</span>
-                <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
-                  Hex N/A
-                </span>
-              </div>
-            `;
-          }
-        }
-      }
+      let displayKey = key.replace(/\s*\(.*/, "");
+      
       cardHTML += `
         <div class="card-field">
-          <div class="card-label">${displayKey}</div>
-          <div class="card-value">${displayValue}</div>
+          <div class="card-label">${escapeHtml(displayKey)}</div>
+          <div class="card-value">${escapeHtml(displayValue?.toString() || '')}</div>
         </div>
         
       `;    
     });
     
+    // Handle Complementary field separately to preserve HTML structure with escaped data
+    if (item[FIELD_KEYS.COMPLEMENTARY]) {
+      const compValue = item[FIELD_KEYS.COMPLEMENTARY];
+      if (compValue && compValue.trim() !== "") {
+        const compHex = colorMap[compValue.toUpperCase()];
+        if (compHex) {
+          const compContrast = getContrastColor(compHex);
+          const compSpecialClass = getSpecialClass(compHex);
+          cardHTML += `
+            <div class="card-field">
+              <div class="card-label">${escapeHtml(FIELD_KEYS.COMPLEMENTARY)}</div>
+              <div class="card-value">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span>${escapeHtml(compValue)}</span>
+                  <span class="card-code ${compSpecialClass}" 
+                        style="background-color: ${compHex}; color: ${compContrast}; 
+                              padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
+                    ${escapeHtml(compHex)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          cardHTML += `
+            <div class="card-field">
+              <div class="card-label">${escapeHtml(FIELD_KEYS.COMPLEMENTARY)}</div>
+              <div class="card-value">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span>${escapeHtml(compValue)}</span>
+                  <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
+                    Hex N/A
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+     
      cardHTML += `
-        <div class="card-keywords">${item['Keywords'] || ''}</div>
+        <div class="card-keywords">${escapeHtml(item[FIELD_KEYS.KEYWORDS] || '')}</div>
       `;    
 
     cardHTML += `</div>`;
@@ -649,17 +689,17 @@ function createCard(item) {
 }
 
 function createProjectCard(item) {  
-    const isInProgress = item.Status && (item.Status.toLowerCase().trim() === 'in progress' || item.Status.toLowerCase().trim() === 'to do');
+    const isInProgress = item[FIELD_KEYS.STATUS] && (item[FIELD_KEYS.STATUS].toLowerCase().trim() === 'in progress' || item[FIELD_KEYS.STATUS].toLowerCase().trim() === 'to do');
     const buttonClass = isInProgress ? "accordion-button" : "accordion-button collapsed";
     const bodyStyle = isInProgress ? 'style="display: block;"' : 'style="display: none;"';
-    const statusClass = getStatusClass(item.Status);
+    const statusClass = getStatusClass(item[FIELD_KEYS.STATUS]);
 
     let urlLine = "";
-    if (item.URL) {
+    if (item[FIELD_KEYS.URL] && isValidUrl(item[FIELD_KEYS.URL])) {
         urlLine = `
           <div class="project-more-info">
             <span class="info-label">✨ More information:</span>
-            <a href="${item.URL}" target="_blank" rel="noopener noreferrer" class="project-link">
+            <a href="${item[FIELD_KEYS.URL]}" target="_blank" rel="noopener noreferrer" class="project-link">
               Read full project log <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
             </a>
           </div>
@@ -671,23 +711,23 @@ function createProjectCard(item) {
         <div class="accordion-item backend-border">
           <button class="${buttonClass}" type="button" onclick="toggleAccordion(this)">
             <div class="project-header-main">
-              <span class="project-title">${(item.ProjectName || '').toUpperCase()}</span>
+              <span class="project-title">${escapeHtml((item[FIELD_KEYS.PROJECT_NAME] || '').toUpperCase())}</span>
               <div class="project-badges">
-                <span class="badge ${statusClass}">${(item.Status || '').toUpperCase()}</span>
-                <span class="badge project-pct">${(item.Pct || '0%').toUpperCase()}</span>
+                <span class="badge ${statusClass}">${escapeHtml((item[FIELD_KEYS.STATUS] || '').toUpperCase())}</span>
+                <span class="badge project-pct">${escapeHtml((item[FIELD_KEYS.PCT] || '0%').toUpperCase())}</span>
               </div>
             </div>
           </button>
 
           <div class="accordion-body" ${bodyStyle}>
-            <p class="project-desc">${item.Description || ''}</p>   
+            <p class="project-desc">${item[FIELD_KEYS.DESCRIPTION] || ''}</p>   
             ${urlLine}       
     `;
       
 
-    if (item.Materials && typeof item.Materials === 'object') {
+    if (item[FIELD_KEYS.MATERIALS] && typeof item[FIELD_KEYS.MATERIALS] === 'object') {
     cardHTML += `<div class="project-dependencies-grid">`;
-    Object.entries(item.Materials).forEach(([subKey, subArray]) => {
+    Object.entries(item[FIELD_KEYS.MATERIALS]).forEach(([subKey, subArray]) => {
         if (Array.isArray(subArray) && subArray.length > 0) {
             
             // Dicionário para traduzir ou enriquecer o nome da coluna no ecrã
@@ -710,8 +750,8 @@ function createProjectCard(item) {
                 const borderStyle = `style="border-left: 4px solid ${details.hex};"`;
                 cardHTML += `
                     <span class="mini-chip" ${borderStyle}>
-                        <small style="color: #888; font-size: 0.75rem; display:block;">${id} ${details.manufacturer}</small>
-                        <strong>${details.name}</strong>
+                        <small style="color: #888; font-size: 0.75rem; display:block;">${escapeHtml(id)} ${escapeHtml(details.manufacturer || '')}</small>
+                        <strong>${escapeHtml(details.name)}</strong>
                     </span>
                 `;
             });
@@ -722,16 +762,16 @@ function createProjectCard(item) {
     }
     
     // --- NOVO CONTAINER DO CARROSSEL DO CANVA ---
-    if (item.ProjectImage && Array.isArray(item.ProjectImage) && item.ProjectImage.length > 0) {
+    if (item[FIELD_KEYS.PROJECT_IMAGE] && Array.isArray(item[FIELD_KEYS.PROJECT_IMAGE]) && item[FIELD_KEYS.PROJECT_IMAGE].length > 0) {
     cardHTML += `
       <div class="canva-carousel-container" onclick="event.stopPropagation();" style="display: flex; flex-direction: column; gap: 15px;">
     `;
     
     // Faz um loop por cada imagem dentro do Array
-    item.ProjectImage.forEach(imgName => {
-        if (imgName) {
+    item[FIELD_KEYS.PROJECT_IMAGE].forEach(imgName => {
+        if (imgName && isValidImageFilename(imgName)) {
             cardHTML += `
-                <img src="img/projects/${imgName}" alt="Canva Showcase" class="canva-long-strip">
+                <img src="img/projects/${escapeHtml(imgName)}" alt="Canva Showcase" class="canva-long-strip">
             `;
         }
     });
@@ -739,10 +779,10 @@ function createProjectCard(item) {
     cardHTML += `</div>`;
     } 
     // Fallback de segurança: Caso o JSON antigo ainda tenha apenas uma string em vez de array
-    else if (item.ProjectImage && typeof item.ProjectImage === 'string') {
+    else if (item[FIELD_KEYS.PROJECT_IMAGE] && typeof item[FIELD_KEYS.PROJECT_IMAGE] === 'string' && isValidImageFilename(item[FIELD_KEYS.PROJECT_IMAGE])) {
         cardHTML += `
           <div class="canva-carousel-container" onclick="event.stopPropagation();">
-              <img src="img/projects/${item.ProjectImage}" alt="Canva Showcase" class="canva-long-strip">
+              <img src="img/projects/${escapeHtml(item[FIELD_KEYS.PROJECT_IMAGE])}" alt="Canva Showcase" class="canva-long-strip">
           </div>
         `;
     }
@@ -773,21 +813,21 @@ function getMaterialDetails(subKey, id) {
     const searchId = id.toUpperCase().trim();
 
     if (subKey === 'Colours' && allDataColours && allDataColours.colours) {
-        const found = allDataColours.colours.find(c => c.Code && c.Code.toUpperCase().trim() === searchId);
+        const found = allDataColours.colours.find(c => c[FIELD_KEYS.CODE] && c[FIELD_KEYS.CODE].toUpperCase().trim() === searchId);
         if (found) {
-            name = found["Base Colour"] || searchId;
-            hex = found.Hex || "#555";
-            manufacturer = found.Manufacturer ? `[${found.Manufacturer}] ` : "";
+            name = found[FIELD_KEYS.BASE_COLOUR] || searchId;
+            hex = found[FIELD_KEYS.HEX] || "#555";
+            manufacturer = found[FIELD_KEYS.MANUFACTURER] ? `[${found[FIELD_KEYS.MANUFACTURER]}] ` : "";
         }
     } else if (subKey === 'Effects' && allDataEffects && allDataEffects.effects) {
-        const found = allDataEffects.effects.find(e => e.Code && e.Code.toUpperCase().trim() === searchId);
+        const found = allDataEffects.effects.find(e => e[FIELD_KEYS.CODE] && e[FIELD_KEYS.CODE].toUpperCase().trim() === searchId);
         if (found) {
-            name = found["Product Name"] || searchId;
-            hex = found.Hex || "#555";
-            manufacturer = found.Manufacturer ? `[${found.Manufacturer}] ` : "";
+            name = found[FIELD_KEYS.PRODUCT_NAME] || searchId;
+            hex = found[FIELD_KEYS.HEX] || "#555";
+            manufacturer = found[FIELD_KEYS.MANUFACTURER] ? `[${found[FIELD_KEYS.MANUFACTURER]}] ` : "";
         }
     } else if (subKey === 'Tools' && typeof allDataTools !== 'undefined' && allDataTools.tools) {
-        const found = allDataTools.tools.find(t => t.ID && t.ID.toUpperCase().trim() === searchId);
+        const found = allDataTools.tools.find(t => t[FIELD_KEYS.CODE] && t[FIELD_KEYS.CODE].toUpperCase().trim() === searchId);
         if (found) {
             name = found.Name || searchId;
         }
@@ -838,15 +878,39 @@ function escapeHtml(text) {
   return text.replace(/[&<>"']/g, m => map[m]);
 }
 
+function isValidUrl(urlString) {
+  if (!urlString || typeof urlString !== 'string') return false;
+  try {
+    const url = new URL(urlString);
+    return ['http:', 'https:'].includes(url.protocol);
+  } catch (err) {
+    return false;
+  }
+}
+
+function isValidImageFilename(filename) {
+  if (!filename || typeof filename !== 'string') return false;
+  // Block path traversal attempts and absolute paths
+  if (filename.includes('/') || filename.includes('\\') || filename.includes('..')) return false;
+  // Only allow alphanumeric, dots, hyphens, underscores
+  const SAFE_FILENAME_REGEX = /^[a-zA-Z0-9._-]+$/;
+  return SAFE_FILENAME_REGEX.test(filename);
+}
+
 function showError(message) {
   const resultsContainer = document.getElementById('results');
+  if (!resultsContainer) return;
+  
+  const escapedMessage = escapeHtml(message);
   resultsContainer.innerHTML = `
     <div class="empty-state">
       <div class="empty-state-icon">⚠️</div>
-      <h3>Erro</h3>
-      <p>${message}</p>
+      <h3>Error</h3>
+      <p>${escapedMessage}</p>
+      <p style="font-size: 0.85rem; color: #999; margin-top: 10px;">Check the browser console for more details.</p>
     </div>
   `;
+  console.error(`[App Error] ${message}`);
 }
 
 function validateSearchButton() {
@@ -877,6 +941,49 @@ function toggleSort() {
     }    
 }
 
+function applyPrimerToCards(primerClass) {
+  // Update state
+  currentPrimerClass = primerClass || 'primer-v-white';
+  
+  // Get all paint cards
+  const cards = document.querySelectorAll('.card');
+  
+  // Get primer selector container (for label color)
+  const primerContainer = document.querySelector('.primer-selector-container');
+  
+  // List of all possible primer classes for removal
+  const allPrimerClasses = [
+    'primer-v-white', 'primer-v-yellow-ice', 'primer-v-desert-sand', 'primer-v-dark-yellow',
+    'primer-v-silvergrey', 'primer-v-light-grey', 'primer-v-vermilion', 'primer-v-ultramarine',
+    'primer-v-nato-green', 'primer-v-chestnut-brown', 'primer-v-oxford-blue', 'primer-v-usmc-green',
+    'primer-v-venetian-red', 'primer-v-german-green', 'primer-v-bronze-green', 'primer-v-grey',
+    'primer-v-dark-grey', 'primer-v-basalt-grey', 'primer-v-black'
+  ];
+  
+  // Apply new primer to each card
+  cards.forEach(card => {
+    // Remove all existing primer classes
+    allPrimerClasses.forEach(primer => {
+      card.classList.remove(primer);
+    });
+    
+    // Add new primer class
+    if (primerClass && primerClass.trim() !== '') {
+      card.classList.add(primerClass);
+    }
+  });
+  
+  // Apply primer class to container to update label color
+  if (primerContainer) {
+    allPrimerClasses.forEach(primer => {
+      primerContainer.classList.remove(primer);
+    });
+    if (primerClass && primerClass.trim() !== '') {
+      primerContainer.classList.add(primerClass);
+    }
+  }
+}
+
 function copyToClipboard(text, event) {
     if (event) event.stopPropagation();
 
@@ -884,20 +991,21 @@ function copyToClipboard(text, event) {
         const element = event.target;
         const originalText = element.innerText;
         element.innerText = "COPIED!";
-        element.style.transform = "scale(1.1)";        
+        element.style.transform = "scale(1.1)";
+        console.log(`✓ Copied to clipboard: ${text}`);
         setTimeout(() => {
             element.innerText = originalText;
             element.style.transform = "scale(1.0)";
         }, 800);
     }).catch(err => {
-        console.error('Error to copy HEX: ', err);
-        alert("Error to copy HEX");
+        console.error('✗ Failed to copy to clipboard:', err);
+        alert("Unable to copy HEX code. Please try again.");
     });
 }
 
 function exportInventoryToCSV() {
-    const ownedColours = allDataColours.colours.filter(colour => colour.Owned === "True" || colour.Owned === true);    
-    const ownedEffects = allDataEffects.effects.filter(effects => effects.Owned === "True" || effects.Owned === true);
+    const ownedColours = allDataColours.colours.filter(colour => colour[FIELD_KEYS.OWNED] === "True" || colour[FIELD_KEYS.OWNED] === true);    
+    const ownedEffects = allDataEffects.effects.filter(effects => effects[FIELD_KEYS.OWNED] === "True" || effects[FIELD_KEYS.OWNED] === true);
 
     if (ownedColours.length === 0 && ownedEffects.length === 0) {
         alert("No items marked as owned in inventory.");
@@ -905,20 +1013,20 @@ function exportInventoryToCSV() {
     }
 
     let csvContent = "\uFEFF"; 
-    csvContent += ["Base Colour", "Code"].join(",") + "\n";
+    csvContent += [FIELD_KEYS.BASE_COLOUR, FIELD_KEYS.CODE].join(",") + "\n";
 
     ownedColours.forEach(colour => {
         const row = [
-            `"${colour["Base Colour"]}"`, 
-            `"${colour["Code"]}"`
+            `"${colour[FIELD_KEYS.BASE_COLOUR]}"`, 
+            `"${colour[FIELD_KEYS.CODE]}"`
         ];
         csvContent += row.join(",") + "\n";
     });
 
     ownedEffects.forEach(e => {
         const row = [
-            `"${e["Product Name"]}"`, 
-            `"${e["Code"]}"`
+            `"${e[FIELD_KEYS.PRODUCT_NAME]}"`, 
+            `"${e[FIELD_KEYS.CODE]}"`
         ];
         csvContent += row.join(",") + "\n";
     });
@@ -953,7 +1061,10 @@ function syncTabWithHash() {
   if (!hash) return;
 
   const tabMap = {
-    'colours': 'colours','effects': 'effects','putty': 'putty','projects': 'projects'
+    [TAB_NAMES.COLOURS]: TAB_NAMES.COLOURS,
+    [TAB_NAMES.EFFECTS]: TAB_NAMES.EFFECTS,
+    [TAB_NAMES.PUTTY]: TAB_NAMES.PUTTY,
+    [TAB_NAMES.PROJECTS]: TAB_NAMES.PROJECTS
   };
 
   if (tabMap[hash]) {

@@ -5,75 +5,73 @@
 }
 
 body {
-  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif; 
-  background: #1a73e8; /* Azul vibrante para um visual mais moderno e energético */
+  font-family: 'Mason Alternate Regular', sans-serif;
+  background: #1a1a2e;
   min-height: 100vh;
-  padding: 0; 
+  padding: 0;
   margin: 0;
   color: #f8fafc;
 }
 
 .container {
-  max-width: 100%; 
+  max-width: 100%;
   padding: 20px;
 }
 
 header {
-    text-align: center;
-    padding: 20px 20px;
-    margin-bottom: 30px;
+  text-align: center;
+  padding: 20px 20px;
+  margin-bottom: 30px;
 }
 
 header h1 {
-    font-family: 'Segoe UI', sans-serif; 
-    font-size: 1.5rem; /* Diminuído de 2.5rem para 1.5rem */
-    color: #ffffff; /* Branco puro */
-    background: none;
-    -webkit-text-fill-color: initial;
-    filter: none;
-    letter-spacing: 0.5px;
-    font-weight: 600;
+  font-family: 'Mason Alternate Regular', sans-serif;
+  font-size: 2rem;
+  color: #d4af37;
+  background: none;
+  -webkit-text-fill-color: initial;
+  filter: none;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 header p {
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 0.85rem;
-    font-style: normal;
-    color: #ffffff; 
-    margin-top: 5px;
+  font-family: 'Mason Alternate Regular', sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: #b8b8b8;
+  margin-top: 5px;
 }
 
 .search-section {
-  background: white;
-  padding: 10px;
+  background: #f8f9fa;
+  padding: 20px;
   border-radius: 10px;
+  border: 2px solid #e0e0e0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
 }
-
-/* .search-controls {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  align-items: end;
-} */
 
 .search-controls {
   display: grid;
   grid-template-columns: 44% 44% calc(12% - 30px);
   gap: 15px;
-  align-items: end; 
+  align-items: end;
 }
+
 .form-group {
   display: flex;
   flex-direction: column;
 }
 
 .form-group label {
+  font-family: 'Mason Alternate Regular', sans-serif;
   font-weight: 600;
   margin-bottom: 8px;
   color: #333;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-group input,
@@ -81,16 +79,18 @@ header p {
   padding: 12px;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   transition: border-color 0.3s;
   width: 100%;
+  background: #ffffff;
+  color: #333;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
 }
 
 .tabs {
@@ -101,54 +101,99 @@ header p {
 }
 
 .bi-info-circle {
-    font-size: 1rem !important; /* Aumenta um pouco para garantir visibilidade */
-    color: #0d6efd !important;
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    min-width: 14px; /* Garante que ele não "esmaga" */
+  font-size: 1rem !important;
+  color: #0d6efd !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 14px;
 }
 
 .tab-btn {
   padding: 12px 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Mason Alternate Regular', sans-serif;
   background: none;
   border: none;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   font-weight: 600;
-  color: #999;
+  color: #888;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.3s;
   margin-bottom: -2px;
-  
-  /* ESTA É A PARTE CRUCIAL */
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Cria o espaço entre a palavra e o ícone */
+  gap: 8px;
 }
 
 .tab-btn.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+  color: #d4af37;
+  border-bottom-color: #d4af37;
 }
 
 .tab-btn:hover {
-  color: #764ba2;
+  color: #ffc107;
+}
+
+.btn-search {
+  background-color: #3f4052;
+  border: 2px solid #d4af37;
+  color: #f8fafc;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  font-family: 'Mason Alternate Regular', sans-serif;
+  text-transform: uppercase;
+}
+
+.btn-search:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #666;
+}
+
+.btn-search:hover:not(:disabled) {
+  background-color: #d4af37;
+  color: #1a1a2e;
+}
+
+.btn-clear,
+.btn-inventory {
+  background-color: #3f4052;
+  border: 2px solid #d4af37;
+  color: #f8fafc;
+  border-radius: 4px;
+  font-family: 'Mason Alternate Regular', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-clear:hover,
+.btn-inventory:hover {
+  background-color: #d4af37;
+  color: #1a1a2e;
 }
 
 .results-section {
-  background: white;
+  background: #252632;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 2px solid #3f4052;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .results-info {
   margin-bottom: 20px;
-  color: #666;
+  color: #b8b8b8;
   font-size: 0.95rem;
 }
 
@@ -159,23 +204,25 @@ header p {
 }
 
 .card {
-  background: #f8f9fa;
-  border: 2px solid #e0e0e0;
+  background: var(--primer-bg, #37375b);
+  border: 2px solid var(--primer-border, #3f4052);
   border-radius: 8px;
   padding: 20px;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   cursor: pointer;
+  color: var(--primer-text-main, #e8e8f0);
 }
 
-.card:hover {  
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+.card:hover {
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
   transform: translateY(-2px);
+  border-color: #d4af37;
 }
 
 .card-header {
   display: flex;
   flex-direction: row;
-  align-content: normal;  
+  align-content: normal;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
@@ -183,10 +230,11 @@ header p {
 }
 
 .card-title {
+  font-family: 'Mason Alternate Regular', sans-serif;
   flex: 1;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #333;
+  color: var(--primer-accent, #d4af37);
 }
 
 .card-hex {
@@ -197,48 +245,46 @@ header p {
   font-size: 0.75rem;
   font-weight: 600;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   margin-left: auto;
   cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-block; /* Garante que o transform funcione bem */
-  user-select: none;     /* Evita selecionar o texto ao clicar rápido */
+  display: inline-block;
+  user-select: none;
 }
 
 .card-hex:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  filter: brightness(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .card-hex:active {
-    transform: scale(0.9) !important;
+  transform: scale(0.9) !important;
 }
 
-
-.card-code{
+.card-code {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #333;
+  color: var(--primer-accent, #ffc107);
 }
 
-.card-keywords{
-  color: #000;
+.card-keywords {
+  color: var(--primer-text-main, #f8fafc);
   width: 100%;
   border-radius: 4px;
   font-size: 0.8rem;
   font-weight: 300;
-  background-color: #dfe5e5;
+  background-color: var(--primer-border, #3f4052);
   padding: 4px;
 }
 
 .silver-preview {
   background: linear-gradient(135deg, #e6e6e6 0%, #b8b8b8 50%, #808080 100%);
-  box-shadow: inset 0 0 5px rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .gold-preview {
   background: linear-gradient(135deg, #ffe082 0%, #d4af37 50%, #8b6d10 100%);
-  box-shadow: inset 0 0 5px rgba(255,255,255,0.3);
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 .card-field {
@@ -246,16 +292,17 @@ header p {
 }
 
 .card-label {
+  font-family: 'Mason Alternate Regular', sans-serif;
   font-weight: 600;
-  color: #667eea;
-  font-size: 0.85rem;
+  color: var(--primer-accent, #ffc107);
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
 
 .card-value {
-  color: #555;
+  color: var(--primer-text-main, #d0d0d0);
   line-height: 1.5;
   font-size: 0.95rem;
 }
@@ -263,19 +310,20 @@ header p {
 .badge {
   display: inline-block;
   padding: 4px 10px;
-  background: #e8eaf6;
-  color: #667eea;
+  background: rgba(212, 175, 55, 0.2);
+  color: #ffc107;
   border-radius: 4px;
   font-size: 0.8rem;
   font-weight: 600;
   margin-right: 5px;
   margin-bottom: 5px;
+  border: 1px solid #d4af37;
 }
 
 .empty-state {
   text-align: center;
   padding: 40px 20px;
-  color: #999;
+  color: #888;
 }
 
 .empty-state-icon {
@@ -284,13 +332,15 @@ header p {
 }
 
 .empty-state h3 {
+  font-family: 'Mason Alternate Regular', sans-serif;
   font-size: 1.3rem;
   margin-bottom: 10px;
-  color: #666;
+  color: #d4af37;
 }
 
 .empty-state p {
   font-size: 0.95rem;
+  color: #b8b8b8;
 }
 
 .loading {
@@ -346,189 +396,57 @@ header p {
   }
 }
 
-/* --- Bloco de Rodapé Unificado --- */
 .disclaimer-container {
-    background-color: rgba(47, 41, 133, 0.4); /* Fundo escuro sólido o suficiente para contraste */
-    padding: 30px;
-    border-radius: 12px;
-    margin: 60px auto 20px; /* Espaço generoso acima */
-    border-left: 6px solid whitesmoke; /* Destaque Imperial Gold */
-    max-width: 1000px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background-color: rgba(47, 41, 133, 0.4);
+  padding: 30px;
+  border-radius: 12px;
+  margin: 60px auto 20px;
+  border-left: 6px solid whitesmoke;
+  max-width: 1000px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .disclaimer-text {
-    color: #ffffff !important; /* Branco puro para legibilidade máxima */
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  color: #ffffff !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .disclaimer-text strong {
-    color: whitesmoke;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+  color: whitesmoke;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 .main-footer {
-    border-top: 1px solid whitesmoke; /* Linha dourada subtil */
-    padding-top: 20px;
-    color: whitesmoke;
-    font-weight: 600;
-    font-size: 0.85rem;
-}
-
-/* Container da pesquisa */
-.search-section {
-    background: #FFF !important; /* Cor sólida e chapada */
-    border: 1px solid #2a2a2a;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-}
-
-/* Estilo dos Inputs e Selects */
-.form-group input, 
-.form-group select {
-    background-color: #f8f9fa !important; /* Fundo bem escuro */
-    border: 1px solid #333 !important;
-    color: #1c1b29 !important;
-    border-radius: 4px !important;
-    padding: 12px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 0.75rem;
-    transition: all 0.3s ease;
-}
-
-/* Foco no campo: a borda fica dourada */
-.form-group input:focus, 
-.form-group select:focus {
-    border-color: #d4af37 !important;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
-    outline: none;
-}
-
-/* Labels em dourado e mais limpos */
-.form-group label {
-    color: #29230f !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-/* --- BOTÕES UNIFICADOS (SUBSTITUA OS ANTERIORES POR ESTE) --- */
-.btn-clear {
-    background: transparent !important;
-    color: #1a1a1a !important; /* Texto escuro para ler bem no fundo branco */
-    border: 1px solid #ccc !important;
-    border-radius: 4px;
-    
-    /* Tipografia idêntica */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 0.9rem !important; 
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;  
-    
-    /* Alinhamento do texto */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 25px; /* Padding lateral */
-    height: 48px;    /* Altura fixa igual aos inputs */
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-inventory {
-    background: #e4e9ee !important;
-    color: #1a1a1a !important; /* Texto escuro para ler bem no fundo branco */
-    border: 1px solid #ccc !important;
-    border-radius: 4px;
-    
-    /* Tipografia idêntica */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 0.9rem !important; 
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;  
-    
-    /* Alinhamento do texto */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 25px; /* Padding lateral */
-    height: 48px;    /* Altura fixa igual aos inputs */
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* Alinha o select e o botão OK lado a lado */
-.search-field-wrapper {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-/* Estilo compacto para o botão OK */
-.btn-search {
-    height: 40px; /* Alinhado à altura do select */
-    padding: 0 15px;
-    background-color: #f8f9fa;
-    border: 1px solid #333;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-search:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: #ccc;
-}
-
-.btn-search:hover:not(:disabled) {
-    border-color: #d4af37;
-    color: #d4af37;
-}
-
-/* Hover idêntico */
-.btn-search:hover, .btn-clear:hover, .btn-inventory:hover {
-    color: #d4af37 !important;
-    border-color: #d4af37 !important;
-    background: rgba(212, 175, 55, 0.05) !important;
-}
-
-/* Filtros com Checkboxes */
-.filter-group {
-  display: inline-flex;
-  flex-direction: column;  
-  padding: 10px;
-  margin: 10px
+  border-top: 1px solid whitesmoke;
+  padding-top: 20px;
+  color: whitesmoke;
+  font-weight: 600;
+  font-size: 0.85rem;
 } 
 
-/* Container de filtros ocupando a largura total */
+
 .filters-container {
-  grid-column: 1 / -1; /* Ocupa as duas colunas do grid pai */
-  display: flex;       /* Muda de grid para flex para alinhar os grupos lado a lado */
-  flex-wrap: wrap;     /* Se a tela for pequena, eles quebram linha automaticamente */
+  grid-column: 1 / -1; 
+  display: flex;       
+  flex-wrap: wrap;     
   background: #f8f9fa;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
 }
 
-/* Os itens dentro de cada grupo (ex: Frio, Neutro) ficam em linha também */
+.filter-group {
+  margin: 10px;
+}
+
 .filter-checkboxes {
   display: flex;
-  flex-wrap: wrap;     /* Permite que as opções fluam horizontalmente */
-  gap: 15px;           /* Espaço entre cada checkbox */
+  flex-wrap: wrap;     
+  gap: 15px;           
 }
 
 .filter-label {
@@ -630,7 +548,7 @@ header p {
 
 .flag-container {
     cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease; /* Bónus: feedback visual */
+    transition: transform 0.2s ease, opacity 0.2s ease; 
 }
 
 .flag-container:hover {
@@ -640,8 +558,8 @@ header p {
 
 .flag-container.active {
     opacity: 1;
-    border-color: #007bff; /* Ou a cor principal do teu tema */
-    background-color: rgba(0, 123, 255, 0.1); /* Um fundo subtil */
+    border-color: #007bff; 
+    background-color: rgba(0, 123, 255, 0.1); 
     box-shadow: 0 0 8px rgba(150, 175, 202, 0.8);
     transform: scale(1.1);
 }
@@ -649,22 +567,22 @@ header p {
 .wip-text {
     font-size: 0.7rem;
     color: #ccc;
-    font-family: sans-serif; /* Força uma fonte simples fora do estilo medieval */
+    font-family: sans-serif; 
 }
 
-/* Contentor da régua */
+
 .dilution-container {
     margin-top: 1px;
     width: 100%;
 }
 
-/* A régua propriamente dita */
+
 .dilution-rule {
     height: 50px;
     width: 100%;
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    /* O gradiente usa a variável --paint-color que vira do JS */
+    
     background: linear-gradient(to right, 
         var(--paint-color) 0%, 
         var(--paint-color) 20%, 
@@ -673,11 +591,11 @@ header p {
     );
     box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1);
     overflow: hidden;
-    border: none; /* Às vezes a borda fina 1px solid ajuda a criar esse efeito, tenta remover */
-    outline: 1px solid rgba(0,0,0,0.05); /* Usa outline se precisares de definição */
+    border: none; 
+    outline: 1px solid rgba(0,0,0,0.05); 
 }
 
-/* O aviso de "Mera Ilustração" */
+
 .dilution-disclaimer {
     font-size: 0.6rem;
     color: #999;
@@ -694,6 +612,61 @@ header p {
     gap: 8px;
     margin-bottom: 15px;
     font-size: 0.9rem;
+}
+
+.primer-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.primer-label {
+    color: #d4af37;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.primer-select {
+    padding: 8px 12px;
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 4px;
+    background: #ffffff !important;
+    color: #333 !important;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    font-family: 'Mason Alternate Regular', sans-serif;
+}
+
+.primer-select:focus {
+    outline: none;
+    border-color: #d4af37 !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+    background: #ffffff !important;
+    color: #333 !important;
+}
+
+.primer-select:hover {
+    border-color: #d4af37 !important;
+    background: #ffffff !important;
+    color: #333 !important;
+}
+
+.primer-tooltip {
+    font-size: 0.9rem;
+    color: #0d6efd;
+    cursor: help;
+    transition: color 0.2s;
+}
+
+.primer-tooltip:hover {
+    color: #0b5ed7;
 }
 
 .sort-btn {
@@ -721,7 +694,7 @@ header p {
 
 .hobby-loader { position: relative; width: 120px; height: 150px; text-align: center; }
 
-/* Pote de Tinta */
+
 .paint-pot {
     position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
     width: 60px; height: 50px; border: 4px solid #eee;
@@ -730,11 +703,11 @@ header p {
 
 .paint-fill {
     position: absolute; bottom: 0; width: 100%; height: 60%;
-    background: #e74c3c; /* Cor da tinta (pode ser dinâmica!) */
+    background: #e74c3c; 
     animation: paint-wave 2s infinite ease-in-out;
 }
 
-/* O Pincel */
+
 .brush {
     position: absolute; left: 50%; transform: translateX(-50%);
     width: 20px; animation: brush-dip 2s infinite ease-in-out;
@@ -747,11 +720,11 @@ header p {
     border-radius: 0 0 5px 5px;
 }
 
-/* Animações */
+
 @keyframes brush-dip {
     0%, 80% { transform: translate(-50%, 0) rotate(0deg); }
-    30% { transform: translate(-50%, 30px) rotate(5deg); } /* Mergulha */
-    45% { transform: translate(-50%, 30px) rotate(-5deg); } /* Chacoalha */
+    30% { transform: translate(-50%, 30px) rotate(5deg); } 
+    45% { transform: translate(-50%, 30px) rotate(-5deg); } 
 }
 
 @keyframes paint-wave {
@@ -765,11 +738,11 @@ header p {
     font-size: 0.8rem; letter-spacing: 1px;
 }
 
-/* Massas */
-/* 1. Container de Resultados no JS*/
 
 
-/* 2. Wrapper da Tabela - Garante o fundo escuro e o scroll no mobile */
+
+
+
 .medieval-table-wrapper {
     width: 100% !important;
     box-sizing: border-box;
@@ -782,13 +755,13 @@ header p {
     overflow-x: auto;
 }
 
-/* 3. A Tabela em si */
+
 .custom-medieval-table {
     width: 100% !important;
     margin-bottom: 0;
     border-collapse: separate;
     border-spacing: 0 5px;
-    table-layout: fixed; /* Força o respeito às larguras abaixo */
+    table-layout: fixed; 
 }
 
 .custom-medieval-table th, 
@@ -798,7 +771,7 @@ header p {
     vertical-align: middle;
 }
 
-/* Cabeçalho Dourado */
+
 .custom-medieval-table thead th {
     border-bottom: 2px solid #d4af37 !important;
     color: #d4af37;
@@ -808,7 +781,7 @@ header p {
     text-align: center;
 }
 
-/* Corpo da Tabela */
+
 .custom-medieval-table tbody td {
     background-color: #38384d;
     border: none !important;
@@ -816,7 +789,7 @@ header p {
     font-size: 0.85rem;
 }
 
-/* Destaque para a primeira coluna (Características) */
+
 .custom-medieval-table tbody td:first-child {
     background-color: #1a1a2e;
     color: #d4af37;
@@ -824,39 +797,39 @@ header p {
     width: 15%;
 }
 
-/* Ajuste de larguras das colunas de dados */
-.custom-medieval-table th:nth-child(2) { width: 20%; } /* CA */
-.custom-medieval-table th:nth-child(3) { width: 25%; } /* Erro */
-.custom-medieval-table th:nth-child(4) { width: 20%; } /* Araldite */
-.custom-medieval-table th:nth-child(5) { width: 20%; } /* Putty */
+
+.custom-medieval-table th:nth-child(2) { width: 20%; } 
+.custom-medieval-table th:nth-child(3) { width: 25%; } 
+.custom-medieval-table th:nth-child(4) { width: 20%; } 
+.custom-medieval-table th:nth-child(5) { width: 20%; } 
 
 .custom-medieval-table .text-info { color: #0dcaf0 !important; }
 .custom-medieval-table .text-warning { color: #ffc107 !important; }
 .custom-medieval-table .text-danger { color: #dc3545 !important; }
 
-/* Utilitários de cores que você usou no HTML */
+
 .text-danger { color: #ff6b6b !important; }
 .fw-bold { font-weight: bold; }
 
-/* Responsividade para telas muito pequenas */
+
 @media (max-width: 768px) {
     .custom-medieval-table {
-        table-layout: auto; /* No mobile, deixa as colunas expandirem */
+        table-layout: auto; 
     }
 }
 
 #results.massa-active {
     display: block !important;
     width: 100% !important;
-    overflow: visible; /* Deixa a tabela respirar */
+    overflow: visible; 
 }
 
-/* Garante que a tabela dentro do modo massa ocupe tudo */
+
 .massa-active .medieval-table-wrapper {
     width: 100%;
 }
 
-/* As bordas verticais que pediste antes */
+
 .massa-active .custom-medieval-table {
     border-collapse: collapse;
     width: 100%;
@@ -867,7 +840,7 @@ header p {
     border: 1px solid #444 !important;
 }
 
-/* Garante o modo bloco apenas na aba massa */
+
 #results.massa-active {
     display: block !important;
 }
@@ -884,11 +857,11 @@ header p {
 
 .custom-medieval-table {
     width: 100% !important;
-    border-collapse: collapse !important; /* Une as bordas verticais */
+    border-collapse: collapse !important; 
     table-layout: fixed;
 }
 
-/* Grelha Técnica: Linhas Verticais e Horizontais */
+
 .custom-medieval-table th, 
 .custom-medieval-table td {
     border: 1px solid #444 !important; 
@@ -899,7 +872,7 @@ header p {
     word-wrap: break-word;
 }
 
-/* Coluna de Características */
+
 .custom-medieval-table tbody td:first-child {
     background-color: #1a1a2e;
     color: #d4af37;
@@ -907,7 +880,7 @@ header p {
     text-align: left;
 }
 
-/* Notas e Espaço para Fotos */
+
 .table-footer-notes {
     margin-top: 15px;
     padding: 12px;
@@ -926,7 +899,7 @@ header p {
     border-radius: 4px;
 }
 
-/* Container Geral */
+
 .projects-accordion {
   max-width: 1100px;
   margin: 20px auto;
@@ -937,16 +910,16 @@ header p {
     white-space: pre-line; 
 }
 
-/* Item Individual */
+
 .accordion-item {
-  background-color: #2a2b36; /* Tom escuro dos teus cards */
+  background-color: #2a2b36; 
   border: 1px solid #3f4052;
   margin-bottom: 10px;
   border-radius: 6px;
   overflow: hidden;
 }
 
-/* Botão de Disparo (Header) */
+
 .accordion-button {
   width: 100%;
   background-color: #21222d;
@@ -966,7 +939,7 @@ header p {
   background-color: #282936;
 }
 
-/* Alinhamento dos Títulos e Badges */
+
 .project-header-main {
   display: flex;
   justify-content: space-between;
@@ -979,10 +952,10 @@ header p {
   font-weight: bold;
   font-size: 1.1rem;
   letter-spacing: 0.5px;
-  color: #ffc107; /* Destaque dourado medieval */
+  color: #ffc107; 
 }
 
-/* Badges Estilizados */
+
 .project-badges {
   display: flex;
   gap: 10px;
@@ -995,10 +968,10 @@ header p {
   font-weight: bold;
 }
 
-.status-progress { background-color: #fd7e14; color: #fff; } /* Laranja para "In Progress" */
+.status-progress { background-color: #fd7e14; color: #fff; } 
 .project-pct { background-color: #4f5063; color: #fff; }
 
-/* Corpo do Accordion (Escondido por padrão via JS ou CSS) */
+
 .accordion-body {
   padding: 20px;
   border-top: 1px solid #3f4052;
@@ -1012,7 +985,7 @@ header p {
   margin-bottom: 20px;
 }
 
-/* Grid de Dependências Interiores */
+
 .project-dependencies-grid {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
@@ -1047,62 +1020,62 @@ header p {
   border-radius: 4px !important;
   font-size: 0.85rem !important;
   color: #e1e1e6 !important;
-  border-left: 3px solid #555; /* Borda padrão caso não venha do colorMap */
+  border-left: 3px solid #555; 
 }
 
-/* --- CORES DOS BADGES DE ESTADO --- */
 
-/* In Progress - Laranja (Já tens) */
+
+
 .status-progress { 
     background-color: #fd7e14 !important; 
     color: #fff !important; 
 }
 
-/* Done - Verde Sucesso */
+
 .status-done { 
     background-color: #28a745 !important; 
     color: #fff !important; 
-    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4); /* Leve brilho de conclusão */
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4); 
 }
 
-/* To Do - Azul de Planeamento */
+
 .status-todo { 
     background-color: #007bff !important; 
     color: #fff !important; 
 }
 
-/* Parking Lot - Cinzento de Ideia Guardada */
+
 .status-parking { 
     background-color: #6c757d !important; 
     color: #e1e1e6 !important; 
 }
 
 
-/* Container que abraça a tua arte do Canva */
+
 .canva-carousel-container {
     width: 100%;
     margin-top: 20px;
-    padding: 0; /* Zerado para colar perfeitamente nas laterais se quiseres */
+    padding: 0; 
     background-color: #1f2029;
     border: 1px solid #3f4052;
     border-radius: 6px;
-    overflow: hidden; /* Garante que os cantos da imagem não herdem bicos */
+    overflow: hidden; 
 }
 
-/* A tua regra de ouro: Largura total e altura fluida */
+
 .canva-long-strip {
-    width: 100% !important;   /* Ocupa a largura total do pai */
-    height: auto !important;   /* Calcula a altura proporcional com base nos 1070x350 */
-    display: block;            /* Remove espaçamentos fantasmas de elementos inline */
+    width: 100% !important;   
+    height: auto !important;   
+    display: block;            
 }
 
-/* --- BLINDAGEM DO PAI (Garante o sumiço ao fechar) --- */
+
 .accordion-item {
     background-color: #2a2b36;
     border: 1px solid #3f4052;
     margin-bottom: 10px;
     border-radius: 6px;
-    overflow: hidden; /* ESSENCIAL: Se o pai fechar, a imagem some a 100% */
+    overflow: hidden; 
 }
 
 .accordion-body {
@@ -1113,13 +1086,13 @@ header p {
     box-sizing: border-box;
 }
 
-/* Container da linha de informações adicionais */
+
 .project-more-info {
-    margin-top: -5px; /* Ajusta a proximidade com a descrição anterior */
+    margin-top: -5px; 
     margin-bottom: 20px;
     padding: 10px 14px;
-    background-color: #252632; /* Tom ligeiramente mais claro que o fundo do corpo */
-    border-left: 3px solid #ffc107; /* Um detalhe em dourado/amarelo para chamar o clique */
+    background-color: #252632; 
+    border-left: 3px solid #ffc107; 
     border-radius: 0 6px 6px 0;
     display: flex;
     align-items: center;
@@ -1127,29 +1100,27 @@ header p {
     font-size: 0.9rem;
 }
 
-/* O texto estático da etiqueta */
+
 .project-more-info .info-label {
     color: #a0a2b7;
     font-weight: 500;
 }
 
-/* Estilização do Link (O "Botão" de âncora) */
+
 .project-link {
-    color: #4da6ff !important; /* Um azul vibrante mas elegante para o tema escuro */
+    color: #4da6ff !important; 
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s ease-in-out, text-decoration 0.2s;
 }
 
-/* Efeito de destaque ao passar o rato (Hover) */
+
 .project-link:hover {
-    color: #80bfff !important; /* Clareia o azul no hover */
-    text-decoration: underline; /* Dá o feedback visual clássico de clique */
+    color: #80bfff !important; 
+    text-decoration: underline; 
 }
 
-/* ==========================================
-   🚨 RESPONSIVIDADE MOBILE (Ecrãs até 768px)
-   ========================================== */
+
 @media (max-width: 768px) {
 
     .placeholder-image
@@ -1158,10 +1129,10 @@ header p {
         height: auto !important;
     } 
     
-    /* 1. CORREÇÃO DA GRID DE MATERIAIS */
+    
     .project-dependencies-grid {
         display: flex !important;
-        flex-direction: column !important; /* Empilha as colunas verticalmente */
+        flex-direction: column !important; 
         gap: 20px !important;
         width: 100% !important;
     }
@@ -1171,36 +1142,36 @@ header p {
         min-width: 0 !important;
     }
 
-    /* 2. CORREÇÃO DO CABEÇALHO DO ACCORDION */
+    
     .accordion-button {
         padding: 12px 15px !important;
     }
 
     .project-header-main {
         display: flex !important;
-        flex-direction: column !important; /* Título em cima, metadados em baixo */
+        flex-direction: column !important; 
         align-items: flex-start !important;
         gap: 10px !important;
         width: 100% !important;
     }
 
     .project-title {
-        font-size: 1.1rem !important; /* Ajusta o tamanho da fonte do título */
-        white-space: normal !important; /* Permite que quebre linha se o nome for gigante */
+        font-size: 1.1rem !important; 
+        white-space: normal !important; 
     }
 
     .project-badges {
         display: flex !important;
-        flex-wrap: wrap !important; /* Se faltar espaço, joga os badges para a linha de baixo */
+        flex-wrap: wrap !important; 
         align-items: center !important;
         gap: 8px !important;
         width: 100% !important;
     }
 
-    /* 3. AJUSTE DO MENU DE TABS SUPERIOR */
-    .tabs-container { /* Altera para a classe real que envelopa os teus botões do menu */
+    
+    .tabs-container { 
         display: flex !important;
-        overflow-x: auto !important; /* Permite arrastar para o lado se o ecrã for minúsculo */
+        overflow-x: auto !important; 
         white-space: nowrap !important;
         justify-content: flex-start !important;
         padding-bottom: 5px !important;
@@ -1208,11 +1179,11 @@ header p {
 
     .tab-button {
         padding: 10px 15px !important;
-        font-size: 0.85rem !important; /* Encolhe ligeiramente o texto dos botões */
+        font-size: 0.85rem !important; 
     }
 
 
-    /* SOLUÇÃO 2 REFINADA COM HEADER */
+    
     .medieval-table-wrapper table, 
     .medieval-table-wrapper thead, 
     .medieval-table-wrapper tbody, 
@@ -1224,47 +1195,47 @@ header p {
         box-sizing: border-box;
     }
 
-    /* Esconde o cabeçalho rígido original da tabela */
+    
     .medieval-table-wrapper thead tr { 
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    /* O Card do Produto */
+    
     .medieval-table-wrapper tr { 
-        background: #1f2029 !important; /* Fundo escuro padrão do corpo */
+        background: #1f2029 !important; 
         border: 1px solid #3f4052 !important;
         border-radius: 8px !important;
         margin-bottom: 20px !important;
-        padding: 0 !important; /* Zerado para o Header colar nas bordas */
+        padding: 0 !important; 
         overflow: hidden;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    /* 🥇 ESTILIZAÇÃO DO HEADER DO CARD (Primeira coluna: Product Name) */
+    
     .medieval-table-wrapper td:nth-of-type(1) {
-        background-color: #2a2b36 !important; /* Tom mais claro para destacar como Header */
-        border-bottom: 2px solid #ffc107 !important; /* Linha dourada medieval */
+        background-color: #2a2b36 !important; 
+        border-bottom: 2px solid #ffc107 !important; 
         padding: 12px 15px !important;
         font-size: 1.1rem !important;
         font-weight: bold !important;
-        color: #ffc107 !important; /* Nome do produto brilha em dourado */
+        color: #ffc107 !important; 
         display: block !important;
-        text-align: left !important; /* Alinhado à esquerda como um título real */
+        text-align: left !important; 
     }
-    /* Oculta o prefixo "Product:" na primeira coluna, já que ela própria é o cabeçalho */
+    
     .medieval-table-wrapper td:nth-of-type(1)::before { 
         content: "" !important; 
     }
 
-    /* As outras células de dados técnicos */
+    
     .medieval-table-wrapper td:not(:nth-of-type(1)) { 
         border: none !important;
         border-bottom: 1px solid #2e2f3d !important; 
         position: relative !important;
-        padding: 10px 15px 10px 45% !important; /* Abre 45% de espaço na esquerda para a label */
-        text-align: right !important; /* Dados alinhados à direita */
+        padding: 10px 15px 10px 45% !important; 
+        text-align: right !important; 
         font-size: 0.9rem !important;
         color: #e3e4e8 !important;
         display: flex !important;
@@ -1277,13 +1248,13 @@ header p {
         border-bottom: none !important;
     }
 
-    /* Injeta os rótulos automáticos à esquerda de cada dado */
+    
     .medieval-table-wrapper td:nth-of-type(2)::before { content: "Type:"; font-weight: bold; color: #a0a2b7; }
     .medieval-table-wrapper td:nth-of-type(3)::before { content: "Drying Time:"; font-weight: bold; color: #a0a2b7; }
     .medieval-table-wrapper td:nth-of-type(4)::before { content: "Shrinkage:"; font-weight: bold; color: #a0a2b7; }
     .medieval-table-wrapper td:nth-of-type(5)::before { content: "Notes:"; font-weight: bold; color: #a0a2b7; }
     
-    /* Posicionamento absoluto das labels à esquerda */
+    
     .medieval-table-wrapper td::before {
         position: absolute !important;
         left: 15px !important;
@@ -1292,28 +1263,28 @@ header p {
         white-space: nowrap;
     }
 
-    /* 📱 CORREÇÃO COMPLETA DO MENU DE ABAS */   
-    /* 📱 TABS ULTRA COMPACTAS EM MOBILE (SEM SCROLL) */
+       
+    
     .tabs {
         display: flex !important;
-        justify-content: space-between !important; /* Distribui as 4 abas igualmente na largura do ecrã */
-        overflow: hidden !important;             /* Mata o scroll, já não é preciso */
+        justify-content: space-between !important; 
+        overflow: hidden !important;             
         white-space: nowrap !important;
-        padding: 8px 10px !important;            /* Padding vertical e horizontal reduzido no container */
-        gap: 0px !important;                     /* Espaço mínimo de segurança entre os botões */
+        padding: 8px 10px !important;            
+        gap: 0px !important;                     
         width: 100% !important;
         box-sizing: border-box;
     }
 
     .tab-button {
-        flex: 1 1 0% !important;                 /* Força cada botão a ter EXATAMENTE o mesmo tamanho (25% do ecrã cada) */
-        padding: 8px 4px !important;             /* Padding interno super encolhido para o texto não quebrar */
-        font-size: 0.78rem !important;           /* Letra ligeiramente menor para caber em qualquer telemóvel */
-        letter-spacing: 0px !important;          /* Junta as letras um pentelhésimo para poupar espaço */
+        flex: 1 1 0% !important;                 
+        padding: 8px 4px !important;             
+        font-size: 0.78rem !important;           
+        letter-spacing: 0px !important;          
         text-align: center !important;
         text-transform: uppercase;
         
-        /* Proteção extra para garantir que o texto longo não quebre a linha interna */
+        
         display: inline-block !important;
         overflow: hidden;
         text-overflow: clip; 
