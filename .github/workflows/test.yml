@@ -2,9 +2,15 @@ name: Test Suite
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
+      - develop
+      - 'feature/**' # <--- Permite correr em qualquer branch que comece por feature/
   pull_request:
-    branches: [main]
+    branches: 
+      - main
+      - develop
+  workflow_dispatch: # <--- Adiciona o botão manual na interface do GitHub Actions!
 
 jobs:
   test:
