@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 // Base URL - adjust if needed
-const baseURL = 'http://127.0.0.1:5500';
+const baseURL = 'https://codecraftandchronicles.github.io/cores/'; //http://127.0.0.1:5500
 
 test.describe('CORES Project - End-to-End Tests', () => {
   test.beforeEach(async ({ page }) => {
