@@ -1,93 +1,252 @@
-// ============ CONSTANTS ============
-// Tab identifiers
-const TAB_NAMES = Object.freeze({
-  COLOURS: 'colours',
-  EFFECTS: 'effects',
-  PUTTY: 'putty',
-  PROJECTS: 'projects'
-});
+/**
+ * Data Service Layer - Centralized data management for the application
+ * Provides a clean API for data operations and separates concerns from UI logic
+ * @namespace DataService
+ */
+const DataService = (function() {
+    let coloursData = { colours: [] };
+    let effectsData = { effects: [] };
+    let projectsData = { projects: [] };
+    let toolsData = { tools: [] };
+    
+    // Private validation functions
+    function validateColourData(data) {
+        if (!data || typeof data !== 'object') {
+            throw new Error('Invalid data structure: Expected object');
+        }
+        if (!Array.isArray(data.colours)) {
+            throw new Error('Invalid data structure: colours should be an array');
+        }
+        
+        data.colours.forEach((colour, index) => {
+            if (!colour || typeof colour !== 'object') {
+                throw new Error(`Invalid colour entry at index ${index}: Expected object`);
+            }
+            
+            // Normalize Owned field to boolean
+            if (colour.hasOwnProperty('Owned')) {
+                colour.Owned = colour.Owned === "True" || colour.Owned === true || colour.Owned === "true";
+            }
+        });
+        
+        return true;
+    }
+    
+    function validateEffectsData(data) {
+        if (!data || typeof data !== 'object') {
+            throw new Error('Invalid data structure: Expected object');
+        }
+        if (!Array.isArray(data.effects)) {
+            throw new Error('Invalid data structure: effects should be an array');
+        }
+        
+        data.effects.forEach((effect, index) => {
+            if (!effect || typeof effect !== 'object') {
+                throw new Error(`Invalid effect entry at index ${index}: Expected object`);
+            }
+            
+            // Normalize Owned field to boolean
+            if (effect.hasOwnProperty('Owned')) {
+                effect.Owned = effect.Owned === "True" || effect.Owned === true || effect.Owned === "true";
+            }
+        });
+        
+        return true;
+    }
+    
+    function validateProjectsData(data) {
+        if (!data || typeof data !== 'object') {
+            throw new Error('Invalid data structure: Expected object');
+        }
+        if (!Array.isArray(data.projects)) {
+            throw new Error('Invalid data structure: projects should be an array');
+        }
+        
+        data.projects.forEach((project, index) => {
+            if (!project || typeof project !== 'object') {
+                throw new Error(`Invalid project entry at index ${index}: Expected object`);
+            }
+            
+            if (!project.ProjectName) {
+                console.warn(`Project at index ${index} missing ProjectName`);
+                project.ProjectName = `Unnamed Project ${index}`;
+            }
+            
+            if (!project.Status) {
+                console.warn(`Project at index ${index} missing Status, defaulting to 'to do'`);
+                project.Status = 'to do';
+            }
+        });
+        
+        return true;
+    }
+    
+    // Public API
+    return {
+        getColours: function() {
+            return coloursData.colours;
+        },
+        
+        getEffects: function() {
+            return effectsData.effects;
+        },
+        
+        getProjects: function() {
+            return projectsData.projects;
+        },
+        
+        getTools: function() {
+            return toolsData.tools;
+        },
+        
+                loadColours: function() {
+            // Create abort controller for timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            
+            return fetch(`./data/colours.json?v=1.0.0`, { signal: controller.signal })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        throw new Error('Request timed out after 10 seconds');
+                    }
+                    throw error;
+                })
+                .then(data => {
+                    validateColourData(data);
+                    coloursData = data;
+                    return coloursData;
+                });
+        },
+        
+                loadEffects: function() {
+            // Create abort controller for timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            
+            return fetch(`./data/effects.json?v=1.0.0`, { signal: controller.signal })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        throw new Error('Request timed out after 10 seconds');
+                    }
+                    throw error;
+                })
+                .then(data => {
+                    validateEffectsData(data);
+                    effectsData = data;
+                    return effectsData;
+                });
+        },
+        
+                loadProjects: function() {
+            // Create abort controller for timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            
+            return fetch(`./data/projects.json?v=1.0.0`, { signal: controller.signal })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        throw new Error('Request timed out after 10 seconds');
+                    }
+                    throw error;
+                })
+                .then(data => {
+                    validateProjectsData(data);
+                    projectsData = data;
+                    return projectsData;
+                });
+        },
+        
+                loadTools: function() {
+            // Create abort controller for timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            
+            return fetch(`./data/tools.json?v=1.0.0`, { signal: controller.signal })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        throw new Error('Request timed out after 10 seconds');
+                    }
+                    throw error;
+                })
+                .then(data => {
+                    if (data.tools) {
+                        toolsData = data;
+                    }
+                    return toolsData;
+                });
+        },
+        
+        getDataByTab: function(tab) {
+            switch(tab) {
+                case 'colours': return this.getColours();
+                case 'effects': return this.getEffects();
+                case 'projects': return this.getProjects();
+                case 'tools': return this.getTools();
+                default: return [];
+            }
+        }
+    };
+})();
 
-// Field names
-const FIELD_KEYS = Object.freeze({
-  BASE_COLOUR: 'Base Colour',
-  PRODUCT_NAME: 'Product Name',
-  CODE: 'Code',
-  HEX: 'Hex',
-  TEMPERATURE: 'Temperature',
-  PHASE: 'Phase',
-  SATURATION: 'Saturation',
-  MANUFACTURER: 'Manufacturer',
-  COMPLEMENTARY: 'Complementary',
-  ROLE_OF_COMPLEMENTARY: 'Role of Complementary',
-  FUNCTION: 'Function',
-  KEYWORDS: 'Keywords',
-  OWNED: 'Owned',
-  STATUS: 'Status',
-  PROJECT_NAME: 'ProjectName',
-  PCT: 'Pct',
-  FINISH_DATE: 'FinishDate',
-  DESCRIPTION: 'Description',
-  MATERIALS: 'Materials',
-  PROJECT_IMAGE: 'ProjectImage',
-  URL: 'URL'
-});
+// Current application state
+let currentTab = 'colours';
+let sortAsc = true;
+let currentFilteredResults = []; 
+let searchField = "Select field...", noResults = "No results found", showing = "Showing", illustrative = "Illustrative", noResultsContainer = "No results", resultsLabel = "Results", headerLabel = "Search", headerParagraph = "Enter search criteria";
+let currentTabOperation = null;
+let lastTabSwitchTime = 0;
+let searchDebounceTimeout = null; // Global debounce timeout
+const TAB_SWITCH_DEBOUNCE = 300; // ms
+const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Temperature','Phase','Saturation Level', 'Manufacturer', 'Owned'];
+let colorMap = {};
 
-// ============ STATE ============
-let allDataColours = { colours: []};
+// Legacy global variables (kept for backward compatibility during transition)
+let allDataColours = { colours: [] };
 let allDataEffects = { effects: [] };
 let allDataProjects = { projects: [] };
 let allDataTools = { tools: [] };
-// ============ PROJECT SORT FUNCTION ============
-// Unified sort logic: by status priority, then by finish date (desc for done), then by name
-const PROJECT_SORT_ORDER = {
-  "to do": 1,
-  "in progress": 2,
-  "on the bench": 2,
-  "done": 3,
-  "completed": 3,
-  "parking lot": 4
-};
-
-function projectSortFunc(a, b) {
-  const statusA = (a[FIELD_KEYS.STATUS] || "").toLowerCase().trim();
-  const statusB = (b[FIELD_KEYS.STATUS] || "").toLowerCase().trim();
-  
-  const priorityA = PROJECT_SORT_ORDER[statusA] || 99;
-  const priorityB = PROJECT_SORT_ORDER[statusB] || 99;
-  
-  if (priorityA !== priorityB) {
-    return priorityA - priorityB;
-  }
-  
-  if (statusA === "done" || statusA === "completed") {
-    const dateA = parseDate(a[FIELD_KEYS.FINISH_DATE]);
-    const dateB = parseDate(b[FIELD_KEYS.FINISH_DATE]);
-    return dateB - dateA;
-  }
-  
-  const nameA = (a[FIELD_KEYS.PROJECT_NAME] || "").toUpperCase();
-  const nameB = (b[FIELD_KEYS.PROJECT_NAME] || "").toUpperCase();
-  return nameA.localeCompare(nameB);
-}
-
-// ============ GLOBAL VARIABLES ============
-let currentTab = TAB_NAMES.COLOURS;
-let currentPrimerClass = 'primer-v-white'; // Default primer
-const fieldsToIgnoreEN = [FIELD_KEYS.HEX, FIELD_KEYS.ROLE_OF_COMPLEMENTARY, FIELD_KEYS.COMPLEMENTARY, FIELD_KEYS.TEMPERATURE, FIELD_KEYS.PHASE, 'Saturation Level', FIELD_KEYS.MANUFACTURER, FIELD_KEYS.OWNED];
-let colorMap = {};
-let sortAsc = true;
-let currentFilteredResults = [];
-let searchField = "", noResults = "", showing = "", illustrative = "", noResultsContainer = "", resultsLabel = "", headerLabel = "", headerParagraph = "";
 const configFiltros = {    
     'EN': {
-        [TAB_NAMES.COLOURS]: {
-            [FIELD_KEYS.TEMPERATURE]: ['Warm', 'Cold', 'Neutral'],
-            [FIELD_KEYS.PHASE]: ['Base', 'Shadow', 'Highlight', 'Filter', 'Fluorescent', 'TMM'],
-            [FIELD_KEYS.SATURATION]: ['Light', 'Medium', 'Dark'],
-            [FIELD_KEYS.MANUFACTURER]: ['AK', 'Citadel', 'Vallejo']
+        'colours': {
+            'Temperature': ['Warm', 'Cold', 'Neutral'],
+            'Phase': ['Base', 'Shadow', 'Highlight', 'Filter', 'Fluorescent', 'TMM'],
+            'Saturation': ['Light', 'Medium', 'Dark'],
+            'Manufacturer': ['AK', 'Citadel', 'Vallejo']
         },
-        [TAB_NAMES.EFFECTS]: {
-            [FIELD_KEYS.MANUFACTURER]: ['AK', 'Citadel', 'Vallejo']
+        'effects': {
+            'Manufacturer': ['AK', 'Citadel', 'Vallejo']
         }
     }
 };
@@ -187,18 +346,101 @@ const htmlPutty = `
 
 </div>`;
 
+// Global error handlers
+window.addEventListener('error', (event) => {
+    console.error('Uncaught error:', event.error);
+    showError(`An unexpected error occurred: ${escapeHtml(event.error.message)}`);
+    
+    // Prevent default browser error handling
+    event.preventDefault();
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+    showError(`An unexpected error occurred: ${escapeHtml(event.reason.message || String(event.reason))}`);
+    
+    // Prevent default browser error handling
+    event.preventDefault();
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
   await PageLoad();
   setupEventListeners();  
   syncTabWithHash(); 
 });
 
-async function PageLoad() {
-  // Load all data using the generic loader
-  loadData('colours', 'colours', FIELD_KEYS.BASE_COLOUR, 'allDataColours');
-  loadData('effects', 'effects', FIELD_KEYS.PRODUCT_NAME, 'allDataEffects');
-  loadData('projects', 'projects', null, 'allDataProjects', projectSortFunc);
-  loadData('tools', 'tools', 'Name', 'allDataTools');
+/**
+ * Initializes the application by loading all data and setting up the UI
+ * @async
+ * @function PageLoad
+ * @returns {Promise<void>}
+ */
+async function PageLoad() {  
+  const loader = document.getElementById('loading-overlay');
+  if (loader) {
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
+  }
+  
+  try {
+    // Use DataService for all data loading
+    const loadOperations = [
+      DataService.loadColours(),
+      DataService.loadEffects(),
+      DataService.loadProjects(),
+      DataService.loadTools()
+    ];
+    
+    // Load all data in parallel
+    await Promise.all(loadOperations);
+    
+    // Update legacy globals for backward compatibility
+    allDataColours = { colours: DataService.getColours() };
+    allDataEffects = { effects: DataService.getEffects() };
+    allDataProjects = { projects: DataService.getProjects() };
+    allDataTools = { tools: DataService.getTools() };
+    
+    // Initialize UI after data is loaded
+    buildColorMap();
+    updateSearchFields();
+    updateFilters();
+    displayResults();
+    
+  } catch (error) {
+    console.error('Failed to load application data:', error);
+    showError(`Failed to load application data: ${escapeHtml(error.message)}`);
+  } finally {
+    // Always hide loader when done
+    if (loader) {
+      loader.style.opacity = '0';
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 500);
+    }
+  }
+}
+
+function validateColourData(data) {
+    if (!data || typeof data !== 'object') {
+        throw new Error('Invalid data structure: Expected object');
+    }
+    if (!Array.isArray(data.colours)) {
+        throw new Error('Invalid data structure: colours should be an array');
+    }
+    
+    // Validate each colour entry
+    data.colours.forEach((colour, index) => {
+        if (!colour || typeof colour !== 'object') {
+            throw new Error(`Invalid colour entry at index ${index}: Expected object`);
+        }
+        
+        // Normalize Owned field to boolean
+        if (colour.hasOwnProperty('Owned')) {
+            colour.Owned = colour.Owned === "True" || colour.Owned === true || colour.Owned === "true";
+        }
+    });
+    
+    return true;
 }
 
 function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
@@ -208,60 +450,218 @@ function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
     loader.style.opacity = '1';
   }
 
-  fetch(`./data/${endpoint}.json`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (!data || !data[dataKey]) {
-        throw new Error(`Invalid data structure: missing '${dataKey}' key`);
-      }
+    fetch(`./data/colours.json`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            try {
+                // Validate data structure
+                validateColourData(data);
+                
+                if (data.colours) {
+                    data.colours.sort((a, b) => {
+                        const nomeA = (a["Base Colour"] || "").toUpperCase();
+                        const nomeB = (b["Base Colour"] || "").toUpperCase();
+                        return nomeA.localeCompare(nomeB);
+                    });
+                }               
 
-      if (customSort) {
-        data[dataKey].sort(customSort);
-      } else if (sortField) {
-        data[dataKey].sort((a, b) => {
-          const valA = (a[sortField] || "").toUpperCase();
-          const valB = (b[sortField] || "").toUpperCase();
-          return valA.localeCompare(valB);
+                allDataColours = data;                  
+                
+                buildColorMap(); 
+                updateSearchFields(); 
+                updateFilters(); 
+                displayResults();
+
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => { loader.style.display = 'none'; }, 500);
+                }
+            } catch (validationError) {
+                console.error('Data validation failed:', validationError.message);
+                showError(`Data validation failed: ${validationError.message}`);
+                if (loader) loader.style.display = 'none';
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load colours data:', err.message);
+            showError(`Failed to load colours data: ${err.message}`);
+            if (loader) loader.style.display = 'none';
         });
-      }
+}
 
-      // Assign data to the appropriate global variable
-      switch (globalName) {
-        case 'allDataColours':
-          allDataColours = data;
-          break;
-        case 'allDataEffects':
-          allDataEffects = data;
-          break;
-        case 'allDataProjects':
-          allDataProjects = data;
-          break;
-        case 'allDataTools':
-          allDataTools = data;
-          break;
-      }
-
-      console.log(`✓ Loaded ${endpoint}: ${data[dataKey].length} items`);
-      buildColorMap();
-      updateSearchFields();
-      updateFilters();
-      displayResults();
-
-      if (loader && endpoint === 'colours') {
-        loader.style.opacity = '0';
-        setTimeout(() => { loader.style.display = 'none'; }, 500);
-      }
-    })
-    .catch(err => {
-      console.error(`✗ Failed to load ${endpoint}:`, err);
-      showError(`Unable to load ${endpoint}. Please refresh the page.`);
-      if (loader) loader.style.display = 'none';
+function validateEffectsData(data) {
+    if (!data || typeof data !== 'object') {
+        throw new Error('Invalid data structure: Expected object');
+    }
+    if (!Array.isArray(data.effects)) {
+        throw new Error('Invalid data structure: effects should be an array');
+    }
+    
+    // Validate each effect entry
+    data.effects.forEach((effect, index) => {
+        if (!effect || typeof effect !== 'object') {
+            throw new Error(`Invalid effect entry at index ${index}: Expected object`);
+        }
+        
+        // Normalize Owned field to boolean
+        if (effect.hasOwnProperty('Owned')) {
+            effect.Owned = effect.Owned === "True" || effect.Owned === true || effect.Owned === "true";
+        }
     });
+    
+    return true;
+}
+
+function loadDataEffects(lang) {
+    const chaveNome = "Base Colour";
+
+    fetch(`./data/effects.json`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {                        
+            try {
+                // Validate data structure
+                validateEffectsData(data);
+                
+                if (data.effects) {
+                    data.effects.sort((a, b) => {
+                        const nomeA = (a["Product Name"] || "").toUpperCase();
+                        const nomeB = (b["Product Name"] || "").toUpperCase();
+                        return nomeA.localeCompare(nomeB);
+                    });
+                }
+
+                allDataEffects = data;
+                buildColorMap(); 
+                updateSearchFields(); 
+                updateFilters(); 
+                displayResults();
+            } catch (validationError) {
+                console.error('Data validation failed:', validationError.message);
+                showError(`Data validation failed: ${validationError.message}`);
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load effects data:', err.message);
+            showError(`Failed to load effects data: ${err.message}`);
+        });
+}
+
+function validateProjectsData(data) {
+    if (!data || typeof data !== 'object') {
+        throw new Error('Invalid data structure: Expected object');
+    }
+    if (!Array.isArray(data.projects)) {
+        throw new Error('Invalid data structure: projects should be an array');
+    }
+    
+    // Validate each project entry
+    data.projects.forEach((project, index) => {
+        if (!project || typeof project !== 'object') {
+            throw new Error(`Invalid project entry at index ${index}: Expected object`);
+        }
+        
+        // Ensure required fields exist
+        if (!project.ProjectName) {
+            console.warn(`Project at index ${index} missing ProjectName`);
+            project.ProjectName = `Unnamed Project ${index}`;
+        }
+        
+        if (!project.Status) {
+            console.warn(`Project at index ${index} missing Status, defaulting to 'to do'`);
+            project.Status = 'to do';
+        }
+    });
+    
+    return true;
+}
+
+function loadDataProjects() {
+    fetch(`./data/projects.json`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Check content type
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Invalid content type: Expected application/json');
+            }
+            
+            return response.json();
+        })
+        .then(data => {                        
+            try {
+                // Validate data structure
+                validateProjectsData(data);
+                
+                if (data.projects) {
+                    const statusPriority = {
+                        "to do": 1,
+                        "in progress": 2,
+                        "on the bench": 2,
+                        "done": 3,
+                        "completed": 3,
+                        "parking lot": 4
+                    };
+
+                    data.projects.sort((a, b) => {
+                        const statusA = (a["Status"] || "").toLowerCase().trim();
+                        const statusB = (b["Status"] || "").toLowerCase().trim();
+
+                        const priorityA = statusPriority[statusA] || 99;
+                        const priorityB = statusPriority[statusB] || 99;
+
+                        if (priorityA !== priorityB) {
+                            return priorityA - priorityB;
+                        } 
+                        
+                        if (statusA === "done" || statusA === "completed") {
+                            const dateA = parseDate(a["FinishDate"]);
+                            const dateB = parseDate(b["FinishDate"]);
+                            return dateB - dateA; 
+                        }
+
+                        const nomeA = (a["ProjectName"] || "").toUpperCase();
+                        const nomeB = (b["ProjectName"] || "").toUpperCase();
+                        return nomeA.localeCompare(nomeB);
+                    });
+                }
+
+                allDataProjects = data;
+                buildColorMap(); 
+                updateSearchFields(); 
+                updateFilters(); 
+                displayResults();
+            } catch (validationError) {
+                console.error('Data validation failed:', validationError.message);
+                showError(`Data validation failed: ${validationError.message}`);
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load projects data:', err.message);
+            
+            // Provide more specific error messages
+            if (err.message.includes('HTTP error! status:')) {
+                showError(`Failed to load projects data. Server returned error: ${err.message}`);
+            } else if (err.message.includes('Invalid content type')) {
+                showError('Failed to load projects data. Invalid data format received.');
+            } else if (err.message.includes('JSON.parse')) {
+                showError('Failed to load projects data. Corrupted or invalid JSON.');
+            } else {
+                showError(`Failed to load projects data: ${err.message}`);
+            }
+        });
 }
 
 function parseDate(dateString) {
@@ -274,7 +674,34 @@ function parseDate(dateString) {
     return new Date(0);
 }
 
+function loadDataTools() {
+    fetch(`./data/tools.json`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {                        
+            if (data.tools) {
+                data.tools.sort((a, b) => {
+                    const nomeA = (a["Name"] || "").toUpperCase();
+                    const nomeB = (b["Name"] || "").toUpperCase();
+                    return nomeA.localeCompare(nomeB);
+                });
+            }
 
+            allDataTools = data;
+            buildColorMap(); 
+            updateSearchFields(); 
+            updateFilters(); 
+            displayResults();
+        })
+        .catch(err => {
+            console.error('Failed to load tools data:', err.message);
+            showError(`Failed to load tools data: ${err.message}`);
+        });
+}
 
 function setupEventListeners() {
   const searchInput = document.getElementById('searchInput'); 
@@ -311,83 +738,154 @@ function setupEventListeners() {
     });
   });
 
-  document.getElementById('btnSearch').addEventListener('click', performSearch);
+    document.getElementById('btnSearch').addEventListener('click', performSearch);
   document.getElementById('btnClear').addEventListener('click', clearSearch);
+
+
+
+
+    // Debounced search input (using global searchDebounceTimeout)
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+    clearTimeout(searchDebounceTimeout);
+    searchDebounceTimeout = setTimeout(() => {
+      validateSearchButton();
+      // Only auto-search if we have a search field selected
+      const searchField = document.getElementById('searchField').value;
+      if (searchField && e.target.value.trim().length > 0) {
+        performSearch();
+      }
+    }, 300); // 300ms debounce delay
+  });
+  
   document.getElementById('searchInput').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
+      clearTimeout(searchDebounceTimeout);
       performSearch();
     }
   });
-
-  // Primer selector event listener - set up with delay to ensure DOM is ready
-  setTimeout(() => {
-    const primerSelect = document.getElementById('primerSelect');
-    if (primerSelect) {
-      primerSelect.addEventListener('change', (e) => {
-        const selectedPrimer = e.target.value || 'primer-v-white';
-        applyPrimerToCards(selectedPrimer);
-      });
-    }
-  }, 100);
+  
+  // Add event listener for export button
+  const exportBtn = document.getElementById('btnInventory');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', exportInventoryToCSV);
+  }
 }
 
 
-function switchTab(tab) {
-  currentTab = tab;
-  const resultsEl = document.getElementById('results');
-  const info = document.getElementById('resultsInfo');
-  const sortContainer = document.querySelector('.sort-container');
-  const primerSelectorContainer = document.querySelector('.primer-selector-container');
-  const searchControls = document.querySelector('.search-controls');
-
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.tab === tab);
-  });
-
-  window.history.replaceState(null, null, `#${tab}`);
-      
-  if (tab === TAB_NAMES.PUTTY || tab === TAB_NAMES.PROJECTS) {
-    if (resultsEl) {
-      resultsEl.innerHTML = '';
-      resultsEl.classList.add('massa-active');
+function cleanupEventListeners() {
+  // Clean up any existing virtual scrolling
+  const virtualContainer = document.querySelector('.virtual-scroll-container');
+  if (virtualContainer) {
+    const viewport = virtualContainer.querySelector('.virtual-scroll-viewport');
+    if (viewport) {
+      // Clone the node to remove all event listeners
+      const newViewport = viewport.cloneNode(true);
+      viewport.parentNode.replaceChild(newViewport, viewport);
     }
-    if (searchControls) searchControls.style.setProperty('display', 'none', 'important');
-    if (info) info.style.display = 'none';
-    if (sortContainer) sortContainer.style.display = 'none';
-    if (primerSelectorContainer) primerSelectorContainer.style.display = 'none';
-    
-    performSearch(); 
-  } else {
-    if (searchControls) {
-      searchControls.style.setProperty('display', 'grid', 'important');
-    }
-    
-    if (resultsEl) resultsEl.classList.remove('massa-active');      
-    if (info) info.style.display = 'block';
-    if (sortContainer) sortContainer.style.display = 'block';
-    if (primerSelectorContainer) primerSelectorContainer.style.display = 'flex';
-    
-    // Atualiza a UI sem resetar o scroll ou o estado
-    updateSearchFields();
-    updateFilters();
-    displayResults(); 
   }
+  
+  // Clear any pending timeouts
+  if (currentTabOperation) {
+    clearTimeout(currentTabOperation);
+    currentTabOperation = null;
+  }
+  
+  if (searchDebounceTimeout) {
+    clearTimeout(searchDebounceTimeout);
+    searchDebounceTimeout = null;
+  }
+  
+  // Remove any orphaned event listeners by cloning checkboxes
+  document.querySelectorAll('.filter-checkboxes input[type="checkbox"]').forEach(checkbox => {
+    const newCheckbox = checkbox.cloneNode(true);
+    checkbox.parentNode.replaceChild(newCheckbox, checkbox);
+  });
+}
+
+function switchTab(tab) {
+  // Clean up before switching
+  cleanupEventListeners();
+  
+  // Debounce rapid tab switching to prevent race conditions
+  const now = Date.now();
+  if (now - lastTabSwitchTime < TAB_SWITCH_DEBOUNCE) {
+    // Cancel previous operation if still pending
+    if (currentTabOperation) {
+      clearTimeout(currentTabOperation);
+    }
+  }
+  lastTabSwitchTime = now;
+  
+  // Set new operation
+  currentTabOperation = setTimeout(() => {
+    currentTab = tab;
+    const resultsEl = document.getElementById('results');
+    const info = document.getElementById('resultsInfo');
+    const sortContainer = document.querySelector('.sort-container');
+    const searchControls = document.querySelector('.search-controls');
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tab === tab);
+    });
+
+    window.history.replaceState(null, null, `#${tab}`);
+      
+    // Reset sort direction when switching tabs
+    sortAsc = true;
+    const sortBtn = document.getElementById('btn-sort');
+    if (sortBtn) {
+      sortBtn.classList.remove('desc');
+    }
+    
+    // Clear filter state when switching tabs
+    document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
+      checkbox.checked = false;
+    });
+    
+    // Clear search when switching tabs
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchField').value = '';
+    validateSearchButton();
+
+    if (tab === 'putty' || tab === 'projects') {
+      if (resultsEl) {
+        resultsEl.innerHTML = '';
+        resultsEl.classList.add('massa-active');
+      }
+      if (searchControls) searchControls.style.setProperty('display', 'none', 'important');
+      if (info) info.style.display = 'none';
+      if (sortContainer) sortContainer.style.display = 'none';
+      
+      performSearch(); 
+    } else {
+      if (searchControls) {
+        searchControls.style.setProperty('display', 'grid', 'important');
+      } 
+      
+      if (resultsEl) resultsEl.classList.remove('massa-active');      
+      if (info) info.style.display = 'block';
+      if (sortContainer) sortContainer.style.display = 'block';
+      
+      // Update UI with cleared state
+      updateSearchFields();
+      updateFilters();
+      displayResults(); 
+    }
+    
+    currentTabOperation = null;
+  }, TAB_SWITCH_DEBOUNCE);
 }
 
 function updateSearchFields() {
     const fieldSelect = document.getElementById('searchField');
     if (!fieldSelect) return;
     fieldSelect.innerHTML = '';
-    let dataRef = '';
+    
+    const dataRef = DataService.getDataByTab(currentTab);
     let fields = [];
-    if (currentTab === TAB_NAMES.COLOURS) 
-      dataRef = allDataColours.colours;
-    else if (currentTab === TAB_NAMES.EFFECTS)
-      dataRef = allDataEffects.effects;
-    else if (currentTab === TAB_NAMES.PROJECTS)
-      dataRef = allDataProjects.projects;
 
-    if (dataRef && dataRef.length > 0) {
+    // Array bounds checking
+    if (dataRef && Array.isArray(dataRef) && dataRef.length > 0) {
         fields = Object.keys(dataRef[0]);
         const ignoreList = fieldsToIgnoreEN;
         fields = fields.filter(field => !ignoreList.includes(field));
@@ -408,19 +906,30 @@ function updateSearchFields() {
 
 function buildColorMap() {
     colorMap = {};
-    if (!allDataColours.colours) return;
+    const colours = DataService.getColours();
+    if (!colours || colours.length === 0) return;
 
     const chaveNome = FIELD_KEYS.BASE_COLOUR;
     
-    allDataColours.colours.forEach(c => {
+    colours.forEach(c => {
         if (c[chaveNome]) {
-            colorMap[c[chaveNome].toUpperCase()] = c["Hex"] || "#ccc";
+            // Store both original and normalized versions for better matching
+            const colorName = c[chaveNome];
+            colorMap[colorName.toUpperCase()] = c["Hex"] || "#ccc";
+            
+            // Also store normalized version (trimmed, without extra spaces)
+            const normalizedName = colorName.trim().replace(/\s+/g, ' ');
+            if (normalizedName !== colorName) {
+                colorMap[normalizedName.toUpperCase()] = c["Hex"] || "#ccc";
+            }
         }
     });
+    
+    console.log('Color map built with', Object.keys(colorMap).length, 'entries');
 }
 
 function extractUniqueValues(fieldName) {
-  const data = currentTab === 'colours' ? allDataColours.colours : allDataEffects.effects;
+  const data = currentTab === 'colours' ? DataService.getColours() : DataService.getEffects();
   const values = new Set();
   data.forEach(item => {
     const fieldValue = item[fieldName];
@@ -432,18 +941,34 @@ function extractUniqueValues(fieldName) {
     }
   });
 
-  return Array.from(values).sort();   
+  return Array.from(values).sort();    
 }
 
 function updateFilters() {
     const container = document.getElementById('filtersContainer');
     if (!container) return;
     container.innerHTML = '';    
-    const filtrosAtuais = configFiltros['EN'][currentTab] || {};
+    
+    // Get the correct filter configuration based on current tab
+    const tabConfig = currentTab === 'effects' ? configFiltros['EN']['effects'] : configFiltros['EN']['colours'];
+    if (!tabConfig) return;
 
-    Object.keys(filtrosAtuais).forEach(fieldName => {
-        const values = filtrosAtuais[fieldName];        
+    // Get sample data to check which fields actually exist
+    let sampleData = [];
+    if (currentTab === 'colours' && allDataColours.colours && allDataColours.colours.length > 0) {
+        sampleData = allDataColours.colours;
+    } else if (currentTab === 'effects' && allDataEffects.effects && allDataEffects.effects.length > 0) {
+        sampleData = allDataEffects.effects;
+    }
+
+    Object.keys(tabConfig).forEach(fieldName => {
+        const values = tabConfig[fieldName];        
         if (!values || values.length === 0) return;
+
+        // Only show filters for fields that actually exist in the data
+        if (sampleData.length > 0 && !sampleData[0].hasOwnProperty(fieldName)) {
+            return;
+        }
 
         const filterGroup = document.createElement('div');
         filterGroup.className = 'filter-group';
@@ -484,11 +1009,20 @@ function performSearch() {
         document.getElementById('searchInput').value = '';
     }
 
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    // Escape search term to prevent HTML injection
+    const searchInput = document.getElementById('searchInput');
+    const rawSearchTerm = searchInput.value.trim();
+    const searchTerm = escapeHtml(rawSearchTerm).toLowerCase();
     const searchField = document.getElementById('searchField').value;
 
-    let data = TAB_NAMES.PUTTY;
-    if (currentTab === TAB_NAMES.COLOURS)
+    // Validate search field - don't allow empty or whitespace-only searches
+    if (searchTerm && searchTerm.length === 0) {
+        showError('Please enter a valid search term');
+        return;
+    }
+
+    let data = 'putty';
+    if (currentTab === 'colours')
       data = allDataColours.colours 
     else if (currentTab === TAB_NAMES.EFFECTS) {
       data = allDataEffects.effects;
@@ -512,25 +1046,36 @@ function performSearch() {
         selectedFilters[field].push(checkbox.value);
     });       
 
-    let results = data.filter(item => {
-        for (const [field, values] of Object.entries(selectedFilters)) {
-            const itemValue = item[field];
-            if (!itemValue) return false;
-            const matches = values.some(value => itemValue.includes(value));
-            if (!matches) return false;
-        }
+        let results = data.filter(item => {
+            // Apply filters
+            for (const [field, values] of Object.entries(selectedFilters)) {
+                const itemValue = item[field];
+            
+                // Skip this filter if the field doesn't exist in this item
+                if (itemValue === undefined || itemValue === null) {
+                    continue;
+                }
+            
+                // Handle cases where itemValue might contain multiple values separated by commas or slashes
+                const itemValues = String(itemValue).split(/[,\/]/).map(v => v.trim());
+                const matches = values.some(filterValue => 
+                    itemValues.some(itemVal => itemVal.toLowerCase() === filterValue.toLowerCase())
+                );
+                if (!matches) return false;
+            } 
         
-        if (searchTerm) {
-            if (searchField) {
-                const fieldValue = item[searchField];
-                return fieldValue?.toString().toLowerCase().includes(searchTerm);
-            } else {
-                return Object.values(item).some(v => v?.toString().toLowerCase().includes(searchTerm));
+            // Apply search term
+            if (searchTerm) {
+                if (searchField) {
+                    const fieldValue = item[searchField];
+                    return fieldValue?.toString().toLowerCase().includes(searchTerm);
+                } else {
+                    return Object.values(item).some(v => v?.toString().toLowerCase().includes(searchTerm));
+                }
             }
-        }
-        return true;
-    });
-    currentFilteredResults = results;
+            return true;
+        });
+    currentFilteredResults = results; 
     sortResults(currentFilteredResults);
     displayResults(currentFilteredResults);
 }
@@ -561,21 +1106,40 @@ function displayResults(results = null) {
       return; 
   }
 
-  let data = "";
-  let resultsInfoLabel, resultsContainerLabel = "";
-
-  data = results !== null ? results : (currentTab === TAB_NAMES.COLOURS ? allDataColours.colours : (currentTab === TAB_NAMES.EFFECTS ? allDataEffects.effects : allDataProjects.projects));  
+  const data = results !== null ? results : DataService.getDataByTab(currentTab);  
   
   const resultsContainer = document.getElementById('results');
   const resultsInfo = document.getElementById('resultsInfo');
 
-  if (data.length === 0) {
+    // Array bounds checking
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    const searchTerm = document.getElementById('searchInput').value.trim();
+    const searchField = document.getElementById('searchField').value;
+    
+    let suggestions = [];
+    if (searchTerm) {
+      suggestions.push(`Check your spelling of "${searchTerm}"`);
+    }
+    if (searchField) {
+      suggestions.push(`Try searching in a different field`);
+    }
+    suggestions.push(`Try broader search terms`);
+    suggestions.push(`Clear filters to see all results`);
+    
+    const suggestionsHTML = suggestions.map(s => `<li>${s}</li>`).join('');
+    
     resultsInfo.innerHTML = `<p>${resultsInfoLabel}</p>`;
     resultsContainer.innerHTML = `
       <div class="empty-state">
         <div class="empty-state-icon">🔍</div>
         <h3>No results found</h3>
-        <p>Try adjusting your search criteria</p>
+        <p>We couldn't find any matches for your search.</p>
+        <div class="suggestions">
+          <h4>Try these suggestions:</h4>
+          <ul>
+            ${suggestionsHTML}
+          </ul>
+        </div>
       </div>
     `;
     return;
@@ -585,17 +1149,112 @@ function displayResults(results = null) {
   tabName = currentTab === TAB_NAMES.COLOURS ? TAB_NAMES.COLOURS : (currentTab === TAB_NAMES.EFFECTS ? TAB_NAMES.EFFECTS : TAB_NAMES.PROJECTS);
   resultsInfo.innerHTML = `<p>${showing} <strong>${data.length}</strong> results</p>`;
 
-  if (currentTab === TAB_NAMES.PROJECTS) {
-    resultsContainer.innerHTML = data.map(item => createProjectCard(item)).join('');
+  // Implement virtualization for large datasets
+  if (data.length > 50) {
+    implementVirtualScrolling(data, resultsContainer);
   } else {
-    resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
-    // Apply current primer to all cards after rendering
-    applyPrimerToCards(currentPrimerClass);
+    // For smaller datasets, use traditional rendering
+    if (currentTab === 'projects') {
+      resultsContainer.innerHTML = data.map(item => createProjectCard(item)).join('');
+    } else {
+      resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
+    }
   }
 }
 
+function implementVirtualScrolling(data, container) {
+  // Create virtual scroll container
+  const virtualContainer = document.createElement('div');
+  virtualContainer.className = 'virtual-scroll-container';
+  virtualContainer.style.position = 'relative';
+  virtualContainer.style.height = `${Math.min(data.length * 380, 5000)}px`; // Max 5000px height
+  
+  // Create viewport
+  const viewport = document.createElement('div');
+  viewport.className = 'virtual-scroll-viewport';
+  viewport.style.position = 'absolute';
+  viewport.style.top = '0';
+  viewport.style.left = '0';
+  viewport.style.width = '100%';
+  viewport.style.height = '100%';
+  viewport.style.overflow = 'auto';
+  
+  // Create content area
+  const content = document.createElement('div');
+  content.className = 'virtual-scroll-content';
+  content.style.position = 'absolute';
+  content.style.top = '0';
+  content.style.left = '0';
+  content.style.width = '100%';
+  
+  // Calculate visible items
+  const itemHeight = 380; // Approximate card height
+  const visibleItems = Math.ceil(window.innerHeight / itemHeight) + 2;
+  
+  // Render initial visible items
+  let startIndex = 0;
+  let endIndex = Math.min(visibleItems, data.length);
+  
+  function renderVisibleItems() {
+    const scrollTop = viewport.scrollTop;
+    const newStartIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - 1);
+    const newEndIndex = Math.min(data.length, newStartIndex + visibleItems + 2);
+    
+    // Only re-render if indices changed significantly
+    if (Math.abs(newStartIndex - startIndex) > visibleItems/2) {
+      startIndex = newStartIndex;
+      endIndex = newEndIndex;
+      
+      // Update content height and position
+      content.style.height = `${data.length * itemHeight}px`;
+      content.style.transform = `translateY(${startIndex * itemHeight}px)`;
+      
+      // Render visible items
+      const visibleData = data.slice(startIndex, endIndex);
+      if (currentTab === 'projects') {
+        content.innerHTML = visibleData.map(item => createProjectCard(item)).join('');
+      } else {
+        content.innerHTML = visibleData.map(item => createCard(item)).join('');
+      }
+    }
+  }
+  
+  // Initial render
+  renderVisibleItems();
+  
+  // Add scroll event listener with throttling
+  let scrollTimeout;
+  viewport.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(renderVisibleItems, 50);
+  });
+  
+  // Handle resize
+  window.addEventListener('resize', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(renderVisibleItems, 100);
+  });
+  
+  // Assemble structure
+  viewport.appendChild(content);
+  virtualContainer.appendChild(viewport);
+  container.innerHTML = '';
+  container.appendChild(virtualContainer);
+  
+  // Cleanup function
+  return () => {
+    window.removeEventListener('resize', renderVisibleItems);
+    viewport.removeEventListener('scroll', renderVisibleItems);
+  };
+}
+
 function createCard(item) {
-  const mainHex = item[FIELD_KEYS.HEX] || '#ccc';
+  if (!item) {
+    console.warn('Invalid item data');
+    return '';
+  }
+  
+  const mainHex = item['Hex'] || '#ccc';
   const mainContrast = getContrastColor(mainHex);
   const mainSpecialClass = getSpecialClass(mainHex);
 
@@ -621,15 +1280,60 @@ function createCard(item) {
           <div class="dilution-disclaimer">${escapeHtml(illustrative)}</div>
       </div>
   `;
-  }
+  } 
   
     Object.entries(item).forEach(([key, value]) => {
       // Skip these fields - they're handled separately or already displayed
       if (key === FIELD_KEYS.BASE_COLOUR || key === FIELD_KEYS.CODE || key === FIELD_KEYS.KEYWORDS || key === FIELD_KEYS.PRODUCT_NAME || key === FIELD_KEYS.HEX || key === FIELD_KEYS.OWNED || key === FIELD_KEYS.PROJECT_NAME || key === FIELD_KEYS.STATUS || key === FIELD_KEYS.COMPLEMENTARY) return;
 
       let displayValue = value;
-      let displayKey = key.replace(/\s*\(.*/, "");
-      
+      let displayKey = key.replace(/\s*\(.*/, "");       
+
+            if (key === 'Complementary') {
+        if (!value || value.trim() === "") {
+          displayValue = `<span style="color: #999; font-style: italic;">N/A</span>`;
+        } else {
+          // Try multiple ways to find the complementary color
+          let compHex = colorMap[value.toUpperCase()];
+          
+          // If not found, try normalized version (remove extra spaces, etc.)
+          if (!compHex) {
+            const normalizedValue = value.trim().replace(/\s+/g, ' ');
+            compHex = colorMap[normalizedValue.toUpperCase()];
+          }
+          
+          // Log missing colors for debugging
+          if (!compHex) {
+            console.warn(`Complementary color not found in colorMap: "${value}"`);
+            console.log('Available color keys:', Object.keys(colorMap).slice(0, 10), '...');
+          }
+          
+          if (compHex) {
+            const compContrast = getContrastColor(compHex);
+            const compSpecialClass = getSpecialClass(compHex);
+            
+            displayValue = `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>${value}</span>
+                <span class="card-code ${compSpecialClass}" 
+                      style="background-color: ${compHex}; color: ${compContrast};
+                            padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
+                  ${compHex}
+                </span>
+              </div>
+            `;
+          } else {
+            displayValue = `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>${value}</span>
+                <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
+                  Hex N/A
+                </span>
+              </div>
+            `;
+          }
+        }
+      }
       cardHTML += `
         <div class="card-field">
           <div class="card-label">${escapeHtml(displayKey)}</div>
@@ -689,7 +1393,12 @@ function createCard(item) {
 }
 
 function createProjectCard(item) {  
-    const isInProgress = item[FIELD_KEYS.STATUS] && (item[FIELD_KEYS.STATUS].toLowerCase().trim() === 'in progress' || item[FIELD_KEYS.STATUS].toLowerCase().trim() === 'to do');
+    if (!item) {
+        console.warn('Invalid project item data');
+        return '';
+    }
+    
+    const isInProgress = item.Status && (item.Status.toLowerCase().trim() === 'in progress' || item.Status.toLowerCase().trim() === 'to do');
     const buttonClass = isInProgress ? "accordion-button" : "accordion-button collapsed";
     const bodyStyle = isInProgress ? 'style="display: block;"' : 'style="display: none;"';
     const statusClass = getStatusClass(item[FIELD_KEYS.STATUS]);
@@ -767,11 +1476,12 @@ function createProjectCard(item) {
       <div class="canva-carousel-container" onclick="event.stopPropagation();" style="display: flex; flex-direction: column; gap: 15px;">
     `;
     
-    // Faz um loop por cada imagem dentro do Array
-    item[FIELD_KEYS.PROJECT_IMAGE].forEach(imgName => {
-        if (imgName && isValidImageFilename(imgName)) {
+        // Faz um loop por cada imagem dentro do Array
+    item.ProjectImage.forEach((imgName, index) => {
+        if (imgName) {
             cardHTML += `
-                <img src="img/projects/${escapeHtml(imgName)}" alt="Canva Showcase" class="canva-long-strip">
+                <img src="img/projects/${imgName}" alt="Canva Showcase" class="canva-long-strip"
+                     onerror="this.src='img/placeholder-image.jpg'; this.alt='Image not available';">
             `;
         }
     });
@@ -794,6 +1504,21 @@ function createProjectCard(item) {
     return cardHTML;  
 }
 
+function validateImagePath(path) {
+    if (!path || typeof path !== 'string') {
+        console.warn('Invalid image path:', path);
+        return false;
+    }
+    
+    // Check if path exists by creating an Image object
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = path;
+    });
+}
+
 function getStatusClass(status) {
     if (!status) return 'status-todo';
     
@@ -812,24 +1537,29 @@ function getMaterialDetails(subKey, id) {
 
     const searchId = id.toUpperCase().trim();
 
-    if (subKey === 'Colours' && allDataColours && allDataColours.colours) {
-        const found = allDataColours.colours.find(c => c[FIELD_KEYS.CODE] && c[FIELD_KEYS.CODE].toUpperCase().trim() === searchId);
+    if (subKey === 'Colours') {
+        const colours = DataService.getColours();
+        const found = colours.find(c => c.Code && c.Code.toUpperCase().trim() === searchId);
         if (found) {
             name = found[FIELD_KEYS.BASE_COLOUR] || searchId;
             hex = found[FIELD_KEYS.HEX] || "#555";
             manufacturer = found[FIELD_KEYS.MANUFACTURER] ? `[${found[FIELD_KEYS.MANUFACTURER]}] ` : "";
         }
-    } else if (subKey === 'Effects' && allDataEffects && allDataEffects.effects) {
-        const found = allDataEffects.effects.find(e => e[FIELD_KEYS.CODE] && e[FIELD_KEYS.CODE].toUpperCase().trim() === searchId);
+    } else if (subKey === 'Effects') {
+        const effects = DataService.getEffects();
+        const found = effects.find(e => e.Code && e.Code.toUpperCase().trim() === searchId);
         if (found) {
             name = found[FIELD_KEYS.PRODUCT_NAME] || searchId;
             hex = found[FIELD_KEYS.HEX] || "#555";
             manufacturer = found[FIELD_KEYS.MANUFACTURER] ? `[${found[FIELD_KEYS.MANUFACTURER]}] ` : "";
         }
-    } else if (subKey === 'Tools' && typeof allDataTools !== 'undefined' && allDataTools.tools) {
-        const found = allDataTools.tools.find(t => t[FIELD_KEYS.CODE] && t[FIELD_KEYS.CODE].toUpperCase().trim() === searchId);
-        if (found) {
-            name = found.Name || searchId;
+    } else if (subKey === 'Tools') {
+        const tools = DataService.getTools();
+        if (tools && tools.tools) {
+            const found = tools.tools.find(t => t.ID && t.ID.toUpperCase().trim() === searchId);
+            if (found) {
+                name = found.Name || searchId;
+            }
         }
     }
 
@@ -868,14 +1598,28 @@ function getContrastColor(hexColor) {
 }
 
 function escapeHtml(text) {
+  if (typeof text !== 'string') {
+    return '';
+  }
+  
   const map = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
     '"': '&quot;',
-    "'": '&#039;'
+    "'": '&#039;',
+    '/': '&#x2F;'
   };
-  return text.replace(/[&<>"']/g, m => map[m]);
+  
+  // First escape HTML characters
+  let escaped = text.replace(/[&<>"'/]/g, m => map[m]);
+  
+  // Then remove any potential script tags or event handlers
+  escaped = escaped.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  escaped = escaped.replace(/on\w+\s*=/gi, '');
+  escaped = escaped.replace(/javascript:/gi, '');
+  
+  return escaped;
 }
 
 function isValidUrl(urlString) {
@@ -899,15 +1643,12 @@ function isValidImageFilename(filename) {
 
 function showError(message) {
   const resultsContainer = document.getElementById('results');
-  if (!resultsContainer) return;
-  
-  const escapedMessage = escapeHtml(message);
+  const safeMessage = escapeHtml(message);
   resultsContainer.innerHTML = `
     <div class="empty-state">
       <div class="empty-state-icon">⚠️</div>
       <h3>Error</h3>
-      <p>${escapedMessage}</p>
-      <p style="font-size: 0.85rem; color: #999; margin-top: 10px;">Check the browser console for more details.</p>
+      <p>${safeMessage}</p>
     </div>
   `;
   console.error(`[App Error] ${message}`);
@@ -1004,8 +1745,17 @@ function copyToClipboard(text, event) {
 }
 
 function exportInventoryToCSV() {
-    const ownedColours = allDataColours.colours.filter(colour => colour[FIELD_KEYS.OWNED] === "True" || colour[FIELD_KEYS.OWNED] === true);    
-    const ownedEffects = allDataEffects.effects.filter(effects => effects[FIELD_KEYS.OWNED] === "True" || effects[FIELD_KEYS.OWNED] === true);
+    // Normalize Owned field to boolean for consistent checking
+    const normalizeOwned = (item) => {
+        if (item.Owned === undefined || item.Owned === null) return false;
+        return item.Owned === "True" || item.Owned === true || item.Owned === "true";
+    }; 
+    
+    const colours = DataService.getColours() || [];
+    const effects = DataService.getEffects() || [];
+    
+    const ownedColours = colours.filter(colour => normalizeOwned(colour)); 
+    const ownedEffects = effects.filter(effect => normalizeOwned(effect));
 
     if (ownedColours.length === 0 && ownedEffects.length === 0) {
         alert("No items marked as owned in inventory.");
@@ -1017,16 +1767,16 @@ function exportInventoryToCSV() {
 
     ownedColours.forEach(colour => {
         const row = [
-            `"${colour[FIELD_KEYS.BASE_COLOUR]}"`, 
-            `"${colour[FIELD_KEYS.CODE]}"`
+            `"${colour["Base Colour"]}"`,
+            `"${colour["Code"]}"`
         ];
         csvContent += row.join(",") + "\n";
     });
 
     ownedEffects.forEach(e => {
         const row = [
-            `"${e[FIELD_KEYS.PRODUCT_NAME]}"`, 
-            `"${e[FIELD_KEYS.CODE]}"`
+            `"${e["Product Name"]}"`,
+            `"${e["Code"]}"`
         ];
         csvContent += row.join(",") + "\n";
     });
