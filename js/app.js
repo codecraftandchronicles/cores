@@ -1,3 +1,37 @@
+// ============ CONSTANTS ============
+// Tab identifiers
+const TAB_NAMES = Object.freeze({
+  COLOURS: 'colours',
+  EFFECTS: 'effects',
+  PUTTY: 'putty',
+  PROJECTS: 'projects'
+});
+
+// Field names
+const FIELD_KEYS = Object.freeze({
+  BASE_COLOUR: 'Base Colour',
+  PRODUCT_NAME: 'Product Name',
+  CODE: 'Code',
+  HEX: 'Hex',
+  TEMPERATURE: 'Temperature',
+  PHASE: 'Phase',
+  SATURATION: 'Saturation',
+  MANUFACTURER: 'Manufacturer',
+  COMPLEMENTARY: 'Complementary',
+  ROLE_OF_COMPLEMENTARY: 'Role of Complementary',
+  FUNCTION: 'Function',
+  KEYWORDS: 'Keywords',
+  OWNED: 'Owned',
+  STATUS: 'Status',
+  PROJECT_NAME: 'ProjectName',
+  PCT: 'Pct',
+  FINISH_DATE: 'FinishDate',
+  DESCRIPTION: 'Description',
+  MATERIALS: 'Materials',
+  PROJECT_IMAGE: 'ProjectImage',
+  URL: 'URL'
+});
+
 /**
  * Data Service Layer - Centralized data management for the application
  * Provides a clean API for data operations and separates concerns from UI logic
@@ -224,6 +258,7 @@ const DataService = (function() {
 let currentTab = 'colours';
 let sortAsc = true;
 let currentFilteredResults = []; 
+let currentPrimerClass = 'primer-v-white'; // Default primer
 let searchField = "Select field...", noResults = "No results found", showing = "Showing", illustrative = "Illustrative", noResultsContainer = "No results", resultsLabel = "Results", headerLabel = "Search", headerParagraph = "Enter search criteria";
 let currentTabOperation = null;
 let lastTabSwitchTime = 0;
@@ -711,6 +746,14 @@ function setupEventListeners() {
   document.getElementById('btn-sort').addEventListener('click', toggleSort);
   validateSearchButton();
 
+  // Add event listener for primer selector
+  const primerSelect = document.getElementById('primerSelect');
+  if (primerSelect) {
+    primerSelect.addEventListener('change', (e) => {
+      applyPrimerToCards(e.target.value);
+    });
+  }
+
   document.querySelectorAll('.flag-container').forEach(flag => {
       flag.addEventListener('click', function() {
           clearSearch();           
@@ -1158,6 +1201,8 @@ function displayResults(results = null) {
       resultsContainer.innerHTML = data.map(item => createProjectCard(item)).join('');
     } else {
       resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
+      // Apply current primer to all cards after rendering
+      applyPrimerToCards(currentPrimerClass);
     }
   }
 }
