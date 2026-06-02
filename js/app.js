@@ -1233,6 +1233,7 @@ function displayResults(results = null) {
       return; 
   }
 
+  let resultsInfoLabel = "No results found"; 
   const data = results !== null ? results : DataService.getDataByTab(currentTab);  
   
   const resultsContainer = document.getElementById('results');
