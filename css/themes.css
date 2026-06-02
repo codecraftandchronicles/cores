@@ -14,7 +14,7 @@
     --primer-bg: #FFFFFF;
     --primer-text-main: #1A1A24;
     --primer-text-muted: #4A4B5A;
-    --primer-accent: #B38600; /* Tom de ouro escurecido para contraste no branco */
+    --primer-accent: #000000; /* Tom de ouro escurecido para contraste no branco */
     --primer-border: #D1D2DC;
     --gradient-mix-blend: multiply; /* Faz o degradê da tinta reagir realisticamente ao fundo */
 }

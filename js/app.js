@@ -401,6 +401,13 @@ window.addEventListener('unhandledrejection', (event) => {
 document.addEventListener('DOMContentLoaded', async () => {
   await PageLoad();
   setupEventListeners();  
+
+  // Show primer selector for colours/effects tabs
+  const primerSelector = document.querySelector('.primer-selector-container');
+  if (primerSelector && (currentTab === 'colours' || currentTab === 'effects')) {
+    primerSelector.style.display = 'block';
+  }
+
   syncTabWithHash(); 
 });
 
@@ -845,10 +852,84 @@ function cleanupEventListeners() {
   });
 }
 
+// function switchTab(tab) {
+//   // Clean up before switching
+//   cleanupEventListeners();
+  
+//   // Debounce rapid tab switching to prevent race conditions
+//   const now = Date.now();
+//   if (now - lastTabSwitchTime < TAB_SWITCH_DEBOUNCE) {
+//     // Cancel previous operation if still pending
+//     if (currentTabOperation) {
+//       clearTimeout(currentTabOperation);
+//     }
+//   }
+//   lastTabSwitchTime = now;
+  
+//   // Set new operation
+//   currentTabOperation = setTimeout(() => {
+//     currentTab = tab;
+//     const resultsEl = document.getElementById('results');
+//     const info = document.getElementById('resultsInfo');
+//     const sortContainer = document.querySelector('.sort-container');
+//     const searchControls = document.querySelector('.search-controls');
+
+//     document.querySelectorAll('.tab-btn').forEach(btn => {
+//       btn.classList.toggle('active', btn.dataset.tab === tab);
+//     });
+
+//     window.history.replaceState(null, null, `#${tab}`);
+      
+//     // Reset sort direction when switching tabs
+//     sortAsc = true;
+//     const sortBtn = document.getElementById('btn-sort');
+//     if (sortBtn) {
+//       sortBtn.classList.remove('desc');
+//     }
+    
+//     // Clear filter state when switching tabs
+//     document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
+//       checkbox.checked = false;
+//     });
+    
+//     // Clear search when switching tabs
+//     document.getElementById('searchInput').value = '';
+//     document.getElementById('searchField').value = '';
+//     validateSearchButton();
+
+//     if (tab === 'putty' || tab === 'projects') {
+//       if (resultsEl) {
+//         resultsEl.innerHTML = '';
+//         resultsEl.classList.add('massa-active');
+//       }
+//       if (searchControls) searchControls.style.setProperty('display', 'none', 'important');
+//       if (info) info.style.display = 'none';
+//       if (sortContainer) sortContainer.style.display = 'none';
+      
+//       performSearch(); 
+//     } else {
+//       if (searchControls) {
+//         searchControls.style.setProperty('display', 'grid', 'important');
+//       } 
+      
+//       if (resultsEl) resultsEl.classList.remove('massa-active');      
+//       if (info) info.style.display = 'block';
+//       if (sortContainer) sortContainer.style.display = 'block';
+      
+//       // Update UI with cleared state
+//       updateSearchFields();
+//       updateFilters();
+//       displayResults(); 
+//     }
+    
+//     currentTabOperation = null;
+//   }, TAB_SWITCH_DEBOUNCE);
+// }
+
 function switchTab(tab) {
   // Clean up before switching
   cleanupEventListeners();
-  
+
   // Debounce rapid tab switching to prevent race conditions
   const now = Date.now();
   if (now - lastTabSwitchTime < TAB_SWITCH_DEBOUNCE) {
@@ -858,7 +939,7 @@ function switchTab(tab) {
     }
   }
   lastTabSwitchTime = now;
-  
+
   // Set new operation
   currentTabOperation = setTimeout(() => {
     currentTab = tab;
@@ -866,25 +947,26 @@ function switchTab(tab) {
     const info = document.getElementById('resultsInfo');
     const sortContainer = document.querySelector('.sort-container');
     const searchControls = document.querySelector('.search-controls');
+    const primerSelector = document.querySelector('.primer-selector-container');
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tab);
     });
 
     window.history.replaceState(null, null, `#${tab}`);
-      
+
     // Reset sort direction when switching tabs
     sortAsc = true;
     const sortBtn = document.getElementById('btn-sort');
     if (sortBtn) {
       sortBtn.classList.remove('desc');
     }
-    
+
     // Clear filter state when switching tabs
     document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
       checkbox.checked = false;
     });
-    
+
     // Clear search when switching tabs
     document.getElementById('searchInput').value = '';
     document.getElementById('searchField').value = '';
@@ -898,23 +980,25 @@ function switchTab(tab) {
       if (searchControls) searchControls.style.setProperty('display', 'none', 'important');
       if (info) info.style.display = 'none';
       if (sortContainer) sortContainer.style.display = 'none';
-      
-      performSearch(); 
+      if (primerSelector) primerSelector.style.display = 'none'; // Hide primer selector
+
+      performSearch();
     } else {
       if (searchControls) {
         searchControls.style.setProperty('display', 'grid', 'important');
-      } 
-      
-      if (resultsEl) resultsEl.classList.remove('massa-active');      
+      }
+
+      if (resultsEl) resultsEl.classList.remove('massa-active');
       if (info) info.style.display = 'block';
       if (sortContainer) sortContainer.style.display = 'block';
-      
+      if (primerSelector) primerSelector.style.display = 'block'; // Show primer selector
+
       // Update UI with cleared state
       updateSearchFields();
       updateFilters();
-      displayResults(); 
+      displayResults();
     }
-    
+
     currentTabOperation = null;
   }, TAB_SWITCH_DEBOUNCE);
 }
