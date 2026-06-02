@@ -711,7 +711,7 @@ header p {
 }
 
 .primer-selector-container {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
