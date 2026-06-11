@@ -1280,7 +1280,7 @@ header p {
 
 
     
-    .medieval-table-wrapper table, 
+    /* .medieval-table-wrapper table, 
     .medieval-table-wrapper thead, 
     .medieval-table-wrapper tbody, 
     .medieval-table-wrapper th, 
@@ -1357,8 +1357,95 @@ header p {
         width: 40% !important;
         text-align: left !important;
         white-space: nowrap;
-    }
+    } */
 
+    @media (max-width: 768px) {
+      .medieval-table-wrapper {
+          overflow-x: visible;
+      }
+
+      .medieval-table-wrapper table,
+      .medieval-table-wrapper thead,
+      .medieval-table-wrapper tbody,
+      .medieval-table-wrapper th,
+      .medieval-table-wrapper td,
+      .medieval-table-wrapper tr {
+          display: block !important;
+          width: 100% !important;
+          box-sizing: border-box;
+      }
+
+      /* Show table title before first row */
+      .medieval-table-wrapper table::before {
+          content: "Feature / Product";
+          display: block;
+          font-weight: bold;
+          color: #ffc107;
+          font-size: 1rem;
+          padding: 15px 15px 0;
+          margin-bottom: 10px;
+      }
+
+      /* Hide original header */
+      .medieval-table-wrapper thead {
+          display: none !important;
+      }
+
+      /* Style each row as a card */
+      .medieval-table-wrapper tbody tr {
+          background: #2a2b36 !important;
+          border: 1px solid #3f4052 !important;
+          border-radius: 8px !important;
+          margin-bottom: 20px !important;
+          padding: 0 !important;
+          overflow: hidden;
+      }
+
+      /* First cell = feature name (bold header) */
+      .medieval-table-wrapper td:nth-child(1) {
+          background-color: #1f2029 !important;
+          border-bottom: 2px solid #ffc107 !important;
+          padding: 12px 15px !important;
+          font-size: 1rem !important;
+          font-weight: bold !important;
+          color: #ffc107 !important;
+          display: block !important;
+      }
+
+      /* Data cells with labels */
+      .medieval-table-wrapper td:not(:nth-child(1)) {
+          border-bottom: 1px solid #3f4052 !important;
+          padding: 12px 15px !important;
+          text-align: left !important;
+          font-size: 0.9rem !important;
+          color: #e3e4e8 !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+      }
+
+      .medieval-table-wrapper td:last-child {
+          border-bottom: none !important;
+      }
+
+      /* Column headers as ::before labels */
+      .medieval-table-wrapper td:nth-child(2)::before { content: "Cyanoacrylate + Baking Soda"; }
+      .medieval-table-wrapper td:nth-child(3)::before { content: "Araldite + Baking Soda"; }
+      .medieval-table-wrapper td:nth-child(4)::before { content: "Araldite (Pure)"; }
+      .medieval-table-wrapper td:nth-child(5)::before { content: "Putty / Paste"; }
+
+      .medieval-table-wrapper td:not(:nth-child(1))::before {
+          font-weight: bold;
+          color: #a0a2b7;
+          font-size: 0.8rem;
+          flex: 0 0 45%;
+      }
+
+      .placeholder-image {
+          width: 100% !important;
+          height: auto !important;
+      }
+  }
        
     
     .tabs {
@@ -1390,3 +1477,8 @@ header p {
         padding: 10px 10px;
     }
 }
+
+#sort-icon-desc { display: none; }
+#btn-sort.desc #sort-icon-asc { display: none; }
+#btn-sort.desc #sort-icon-desc { display: inline; }
+

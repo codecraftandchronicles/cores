@@ -1,98 +1,190 @@
 
-Running 12 tests using 1 worker
-
-[WebServer] (node:3336) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
-[WebServer] (Use `node --trace-deprecation ...` to show where the warning was created)
-  Ô£ô   1 tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid (4.0s)
-  Ô£ô   2 tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card (3.5s)
-  Ô£ô   3 tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results (2.8s)
-  Ô£ô   4 tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads (2.8s)
-  Ô£ô   5 tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders (2.5s)
-  Ô£ô   6 tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders (2.8s)
-  Ô£ÿ   7 tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered (3.0s)
-  Ô£ÿ   8 tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters (3.4s)
-  Ô£ô   9 tests\search-form.spec.js:225:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses (4.2s)
-  Ô£ÿ  10 tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body (4.2s)
-  Ô£ô  11 tests\search-form.spec.js:288:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header again to collapse accordion body (3.8s)
-  Ô£ô  12 tests\search-form.spec.js:322:3 ÔÇ║ Data load overlay ÔÇ║ verify loading overlay appears and disappears during page load (2.7s)
+> cores@1.0.0 test
+> playwright test user-journey.spec.js
 
 
-  1) tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered 
+Running 9 tests using 4 workers
 
-    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+[1A[2K[1/9] [firefox] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information
+[1A[2K[2/9] [chromium] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information
+[1A[2K[3/9] [chromium] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects
+[1A[2K[4/9] [chromium] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials
+[1A[2K  1) [firefox] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information 
 
-    Locator: locator('.filter-group')
-    Expected: visible
-    Error: strict mode violation: locator('.filter-group') resolved to 4 elements:
-        1) <div class="filter-group">ÔÇª</div> aka getByText('TemperatureWarmColdNeutral')
-        2) <div class="filter-group">ÔÇª</div> aka getByText('PhaseBaseShadowHighlightFilterFluorescentTMM')
-        3) <div class="filter-group">ÔÇª</div> aka getByText('SaturationLightMediumDark')
-        4) <div class="filter-group">ÔÇª</div> aka getByText('ManufacturerAKCitadelVallejo')
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('.card-hex').first()
+    Expected: [32m"COPIED!"[39m
+    Received: [31m"#F5F5DC"[39m
+    Timeout:  5000ms
 
     Call log:
-    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
-    [2m  - waiting for locator('.filter-group')[22m
+    [2m  - Expect "toHaveText" with timeout 5000ms[22m
+    [2m  - waiting for locator('.card-hex').first()[22m
+    [2m    8 ├ù locator resolved to <span class="card-hex " title="Clique para copiar HEX" onclick="copyToClipboard('#F5F5DC', event)">#F5F5DC</span>[22m
+    [2m      - unexpected value "#F5F5DC"[22m
 
 
-      142 |     await expect(page.locator('#tab-cores-label')).toHaveClass(/active/);
-      143 |     // Wait for filters to be loaded
-    > 144 |     await expect(page.locator('.filter-group')).toBeVisible({ timeout: 5000 });
-          |                                                 ^
-      145 |   });
-      146 |
-      147 |   test('click Temperature filter checkbox and verify results are filtered', async ({ page }) => {
-        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:144:49
+      61 |     
+      62 |     // Verify copy feedback
+    > 63 |     await expect(firstHex).toHaveText('COPIED!');
+         |                            ^
+      64 |     
+      65 |     await page.waitForTimeout(1000);
+      66 |     
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:63:28
 
-    Error Context: test-results\search-form-Filter-functio-ce703-verify-results-are-filtered\error-context.md
+    Error Context: test-results\user-journey-CORES-Project-4c2e7-nd-using-colour-information-firefox\error-context.md
 
-  2) tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters 
 
-    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+[1A[2K  2) [chromium] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects 
 
-    Locator: locator('.filter-group')
-    Expected: visible
-    Error: strict mode violation: locator('.filter-group') resolved to 4 elements:
-        1) <div class="filter-group">ÔÇª</div> aka getByText('TemperatureWarmColdNeutral')
-        2) <div class="filter-group">ÔÇª</div> aka getByText('PhaseBaseShadowHighlightFilterFluorescentTMM')
-        3) <div class="filter-group">ÔÇª</div> aka getByText('SaturationLightMediumDark')
-        4) <div class="filter-group">ÔÇª</div> aka getByText('ManufacturerAKCitadelVallejo')
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('text=EFFECTS')[22m
+
+
+      200 |     
+      201 |     // 3. User switches to Effects tab
+    > 202 |     await page.click('text=EFFECTS');
+          |                ^
+      203 |     
+      204 |     // 4. User sorts effects alphabetically
+      205 |     const firstEffect = await page.locator('.card').first().locator('.card-title').textContent();
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:202:16
+
+    Error Context: test-results\user-journey-CORES-Project-85c4b-mparing-colours-and-effects-chromium\error-context.md
+
+
+[1A[2K  3) [chromium] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('text=Projects')[22m
+
+
+      125 |     // User arrives and goes directly to projects
+      126 |     await page.goto('/');
+    > 127 |     await page.click('text=Projects');
+          |                ^
+      128 |     
+      129 |     // 1. User sees list of projects
+      130 |     const projectButtons = page.getByRole('button', { name: /DONE|IN PROGRESS/i });
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:127:16
+
+    Error Context: test-results\user-journey-CORES-Project-ecb8a--specific-project-materials-chromium\error-context.md
+
+
+[1A[2K[5/9] [firefox] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials
+[1A[2K[6/9] [firefox] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects
+[1A[2K[7/9] [webkit] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information
+[1A[2K  4) [webkit] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information 
+
+    Error: locator.textContent: Error: strict mode violation: locator('.card').first().locator('.card-field:has-text("Complementary")').locator('.card-value') resolved to 2 elements:
+        1) <div class="card-value">Cold shadow for skin tones, leather or fabrics. HÔÇª</div> aka getByText('Cold shadow for skin tones,')
+        2) <div class="card-value">ÔÇª</div> aka locator('div').filter({ hasText: 'AMETHYST BLUE #6C2E9C' }).nth(5)
 
     Call log:
-    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
-    [2m  - waiting for locator('.filter-group')[22m
+    [2m  - waiting for locator('.card').first().locator('.card-field:has-text("Complementary")').locator('.card-value')[22m
 
 
-      142 |     await expect(page.locator('#tab-cores-label')).toHaveClass(/active/);
-      143 |     // Wait for filters to be loaded
-    > 144 |     await expect(page.locator('.filter-group')).toBeVisible({ timeout: 5000 });
-          |                                                 ^
-      145 |   });
-      146 |
-      147 |   test('click Temperature filter checkbox and verify results are filtered', async ({ page }) => {
-        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:144:49
+      73 |     
+      74 |     if (await complementarySection.count() > 0) {
+    > 75 |       const complementaryValue = await complementarySection.locator('.card-value').textContent();
+         |                                                                                    ^
+      76 |       
+      77 |       if (complementaryValue && !complementaryValue.includes('N/A')) {
+      78 |         // Verify complementary colour is displayed with HEX
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:75:84
 
-    Error Context: test-results\search-form-Filter-functio-f1a34-y-results-match-all-filters\error-context.md
+    Error Context: test-results\user-journey-CORES-Project-4c2e7-nd-using-colour-information-webkit\error-context.md
 
-  3) tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body 
 
-    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+[1A[2K[firefox] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects
+Ô£à Colour comparison journey test passed!
 
-    Expected: [32m"block"[39m
-    Received: [31m"none"[39m
+[1A[2K[8/9] [webkit] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials
+[1A[2K  5) [firefox] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials 
 
-      280 |     accordionBody = page.locator('.projects-accordion .accordion-body').first();
-      281 |     const displayAfterClick = await accordionBody.evaluate((el) => window.getComputedStyle(el).display);
-    > 282 |     expect(displayAfterClick).toBe('block');
-          |                               ^
-      283 |
-      284 |     // Verify accordion button no longer has 'collapsed' class
-      285 |     await expect(accordionButton).not.toHaveClass(/collapsed/);
-        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:282:31
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
 
-    Error Context: test-results\search-form-Project-accord-3eb68-er-to-expand-accordion-body\error-context.md
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
 
-  3 failed
-    tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered 
-    tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters 
-    tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body 
-  9 passed (1.2m)
+      130 |     const projectButtons = page.getByRole('button', { name: /DONE|IN PROGRESS/i });
+      131 |     const projectsCount = await projectButtons.count();
+    > 132 |     expect(projectsCount).toBeGreaterThan(0);
+          |                           ^
+      133 |     
+      134 |     // 2. User finds a project with materials
+      135 |     let projectWithMaterials = null;
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:132:27
+
+    Error Context: test-results\user-journey-CORES-Project-ecb8a--specific-project-materials-firefox\error-context.md
+
+
+[1A[2K  6) [webkit] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      130 |     const projectButtons = page.getByRole('button', { name: /DONE|IN PROGRESS/i });
+      131 |     const projectsCount = await projectButtons.count();
+    > 132 |     expect(projectsCount).toBeGreaterThan(0);
+          |                           ^
+      133 |     
+      134 |     // 2. User finds a project with materials
+      135 |     let projectWithMaterials = null;
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:132:27
+
+    Error Context: test-results\user-journey-CORES-Project-ecb8a--specific-project-materials-webkit\error-context.md
+
+
+[1A[2K  7) [chromium] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('.tab-btn.active')
+    Expected: [32m"COLOURS"[39m
+    Received: [31m""[39m
+
+    Call log:
+    [2m  - Expect "toHaveText" with timeout 5000ms[22m
+    [2m  - waiting for locator('.tab-btn.active')[22m
+
+
+      12 |     
+      13 |     // 2. User is on the Colours tab by default
+    > 14 |     await expect(page.locator('.tab-btn.active')).toHaveText('COLOURS');
+         |                                                   ^
+      15 |     
+      16 |     // 3. User sees the list of colours
+      17 |     const initialColours = page.locator('.card');
+        at C:\Users\breis\Documents\Pessoal\cores\tests\user-journey.spec.js:14:51
+
+    Error Context: test-results\user-journey-CORES-Project-4c2e7-nd-using-colour-information-chromium\error-context.md
+
+
+[1A[2K[9/9] [webkit] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects
+[1A[2K[webkit] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects
+Ô£à Colour comparison journey test passed!
+
+[1A[2K  7 failed
+    [chromium] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information 
+    [chromium] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials 
+    [chromium] ÔÇ║ tests\user-journey.spec.js:191:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: comparing colours and effects 
+    [firefox] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information 
+    [firefox] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials 
+    [webkit] ÔÇ║ tests\user-journey.spec.js:5:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ complete user journey: finding and using colour information 
+    [webkit] ÔÇ║ tests\user-journey.spec.js:124:7 ÔÇ║ CORES Project - User Journey Tests ÔÇ║ user journey: searching for specific project materials 
+  2 passed (2.3m)
+
+[36m  Serving HTML report at http://localhost:65145. Press Ctrl+C to quit.[39m

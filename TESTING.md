@@ -95,7 +95,36 @@ npm install
 npx playwright install
 ```
 
-### Running Tests
+### Environment Configuration
+
+Create or edit `.env` file in the project root:
+
+```env
+# Local development (default)
+TEST_BASE_URL=http://127.0.0.1:5500
+
+# Production (GitHub Pages) - uncomment to test against live site
+# TEST_BASE_URL=https://codecraftandchronicles.github.io/cores/
+```
+
+The test configuration automatically reads `TEST_BASE_URL` from the environment and uses it as the baseURL for all Playwright tests.
+
+### Running Tests with Environment Variables
+
+#### Run tests against local development (default):
+```bash
+npm run test:local
+```
+
+#### Run tests against production:
+```bash
+npm run test:production
+```
+
+#### Run all tests using .env configuration
+```bash
+npm test
+```
 
 #### Run all tests
 ```bash

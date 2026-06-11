@@ -1,11 +1,14 @@
 const { test, expect } = require('@playwright/test');
 
-const COLOURS_PAGE = '/index.html';
+const COLOURS_PAGE = '/';
 
 test.describe('Primer selector feature', () => {
   test.beforeEach(async ({ page }) => {
+    // await page.goto(COLOURS_PAGE);
+    // // Ensure we're on the colours tab
+    // await expect(page.locator('#tab-cores-label')).toHaveClass(/active/);
+    await page.unroute('**/data/*.json'); // clear any leaked routes from other spec files
     await page.goto(COLOURS_PAGE);
-    // Ensure we're on the colours tab
     await expect(page.locator('#tab-cores-label')).toHaveClass(/active/);
   });
 

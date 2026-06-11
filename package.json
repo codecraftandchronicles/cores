@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "test:local": "TEST_BASE_URL=http://127.0.0.1:5500 playwright test",
+    "test:production": "TEST_BASE_URL=https://codecraftandchronicles.github.io/cores/ playwright test",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
@@ -25,6 +27,7 @@
   "homepage": "https://github.com/codecraftandchronicles/cores#readme",
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.1"
+    "@types/node": "^25.9.1",
+    "dotenv": "^16.0.0"
   }
 }

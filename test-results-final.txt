@@ -1,0 +1,38 @@
+
+Running 63 tests using 2 workers
+
+[1A[2K[1/63] [chromium] ÔÇ║ tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid
+[1A[2K[2/63] [chromium] ÔÇ║ tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card
+[1A[2K[3/63] [chromium] ÔÇ║ tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results
+[1A[2K[4/63] [chromium] ÔÇ║ tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads
+[1A[2K[5/63] [chromium] ÔÇ║ tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders
+[1A[2K[6/63] [chromium] ÔÇ║ tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders
+[1A[2K[7/63] [chromium] ÔÇ║ tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered
+[1A[2K[8/63] [chromium] ÔÇ║ tests\search-form.spec.js:175:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ apply multiple filters and verify results match all filters
+[1A[2K[9/63] [chromium] ÔÇ║ tests\search-form.spec.js:225:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses
+[1A[2K[10/63] [chromium] ÔÇ║ tests\search-form.spec.js:266:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header to expand accordion body
+[1A[2K[11/63] [chromium] ÔÇ║ tests\search-form.spec.js:294:3 ÔÇ║ Project accordion functionality ÔÇ║ click project header again to collapse accordion body
+[1A[2K[12/63] [chromium] ÔÇ║ tests\search-form.spec.js:328:3 ÔÇ║ Data load overlay ÔÇ║ verify loading overlay appears and disappears during page load
+[1A[2K[13/63] [chromium] ÔÇ║ tests\search-form.spec.js:355:3 ÔÇ║ Untested functions coverage ÔÇ║ escapeHtml() - verify script tags in search input do not execute
+[1A[2K[14/63] [chromium] ÔÇ║ tests\search-form.spec.js:383:3 ÔÇ║ Untested functions coverage ÔÇ║ isValidUrl() - verify project with malicious URL does not render link
+[1A[2K[15/63] [chromium] ÔÇ║ tests\search-form.spec.js:406:3 ÔÇ║ Untested functions coverage ÔÇ║ copyToClipboard() - verify hex badge click shows COPIED tooltip
+[1A[2K[16/63] [chromium] ÔÇ║ tests\search-form.spec.js:444:3 ÔÇ║ Untested functions coverage ÔÇ║ validateSearchButton() - verify button state transitions (disabled ÔåÆ enabled)
+[1A[2K[17/63] [chromium] ÔÇ║ tests\search-form.spec.js:472:3 ÔÇ║ Untested functions coverage ÔÇ║ toggleSort() - verify sort button click reverses results order
+[1A[2K[18/63] [chromium] ÔÇ║ tests\search-form.spec.js:513:3 ÔÇ║ Untested functions coverage ÔÇ║ exportInventoryToCSV() - verify export button downloads CSV file
+[1A[2K[19/63] [chromium] ÔÇ║ tests\search-form.spec.js:540:3 ÔÇ║ Untested functions coverage ÔÇ║ extractUniqueValues() - verify filter checkboxes populated with correct values
+[1A[2K[20/63] [chromium] ÔÇ║ tests\search-form.spec.js:568:3 ÔÇ║ Untested functions coverage ÔÇ║ showError() - verify error message displays when data loading fails
+[1A[2K[21/63] [chromium] ÔÇ║ tests\search-form.spec.js:606:3 ÔÇ║ Untested functions coverage ÔÇ║ REGRESSION: app.js loads without SyntaxError (no duplicate declarations)
+[1A[2K  1) [chromium] ÔÇ║ tests\search-form.spec.js:406:3 ÔÇ║ Untested functions coverage ÔÇ║ copyToClipboard() - verify hex badge click shows COPIED tooltip 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error Context: test-results\search-form-Untested-funct-7c055--click-shows-COPIED-tooltip-chromium\error-context.md
+
+
+[1A[2K[22/63] [firefox] ÔÇ║ tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid
+[1A[2K[23/63] [firefox] ÔÇ║ tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card
+[1A[2K[24/63] [firefox] ÔÇ║ tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results
+[1A[2K[25/63] [firefox] ÔÇ║ tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads
+[1A[2K[26/63] [firefox] ÔÇ║ tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders
+[1A[2K[27/63] [firefox] ÔÇ║ tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders
+[1A[2K[28/63] [firefox] ÔÇ║ tests\search-form.spec.js:147:3 ÔÇ║ Filter functionality on colours tab ÔÇ║ click Temperature filter checkbox and verify results are filtered

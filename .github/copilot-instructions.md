@@ -50,7 +50,7 @@ npx playwright test tests/search-form.spec.js
 npx playwright test --grep "search by Base Colour"
 ```
 
-Playwright spins up a bare Node.js HTTP server on port 3000 pointing at the repo root (`playwright.config.js`). Tests use `baseURL: 'http://127.0.0.1:3000'`.
+Playwright reads the base URL from `playwright.config.js`, which uses the `TEST_BASE_URL` environment variable (defaults to `http://127.0.0.1:5500` for local development). To switch environments, use npm scripts: `npm run test:local` (http://127.0.0.1:5500) or `npm run test:production` (https://codecraftandchronicles.github.io/cores/).
 
 ---
 
