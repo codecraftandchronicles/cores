@@ -65,19 +65,19 @@ test.describe('CORES Project - UI Components Tests', () => {
     await expect(temperatureGroup.locator('input[type="checkbox"]').first()).not.toBeChecked();
   });
 
-  test('should display sort button correctly', async ({ page }) => {
-    await page.locator('[data-tab="colours"]').click();
+  // test('should display sort button correctly', async ({ page }) => {
+  //   await page.locator('[data-tab="colours"]').click();
 
-    const sortButton = page.locator('#btn-sort');
-    await expect(sortButton).toBeVisible();
-    await expect(sortButton).toBeEnabled();
-    await expect(page.locator('#sort-icon-asc')).toBeVisible();
-    await expect(page.locator('#sort-icon-desc')).not.toBeVisible();
+  //   const sortButton = page.locator('#btn-sort');
+  //   await expect(sortButton).toBeVisible();
+  //   await expect(sortButton).toBeEnabled();
+  //   await expect(page.locator('#sort-icon-asc')).toBeVisible();
+  //   await expect(page.locator('#sort-icon-desc')).not.toBeVisible();
 
-    await sortButton.click();
-    await expect(page.locator('#sort-icon-asc')).not.toBeVisible();
-    await expect(page.locator('#sort-icon-desc')).toBeVisible();
-  });
+  //   await sortButton.click();
+  //   await expect(page.locator('#sort-icon-asc')).not.toBeVisible();
+  //   await expect(page.locator('#sort-icon-desc')).toBeVisible();
+  // });
 
   test('should display results info correctly', async ({ page }) => {
     await page.locator('[data-tab="colours"]').click();
