@@ -1,0 +1,27 @@
+
+> cores@1.0.0 test
+> playwright test
+
+
+Running 300 tests using 4 workers
+
+[1A[2K[1/300] [chromium] ÔÇ║ tests\basic-test.spec.js:5:7 ÔÇ║ Basic Setup Test ÔÇ║ should verify basic test infrastructure works
+[1A[2K[2/300] [chromium] ÔÇ║ tests\business-logic.spec.js:11:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should sort colours alphabetically by default
+[1A[2K[3/300] [chromium] ÔÇ║ tests\business-logic.spec.js:30:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should sort projects by status priority
+[1A[2K[4/300] [chromium] ÔÇ║ tests\business-logic.spec.js:56:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should filter colours by temperature correctly
+[1A[2K[chromium] ÔÇ║ tests\basic-test.spec.js:5:7 ÔÇ║ Basic Setup Test ÔÇ║ should verify basic test infrastructure works
+Ô£à Basic test infrastructure is working!
+
+[1A[2K[5/300] [chromium] ÔÇ║ tests\business-logic.spec.js:92:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should search colours by specific field
+[1A[2K[6/300] [chromium] ÔÇ║ tests\business-logic.spec.js:115:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should display complementary colours correctly
+[1A[2K[7/300] [chromium] ÔÇ║ tests\business-logic.spec.js:143:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should calculate colour contrast correctly
+[1A[2K[8/300] [chromium] ÔÇ║ tests\business-logic.spec.js:162:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should display project materials correctly
+[1A[2K[9/300] [chromium] ÔÇ║ tests\business-logic.spec.js:199:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should handle project images correctly
+[1A[2K[10/300] [chromium] ÔÇ║ tests\business-logic.spec.js:236:7 ÔÇ║ CORES Project - Business Logic Tests ÔÇ║ should export only owned items to CSV
+[1A[2K[11/300] [chromium] ÔÇ║ tests\business-logic.spec.js:261:7 ÔÇ║ CORES Project - Error Handling Tests ÔÇ║ should handle empty search gracefully
+[1A[2K[12/300] [chromium] ÔÇ║ tests\business-logic.spec.js:280:7 ÔÇ║ CORES Project - Error Handling Tests ÔÇ║ should handle search with no results gracefully
+[1A[2K[13/300] [chromium] ÔÇ║ tests\business-logic.spec.js:299:7 ÔÇ║ CORES Project - Error Handling Tests ÔÇ║ should handle filter with no results gracefully
+[1A[2K[14/300] [chromium] ÔÇ║ tests\business-logic.spec.js:321:7 ÔÇ║ CORES Project - Error Handling Tests ÔÇ║ should handle special characters in data gracefully
+[1A[2K[15/300] [chromium] ÔÇ║ tests\business-logic.spec.js:338:7 ÔÇ║ CORES Project - Error Handling Tests ÔÇ║ should handle missing data fields gracefully
+[1A[2K[16/300] [chromium] ÔÇ║ tests\cores.spec.js:11:7 ÔÇ║ CORES Project - End-to-End Tests ÔÇ║ should load and display initial data
+[1A[2K[17/300] [chromium] ÔÇ║ tests\cores.spec.js:29:7 ÔÇ║ CORES Project - End-to-End Tests ÔÇ║ should switch between tabs correctly

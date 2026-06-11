@@ -27,12 +27,24 @@ This ensures commits are attributed to you locally without affecting global sett
 
 1. Create and switch to feature branch from main
 2. Make changes, write/update tests
-3. **Run tests locally:** `npx playwright test` (must pass)
+3. **Run tests locally:** `npm run test:local` (must pass) — tests run against `http://127.0.0.1:5500`
 4. Commit with conventional format: `git commit -m "feat: add XRay view"`
 5. Push: `git push origin feature/your-feature-name`
-6. **Open PR on GitHub** — GitHub Actions runs tests automatically
+6. **Open PR on GitHub** — GitHub Actions runs tests automatically against production URL
 7. If tests ✅ pass and reviewed ✅ approved → Merge
 8. Delete feature branch after merge
+
+### Testing Against Different Environments
+
+Before submitting a PR, test against both environments:
+
+```bash
+# Test locally (development environment)
+npm run test:local
+
+# Test production (GitHub Pages)
+npm run test:production
+```
 
 **⚠️ Important:** Tests must pass before merge. GitHub will block the merge if CI fails.
 

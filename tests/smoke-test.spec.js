@@ -15,21 +15,26 @@ test.describe('CORES Project - Smoke Tests', () => {
     
     // 2. Verify colours are loaded
     const colourCards = page.locator('.card');
-    await expect(colourCards).toHaveCountGreaterThan(0);
+    expect(await colourCards.count()).toBeGreaterThan(0);
     
     // 3. Test tab switching
-    await page.click('text=EFFECTS');
-    await expect(page.locator('.tab-btn.active')).toHaveText('EFFECTS');
+    await page.locator('[data-tab="effects"]').click();
+    await page.waitForTimeout(300);
+    await expect(page.locator('[data-tab="effects"].active')).toBeVisible();
     
-    await page.click('text=PUTTY');
-    await expect(page.locator('.tab-btn.active')).toHaveText('PUTTY');
-    await expect(page.locator('text=Technical reference guide for fillers')).toBeVisible();
+    await page.locator('[data-tab="putty"]').click();
+    await page.waitForTimeout(300);
+    await expect(page.locator('[data-tab="putty"].active')).toBeVisible();
+    // Wait for PUTTY content to be visible in the results container
+    await expect(page.locator('#resultsInfo')).toContainText('Technical reference guide for fillers');
     
-    await page.click('text=Projects');
-    await expect(page.locator('.tab-btn.active')).toHaveText('Projects');
+    await page.locator('[data-tab="projects"]').click();
+    await page.waitForTimeout(300);
+    await expect(page.locator('[data-tab="projects"].active')).toBeVisible();
     
     // 4. Test search functionality
-    await page.click('text=COLOURS');
+    await page.locator('[data-tab="colours"]').click();
+    await page.waitForTimeout(300);
     
     const searchInput = page.locator('#searchInput');
     await searchInput.fill('red');
@@ -55,13 +60,13 @@ test.describe('CORES Project - Smoke Tests', () => {
     // 5. Test filtering
     await page.click('#btnClear');
     
-    const warmCheckbox = page.locator('text=Warm').locator('..').locator('input[type="checkbox"]');
+    const warmCheckbox = page.locator('#filter-Temperature-Warm');
     await warmCheckbox.check();
     
     await page.waitForTimeout(500);
     
     const filteredCards = page.locator('.card');
-    await expect(filteredCards).toHaveCountGreaterThan(0);
+    expect(await filteredCards.count()).toBeGreaterThan(0);
     
     // 6. Test sorting
     await warmCheckbox.uncheck();
@@ -109,7 +114,8 @@ test.describe('CORES Project - Smoke Tests', () => {
     await page.goto('/');
     
     // 1. Test search with no results
-    await page.click('text=COLOURS');
+    await page.locator('[data-tab="colours"]').click();
+    await page.waitForTimeout(300);
     
     const searchInput = page.locator('#searchInput');
     await searchInput.fill('nonexistentcolorxyz123');
@@ -118,6 +124,7 @@ test.describe('CORES Project - Smoke Tests', () => {
     await searchField.selectOption('Base Colour');
     
     await page.click('#btnSearch');
+    await page.waitForTimeout(500);
     
     // Should show empty state, not crash
     const emptyState = page.locator('.empty-state');

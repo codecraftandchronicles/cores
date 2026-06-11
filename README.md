@@ -34,32 +34,51 @@ Single-page application with four main tabs (state-driven routing via `window.lo
 
 ## How to Run
 
-Start a bare HTTP server (Playwright's built-in):
+### Environment Configuration
+
+Tests automatically detect the environment via the `.env` file:
 
 ```bash
-npx playwright test --grep "search by Base"
+# .env (default - local development)
+TEST_BASE_URL=http://127.0.0.1:5500
+
+# To test production (GitHub Pages), uncomment and use:
+# TEST_BASE_URL=https://codecraftandchronicles.github.io/cores/
 ```
 
 For manual browsing, open `index.html` directly in a browser (file:// protocol; some features may be restricted).
 
 ## Running Tests
 
-**Full E2E test suite:**
+### Environment-Based Test Commands
+
+**Test against local development (default):**
 ```bash
-npx playwright test
+npm run test:local
+# or just: npm test
 ```
 
-**Single test file:**
+**Test against production (GitHub Pages):**
 ```bash
-npx playwright test tests/search-form.spec.js
+npm run test:production
 ```
 
-**Single test by name:**
+**Test with specific single file:**
 ```bash
-npx playwright test --grep "search by Base Colour"
+Test_BASE_URL=http://127.0.0.1:5500 npx playwright test tests/search-form.spec.js
 ```
 
-Tests run against `http://127.0.0.1:3000` (configured in `playwright.config.js`).
+**Test with grep pattern:**
+```bash
+npm run test:local -- --grep "search by Base Colour"
+```
+
+**Full E2E test suite (uses .env TEST_BASE_URL):**
+```bash
+npm test
+```
+
+Configuration is read from `playwright.config.js` which respects the `TEST_BASE_URL` environment variable (defaults to `http://127.0.0.1:5500`).
 
 ## CI/CD Pipeline
 

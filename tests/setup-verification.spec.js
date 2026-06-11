@@ -36,20 +36,19 @@ test.describe('CORES Project - Setup Verification', () => {
   });
 
   test('should verify basic interactions work', async ({ page }) => {
+    await page.unroute('**/data/*.json'); // clear leaked routes from other spec files
     await page.goto('/');
-    
-    // Verify we can click tabs
-    await page.click('text=COLOURS');
-    await expect(page.locator('.tab-btn.active')).toHaveText('COLOURS');
-    
-    await page.click('text=EFFECTS');
-    await expect(page.locator('.tab-btn.active')).toHaveText('EFFECTS');
-    
-    // Verify we can type in search
+
+    await page.click('[data-tab="colours"]');
+    await expect(page.locator('[data-tab="colours"].tab-btn')).toHaveClass(/active/, { timeout: 5000 });
+
+    await page.click('[data-tab="effects"]');
+    await expect(page.locator('[data-tab="effects"].tab-btn')).toHaveClass(/active/, { timeout: 5000 });
+
     const searchInput = page.locator('#searchInput');
     await searchInput.fill('test');
     await expect(searchInput).toHaveValue('test');
-    
+
     console.log('✅ Basic interactions work correctly!');
   });
 });

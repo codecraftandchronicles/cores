@@ -155,6 +155,14 @@ const DataService = (function() {
                 })
                 .then(data => {
                     validateColourData(data);
+                    // Sort colours alphabetically by Base Colour
+                    if (data.colours) {
+                        data.colours.sort((a, b) => {
+                            const nomeA = (a["Base Colour"] || "").toUpperCase();
+                            const nomeB = (b["Base Colour"] || "").toUpperCase();
+                            return nomeA.localeCompare(nomeB);
+                        });
+                    }
                     coloursData = data;
                     return coloursData;
                 });
@@ -182,6 +190,14 @@ const DataService = (function() {
                 })
                 .then(data => {
                     validateEffectsData(data);
+                    // Sort effects alphabetically by Product Name
+                    if (data.effects) {
+                        data.effects.sort((a, b) => {
+                            const nomeA = (a["Product Name"] || "").toUpperCase();
+                            const nomeB = (b["Product Name"] || "").toUpperCase();
+                            return nomeA.localeCompare(nomeB);
+                        });
+                    }
                     effectsData = data;
                     return effectsData;
                 });
@@ -209,6 +225,24 @@ const DataService = (function() {
                 })
                 .then(data => {
                     validateProjectsData(data);
+                    // Sort projects by status priority then by name
+                    if (data.projects) {
+                        const priorityOrder = ['to do', 'in progress', 'on the bench', 'done', 'completed', 'parking lot'];
+                        data.projects.sort((a, b) => {
+                            const statusA = (a.Status || 'to do').toLowerCase();
+                            const statusB = (b.Status || 'to do').toLowerCase();
+                            const priorityA = priorityOrder.indexOf(statusA);
+                            const priorityB = priorityOrder.indexOf(statusB);
+                            
+                            // If same priority, sort by project name
+                            if (priorityA === priorityB) {
+                                const nameA = (a.ProjectName || '').toUpperCase();
+                                const nameB = (b.ProjectName || '').toUpperCase();
+                                return nameA.localeCompare(nameB);
+                            }
+                            return priorityA - priorityB;
+                        });
+                    }
                     projectsData = data;
                     return projectsData;
                 });
@@ -485,6 +519,57 @@ function validateColourData(data) {
     return true;
 }
 
+// function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
+//   const loader = document.getElementById('loading-overlay');
+//   if (loader && endpoint === 'colours') {
+//     loader.style.display = 'flex';
+//     loader.style.opacity = '1';
+//   }
+
+//     fetch(`./data/colours.json`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             try {
+//                 // Validate data structure
+//                 validateColourData(data);
+                
+//                 if (data.colours) {
+//                     data.colours.sort((a, b) => {
+//                         const nomeA = (a["Base Colour"] || "").toUpperCase();
+//                         const nomeB = (b["Base Colour"] || "").toUpperCase();
+//                         return nomeA.localeCompare(nomeB);
+//                     });
+//                 }               
+
+//                 allDataColours = data;                  
+                
+//                 buildColorMap(); 
+//                 updateSearchFields(); 
+//                 updateFilters(); 
+//                 displayResults();
+
+//                 if (loader) {
+//                     loader.style.opacity = '0';
+//                     setTimeout(() => { loader.style.display = 'none'; }, 500);
+//                 }
+//             } catch (validationError) {
+//                 console.error('Data validation failed:', validationError.message);
+//                 showError(`Data validation failed: ${validationError.message}`);
+//                 if (loader) loader.style.display = 'none';
+//             }
+//         })
+//         .catch(err => {
+//             console.error('Failed to load colours data:', err.message);
+//             showError(`Failed to load colours data: ${err.message}`);
+//             if (loader) loader.style.display = 'none';
+//         });
+// }
+
 function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
   const loader = document.getElementById('loading-overlay');
   if (loader && endpoint === 'colours') {
@@ -492,48 +577,56 @@ function loadData(endpoint, dataKey, sortField, globalName, customSort = null) {
     loader.style.opacity = '1';
   }
 
-    fetch(`./data/colours.json`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            try {
-                // Validate data structure
-                validateColourData(data);
-                
-                if (data.colours) {
-                    data.colours.sort((a, b) => {
-                        const nomeA = (a["Base Colour"] || "").toUpperCase();
-                        const nomeB = (b["Base Colour"] || "").toUpperCase();
-                        return nomeA.localeCompare(nomeB);
-                    });
-                }               
+  // Correção aqui: usando o parâmetro 'endpoint' dinamicamente
+  fetch(`./data/${endpoint}.json`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          try {
+              // Ajusta dinamicamente a validação baseada no endpoint
+              if (endpoint === 'colours') {
+                  validateColourData(data);
+                  if (data.colours) {
+                      data.colours.sort((a, b) => (a["Base Colour"] || "").toUpperCase().localeCompare((b["Base Colour"] || "").toUpperCase()));
+                  }
+                  allDataColours = data;
+              } else if (endpoint === 'effects') {
+                  validateEffectsData(data);
+                  if (data.effects) {
+                      data.effects.sort((a, b) => (a["Product Name"] || "").toUpperCase().localeCompare((b["Product Name"] || "").toUpperCase()));
+                  }
+                  allDataEffects = data;
+              } else if (endpoint === 'projects') {
+                  validateProjectsData(data);
+                  allDataProjects = data;
+              } else if (endpoint === 'tools') {
+                  allDataTools = data;
+              }
+              
+              buildColorMap(); 
+              updateSearchFields(); 
+              updateFilters(); 
+              displayResults();
 
-                allDataColours = data;                  
-                
-                buildColorMap(); 
-                updateSearchFields(); 
-                updateFilters(); 
-                displayResults();
-
-                if (loader) {
-                    loader.style.opacity = '0';
-                    setTimeout(() => { loader.style.display = 'none'; }, 500);
-                }
-            } catch (validationError) {
-                console.error('Data validation failed:', validationError.message);
-                showError(`Data validation failed: ${validationError.message}`);
-                if (loader) loader.style.display = 'none';
-            }
-        })
-        .catch(err => {
-            console.error('Failed to load colours data:', err.message);
-            showError(`Failed to load colours data: ${err.message}`);
-            if (loader) loader.style.display = 'none';
-        });
+              if (loader) {
+                  loader.style.opacity = '0';
+                  setTimeout(() => { loader.style.display = 'none'; }, 500);
+              }
+          } catch (validationError) {
+              console.error('Data validation failed:', validationError.message);
+              showError(`Data validation failed: ${validationError.message}`);
+              if (loader) loader.style.display = 'none';
+          }
+      })
+      .catch(err => {
+          console.error(`Failed to load ${endpoint} data:`, err.message);
+          showError(`Failed to load ${endpoint} data: ${err.message}`);
+          if (loader) loader.style.display = 'none';
+      });
 }
 
 function validateEffectsData(data) {
@@ -748,12 +841,49 @@ function loadDataTools() {
 function setupEventListeners() {
   const searchInput = document.getElementById('searchInput'); 
   const searchFieldSelect = document.getElementById('searchField'); 
-  searchInput.addEventListener('input', validateSearchButton);
-  searchFieldSelect.addEventListener('change', validateSearchButton);
-  document.getElementById('btn-sort').addEventListener('click', toggleSort);
+
+  // --- BUSCA E VALIDAÇÃO (Versão Síncrona / Sem Debounce para a UI) ---
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      // Executa imediatamente para garantir que o Playwright apanhe o estado correto no mesmo loop de eventos
+      validateSearchButton(); 
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        clearTimeout(searchDebounceTimeout);
+        performSearch();
+      }
+    });
+  }
+
+  if (searchFieldSelect) {
+    searchFieldSelect.addEventListener('change', () => {
+      // Executa de forma síncrona imediata, sem cancelamentos assíncronos
+      validateSearchButton();
+    });
+  }
+  
+  // Inicializa o estado do botão no carregamento
   validateSearchButton();
 
-  // Add event listener for primer selector
+  // --- CONTROLOS GERAIS DE BUSCA E ORDENAÇÃO ---
+  const btnSort = document.getElementById('btn-sort');
+  if (btnSort) {
+    btnSort.addEventListener('click', toggleSort);
+  }
+
+  const btnSearch = document.getElementById('btnSearch');
+  if (btnSearch) {
+    btnSearch.addEventListener('click', performSearch);
+  }
+
+  const btnClear = document.getElementById('btnClear');
+  if (btnClear) {
+    btnClear.addEventListener('click', clearSearch);
+  }
+
+  // --- PRIMER SELECTOR ---
   const primerSelect = document.getElementById('primerSelect');
   if (primerSelect) {
     primerSelect.addEventListener('change', (e) => {
@@ -761,6 +891,7 @@ function setupEventListeners() {
     });
   }
 
+  // --- TRADUÇÃO / IDIOMAS (BANDEIRAS) ---
   document.querySelectorAll('.flag-container').forEach(flag => {
       flag.addEventListener('click', function() {
           clearSearch();           
@@ -782,39 +913,14 @@ function setupEventListeners() {
       });
   });
 
+  // --- NAVEGAÇÃO DE ABAS ---
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       switchTab(e.target.dataset.tab);
     });
   });
-
-    document.getElementById('btnSearch').addEventListener('click', performSearch);
-  document.getElementById('btnClear').addEventListener('click', clearSearch);
-
-
-
-
-    // Debounced search input (using global searchDebounceTimeout)
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-    clearTimeout(searchDebounceTimeout);
-    searchDebounceTimeout = setTimeout(() => {
-      validateSearchButton();
-      // Only auto-search if we have a search field selected
-      const searchField = document.getElementById('searchField').value;
-      if (searchField && e.target.value.trim().length > 0) {
-        performSearch();
-      }
-    }, 300); // 300ms debounce delay
-  });
   
-  document.getElementById('searchInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      clearTimeout(searchDebounceTimeout);
-      performSearch();
-    }
-  });
-  
-  // Add event listener for export button
+  // --- EXPORTAR INVENTÁRIO ---
   const exportBtn = document.getElementById('btnInventory');
   if (exportBtn) {
     exportBtn.addEventListener('click', exportInventoryToCSV);
@@ -942,6 +1048,7 @@ function switchTab(tab) {
 
   // Set new operation
   currentTabOperation = setTimeout(() => {
+    const previousTab = currentTab;
     currentTab = tab;
     const resultsEl = document.getElementById('results');
     const info = document.getElementById('resultsInfo');
@@ -967,9 +1074,11 @@ function switchTab(tab) {
       checkbox.checked = false;
     });
 
-    // Clear search when switching tabs
+    // Clear search when switching tabs — but only if actually changing tab
     document.getElementById('searchInput').value = '';
-    document.getElementById('searchField').value = '';
+    if (previousTab !== tab) { 
+      document.getElementById('searchField').value = '';
+    }
     validateSearchButton();
 
     if (tab === 'putty' || tab === 'projects') {
@@ -1003,32 +1112,81 @@ function switchTab(tab) {
   }, TAB_SWITCH_DEBOUNCE);
 }
 
-function updateSearchFields() {
-    const fieldSelect = document.getElementById('searchField');
-    if (!fieldSelect) return;
-    fieldSelect.innerHTML = '';
+// function updateSearchFields() {
+//     const fieldSelect = document.getElementById('searchField');
+//     if (!fieldSelect) return;
+
+//     // Preserve the currently selected value before rebuilding the select.
+//     // The window 'load' setTimeout calls this 100ms after page load, which
+//     // would wipe any value the user (or test) already selected.
+//     const previousValue = fieldSelect.value;
+
+//     fieldSelect.innerHTML = '';
     
-    const dataRef = DataService.getDataByTab(currentTab);
-    let fields = [];
+//     const dataRef = DataService.getDataByTab(currentTab);
+//     let fields = [];
 
-    // Array bounds checking
-    if (dataRef && Array.isArray(dataRef) && dataRef.length > 0) {
-        fields = Object.keys(dataRef[0]);
-        const ignoreList = fieldsToIgnoreEN;
-        fields = fields.filter(field => !ignoreList.includes(field));
-    }
+//     if (dataRef && Array.isArray(dataRef) && dataRef.length > 0) {
+//         fields = Object.keys(dataRef[0]);
+//         const ignoreList = fieldsToIgnoreEN;
+//         fields = fields.filter(field => !ignoreList.includes(field));
+//     }
 
-    const defaultOption = document.createElement('option');
-    defaultOption.value = '';
-    defaultOption.textContent = searchField; 
-    fieldSelect.appendChild(defaultOption);
+//     const defaultOption = document.createElement('option');
+//     defaultOption.value = '';
+//     defaultOption.textContent = searchField; 
+//     fieldSelect.appendChild(defaultOption);
 
-    fields.forEach(field => {
-        const option = document.createElement('option');
-        option.value = field;
-        option.textContent = field;
-        fieldSelect.appendChild(option);
-    });
+//     fields.forEach(field => {
+//         const option = document.createElement('option');
+//         option.value = field;
+//         option.textContent = field;
+//         fieldSelect.appendChild(option);
+//     });
+
+//     // Restore previous selection if it still exists in the rebuilt options
+//     if (previousValue && fieldSelect.querySelector(`option[value="${previousValue}"]`)) {
+//         fieldSelect.value = previousValue;
+//         validateSearchButton();
+//     }
+// }
+
+function updateSearchFields() {
+  const fieldSelect = document.getElementById('searchField');
+  if (!fieldSelect) return;
+
+  // Preserva o valor selecionado antes de reconstruir as opções
+  const previousValue = fieldSelect.value;
+  fieldSelect.innerHTML = '';
+
+  const dataRef = DataService.getDataByTab(currentTab);
+  let fields = [];
+
+  if (dataRef && Array.isArray(dataRef) && dataRef.length > 0) {
+    fields = Object.keys(dataRef[0]);
+    const ignoreList = fieldsToIgnoreEN;
+    fields = fields.filter(field => !ignoreList.includes(field));
+  }
+
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = searchField;
+  fieldSelect.appendChild(defaultOption);
+
+  fields.forEach(field => {
+    const option = document.createElement('option');
+    option.value = field;
+    option.textContent = field;
+    fieldSelect.appendChild(option);
+  });
+
+  // Garante a restauração segura do valor e força a validação síncrona
+  if (previousValue && fieldSelect.querySelector(`option[value="${previousValue}"]`)) {
+    fieldSelect.value = previousValue;
+  }
+  
+  // Executa a validação síncrona após a árvore de opções estar totalmente pronta
+  validateSearchButton();
 }
 
 function buildColorMap() {
@@ -1103,20 +1261,24 @@ function updateFilters() {
         const checkboxesDiv = document.createElement('div');
         checkboxesDiv.className = 'filter-checkboxes';
 
+        // Altere o trecho dentro do loop values.forEach(value => { ... }) na função updateFilters():
         values.forEach(value => {
-            const checkboxId = `filter-${fieldName}-${value}`.replace(/[^a-zA-Z0-9-]/g, '_');                  
-            const label = document.createElement('label');
-            label.className = 'checkbox-label';            
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = checkboxId;
-            checkbox.value = value;
-            checkbox.dataset.field = fieldName;          
-            checkbox.addEventListener('change', performSearch);
-
-            label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(value));
-            checkboxesDiv.appendChild(label);
+          const trimmedValue = value.trim(); // Remove espaços extras como 'Warm '
+          const checkboxId = `filter-${fieldName}-${trimmedValue}`.replace(/[^a-zA-Z0-9-]/g, '_');
+          
+          const label = document.createElement('label');
+          label.className = 'checkbox-label';
+          
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.id = checkboxId;
+          checkbox.value = trimmedValue; // Garante o valor limpo
+          checkbox.dataset.field = fieldName;
+          checkbox.addEventListener('change', performSearch);
+          
+          label.appendChild(checkbox);
+          label.appendChild(document.createTextNode(value));
+          checkboxesDiv.appendChild(label);
         });
 
         filterGroup.appendChild(checkboxesDiv);

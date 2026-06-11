@@ -5,13 +5,18 @@ import { defineConfig, devices } from '@playwright/test';
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load environment variables from .env file
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+// Determine base URL from environment variable
+const baseUrl = process.env.TEST_BASE_URL || 'http://127.0.0.1:5500';
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -24,10 +29,19 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+
+  /* Web server configuration for static SPA */
+  webServer: {
+    command: 'npx http-server . -p 5500 -c-1',
+    url: 'http://127.0.0.1:5500',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+  },
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://codecraftandchronicles.github.io/cores/', /*http://127.0.0.1:5500',*/
+    baseURL: baseUrl,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
