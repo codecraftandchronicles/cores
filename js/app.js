@@ -4,7 +4,8 @@ const TAB_NAMES = Object.freeze({
   COLOURS: 'colours',
   EFFECTS: 'effects',
   PUTTY: 'putty',
-  PROJECTS: 'projects'
+  PROJECTS: 'projects',
+  RECIPES: 'recipes'
 });
 
 // Field names
@@ -42,6 +43,7 @@ const DataService = (function() {
     let effectsData = { effects: [] };
     let projectsData = { projects: [] };
     let toolsData = { tools: [] };
+    let recipesData = { recipes: [] };
     
     // Private validation functions
     function validateColourData(data) {
@@ -115,6 +117,37 @@ const DataService = (function() {
         return true;
     }
     
+    function validateRecipesData(data) {
+        if (!data || typeof data !== 'object') {
+            throw new Error('Invalid data structure: Expected object');
+        }
+        if (!Array.isArray(data.recipes)) {
+            throw new Error('Invalid data structure: recipes should be an array');
+        }
+        
+        data.recipes.forEach((recipe, index) => {
+            if (!recipe || typeof recipe !== 'object') {
+                throw new Error(`Invalid recipe entry at index ${index}: Expected object`);
+            }
+            
+            if (!recipe.RecipeName) {
+                console.warn(`Recipe at index ${index} missing RecipeName`);
+                recipe.RecipeName = `Unnamed Recipe ${index}`;
+            }
+            
+            if (!recipe.System) {
+                console.warn(`Recipe at index ${index} missing System`);
+                recipe.System = 'Warhammer 40K';
+            }
+            
+            if (!Array.isArray(recipe.Steps)) {
+                recipe.Steps = [];
+            }
+        });
+        
+        return true;
+    }
+    
     // Public API
     return {
         getColours: function() {
@@ -131,6 +164,10 @@ const DataService = (function() {
         
         getTools: function() {
             return toolsData.tools;
+        },
+        
+        getRecipes: function() {
+            return recipesData.recipes;
         },
         
                 loadColours: function() {
@@ -276,11 +313,47 @@ const DataService = (function() {
                 });
         },
         
+        loadRecipes: function() {
+            // Create abort controller for timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            
+            return fetch(`./data/recipes.json?v=1.0.0`, { signal: controller.signal })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                        throw new Error('Request timed out after 10 seconds');
+                    }
+                    throw error;
+                })
+                .then(data => {
+                    validateRecipesData(data);
+                    // Sort recipes alphabetically by RecipeName
+                    if (data.recipes) {
+                        data.recipes.sort((a, b) => {
+                            const nomeA = (a.RecipeName || "").toUpperCase();
+                            const nomeB = (b.RecipeName || "").toUpperCase();
+                            return nomeA.localeCompare(nomeB);
+                        });
+                    }
+                    recipesData = data;
+                    return recipesData;
+                });
+        },
+        
         getDataByTab: function(tab) {
             switch(tab) {
                 case 'colours': return this.getColours();
                 case 'effects': return this.getEffects();
                 case 'projects': return this.getProjects();
+                case 'recipes': return this.getRecipes();
                 case 'tools': return this.getTools();
                 default: return [];
             }
@@ -293,6 +366,8 @@ let currentTab = 'colours';
 let sortAsc = true;
 let currentFilteredResults = []; 
 let currentPrimerClass = 'primer-v-white'; // Default primer
+let recipeFilterSystem = 'all';
+let recipeFilterArmy   = 'all';
 let searchField = "Select field...", noResults = "No results found", showing = "Showing", illustrative = "Illustrative", noResultsContainer = "No results", resultsLabel = "Results", headerLabel = "Search", headerParagraph = "Enter search criteria";
 let currentTabOperation = null;
 let lastTabSwitchTime = 0;
@@ -464,7 +539,8 @@ async function PageLoad() {
       DataService.loadColours(),
       DataService.loadEffects(),
       DataService.loadProjects(),
-      DataService.loadTools()
+      DataService.loadTools(),
+      DataService.loadRecipes()
     ];
     
     // Load all data in parallel
@@ -1081,7 +1157,7 @@ function switchTab(tab) {
     }
     validateSearchButton();
 
-    if (tab === 'putty' || tab === 'projects') {
+    if (tab === 'putty' || tab === 'projects' || tab === 'recipes') {
       if (resultsEl) {
         resultsEl.innerHTML = '';
         resultsEl.classList.add('massa-active');
@@ -1091,7 +1167,16 @@ function switchTab(tab) {
       if (sortContainer) sortContainer.style.display = 'none';
       if (primerSelector) primerSelector.style.display = 'none'; // Hide primer selector
 
-      performSearch();
+      // Show/build recipe filters only for the recipes tab
+      const recipeFiltersEl = document.getElementById('recipe-filters');
+      if (recipeFiltersEl) recipeFiltersEl.style.display = tab === 'recipes' ? 'flex' : 'none';
+      if (tab === 'recipes') {
+        recipeFilterSystem = 'all';
+        recipeFilterArmy   = 'all';
+        buildRecipeFilters(); // builds UI and calls performSearch
+      } else {
+        performSearch();
+      }
     } else {
       if (searchControls) {
         searchControls.style.setProperty('display', 'grid', 'important');
@@ -1287,7 +1372,7 @@ function updateFilters() {
 }
 
 function performSearch() {
-    if (currentTab === TAB_NAMES.PROJECTS) {
+    if (currentTab === TAB_NAMES.PROJECTS || currentTab === TAB_NAMES.RECIPES) {
         document.querySelectorAll('.filter-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
             checkbox.checked = false;
         });
@@ -1318,6 +1403,12 @@ function performSearch() {
     }
     else if (currentTab === TAB_NAMES.PROJECTS) {
       data = allDataProjects.projects;
+    }
+    else if (currentTab === TAB_NAMES.RECIPES) {
+      let recipes = DataService.getRecipes();
+      if (recipeFilterSystem !== 'all') recipes = recipes.filter(r => r.System === recipeFilterSystem);
+      if (recipeFilterArmy   !== 'all') recipes = recipes.filter(r => r.Army   === recipeFilterArmy);
+      data = recipes;
     }    
 
     if (currentTab === TAB_NAMES.PUTTY) {
@@ -1444,8 +1535,46 @@ function displayResults(results = null) {
     implementVirtualScrolling(data, resultsContainer);
   } else {
     // For smaller datasets, use traditional rendering
-    if (currentTab === 'projects') {
-      resultsContainer.innerHTML = data.map(item => createProjectCard(item)).join('');
+    if (currentTab === 'projects' || currentTab === 'recipes') {
+      resultsContainer.innerHTML = data.map(item => {
+        if (currentTab === 'recipes') {
+          return createRecipeCard(item);
+        } else {
+          return createProjectCard(item);
+        }
+      }).join('');
+
+      // Append the ΔE legend once, after all recipe cards
+      if (currentTab === 'recipes' && data.length > 0) {
+        const legendEl = document.createElement('div');
+        legendEl.className = 'delta-e-legend';
+        legendEl.innerHTML = `
+          <h5 class="legend-title">δE (CIE76) — How match scores are calculated</h5>
+          <p class="legend-text">
+            Each match percentage is derived from <strong>ΔE (CIE76)</strong> — the international standard
+            for measuring colour difference perceptible to the human eye. The formula converts each colour
+            from <em>sRGB → linear RGB → XYZ → CIELAB</em>, then computes the Euclidean distance between
+            the two colours in perceptual space. A ΔE of 1 is the smallest difference a trained eye can detect;
+            values below 2 are invisible in normal viewing conditions.
+          </p>
+          <table class="legend-table" aria-label="ΔE match score interpretation">
+            <thead>
+              <tr><th>ΔE</th><th>Match %</th><th>Label</th><th>Practical Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="legend-de">&lt;&nbsp;2</td><td><span class="match-badge match-exact">96–100%</span></td><td>Near-identical</td><td>Imperceptible under normal viewing conditions. Drop-in replacement.</td></tr>
+              <tr><td class="legend-de">2–5</td><td><span class="match-badge match-close">90–95%</span></td><td>Close match</td><td>Visible only in direct side-by-side comparison. Excellent substitute.</td></tr>
+              <tr><td class="legend-de">5–10</td><td><span class="match-badge match-good">80–89%</span></td><td>Good substitute</td><td>Noticeable in isolation; works well on a finished, based miniature.</td></tr>
+              <tr><td class="legend-de">10–20</td><td><span class="match-badge match-fair">60–79%</span></td><td>Fair substitute</td><td>Different shade — consider adjusting highlight and shade colours.</td></tr>
+              <tr><td class="legend-de">&gt;&nbsp;20</td><td><span class="match-badge match-poor">&lt;&nbsp;60%</span></td><td>Poor substitute</td><td>Significantly different colour. Use only as a last resort.</td></tr>
+            </tbody>
+          </table>
+        `;
+        resultsContainer.appendChild(legendEl);
+
+        // Load real vote counts from Supabase (non-blocking)
+        loadRecipeVotes();
+      }
     } else {
       resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
       // Apply current primer to all cards after rendering
@@ -1858,6 +1987,240 @@ function getMaterialDetails(subKey, id) {
     return { name, hex, manufacturer };
 }
 
+/**
+ * Computes CIE76 ΔE between two hex colour strings.
+ * Returns null if either hex is missing or '—'.
+ */
+function deltaEFromHex(hex1, hex2) {
+    if (!hex1 || !hex2 || hex1 === '—' || hex2 === '—') return null;
+    try {
+        function hexToRgb(h) {
+            const s = h.replace('#', '');
+            return [parseInt(s.slice(0,2),16), parseInt(s.slice(2,4),16), parseInt(s.slice(4,6),16)];
+        }
+        function toLinear(c) {
+            const v = c / 255;
+            return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+        }
+        function toLab(rgb) {
+            const r = toLinear(rgb[0]), g = toLinear(rgb[1]), b = toLinear(rgb[2]);
+            const x = (r*0.4124 + g*0.3576 + b*0.1805) / 0.95047;
+            const y = (r*0.2126 + g*0.7152 + b*0.0722) / 1.00000;
+            const z = (r*0.0193 + g*0.1192 + b*0.9505) / 1.08883;
+            const f = t => t > 0.008856 ? Math.cbrt(t) : 7.787*t + 16/116;
+            return { L: 116*f(y)-16, a: 500*(f(x)-f(y)), b: 200*(f(y)-f(z)) };
+        }
+        const l1 = toLab(hexToRgb(hex1)), l2 = toLab(hexToRgb(hex2));
+        return Math.sqrt((l1.L-l2.L)**2 + (l1.a-l2.a)**2 + (l1.b-l2.b)**2);
+    } catch(e) { return null; }
+}
+
+/**
+ * Converts a ΔE value to a display object: { pct, css, tooltip }.
+ * pct  — match percentage shown to the user (linear scale: ΔE 0→100%, ΔE 50→0%).
+ * css  — CSS modifier class for colour coding the badge.
+ * tooltip — plain-English explanation shown on hover.
+ */
+function getMatchLabel(de) {
+    if (de === null || de === undefined) return null;
+    const pct = Math.max(0, Math.min(100, Math.round(100 - de * 2)));
+    let css, desc, detail;
+    if      (de <  2) { css = 'match-exact'; desc = 'Near-identical';  detail = 'Imperceptible difference under normal painting conditions.'; }
+    else if (de <  5) { css = 'match-close'; desc = 'Close match';     detail = 'Slight difference visible only under direct side-by-side comparison.'; }
+    else if (de < 10) { css = 'match-good';  desc = 'Good substitute'; detail = 'Noticeable in isolation but usable on a finished miniature.'; }
+    else if (de < 20) { css = 'match-fair';  desc = 'Fair substitute'; detail = 'Different shade — consider adjusting your technique.'; }
+    else              { css = 'match-poor';  desc = 'Poor substitute'; detail = 'Significantly different colour. Use with caution.'; }
+    return { pct, css, tooltip: `${desc} — ΔE ${de.toFixed(1)}. ${detail}` };
+}
+
+function createRecipeCard(recipe) {
+    if (!recipe) {
+        console.warn('Invalid recipe item data');
+        return '';
+    }
+    
+    const recipeName = escapeHtml(recipe.RecipeName || 'Unnamed Recipe');
+    const system = escapeHtml(recipe.System || 'Unknown System');
+    const army = escapeHtml(recipe.Army || '');
+    const author = escapeHtml(recipe.TutorialAuthor || '');
+    const site = escapeHtml(recipe.TutorialSite || '');
+    const tutorialUrl = recipe.TutorialURL || '#';
+    const numPaints = recipe.Steps ? recipe.Steps.reduce((sum, step) => sum + (step.Paints ? step.Paints.length : 0), 0) : 0;
+
+    // Map tutorial site to a logo image
+    const siteLogoMap = {
+        'Tale of Painters':   './img/tale_of_painters_logo_2023.png.webp',
+        'Warhammer Community':'./img/Warhammer-logo-main.png.webp',
+        'Warhammer Guild':    './img/Warhammer-logo-main.png.webp',
+    };
+    const siteLogo = siteLogoMap[recipe.TutorialSite] || '';
+    const creditBgStyle = siteLogo
+        ? ` style="background-image: url('${siteLogo}'); background-repeat: no-repeat; background-position: right 16px center; background-size: auto 60%;"` 
+        : '';
+    
+    // Determine if expanded by default
+    const isExpanded = true; // Always expand for better UX on first view
+    const buttonClass = isExpanded ? "accordion-button" : "accordion-button collapsed";
+    const bodyStyle = isExpanded ? 'style="display: block;"' : 'style="display: none;"';
+    
+    let cardHTML = `
+      <div class="recipe-accordion">
+        <div class="accordion-item recipe-border">
+          <button class="${buttonClass}" type="button" onclick="toggleAccordion(this)">
+            <div class="recipe-header-main">
+              <span class="recipe-title">${recipeName}</span>
+              <div class="recipe-badges">
+                <span class="badge recipe-system">${system}</span>
+                ${army ? `<span class="badge recipe-army">${army}</span>` : ''}
+                <span class="badge recipe-count">🎨 ${numPaints} paints</span>
+              </div>
+            </div>
+          </button>
+
+          <div class="accordion-body recipe-body" ${bodyStyle}>
+    `;
+    
+    // Credit section
+    cardHTML += `
+      <div class="recipe-credit"${creditBgStyle}>
+        <p class="credit-text">
+          📖 Recipe based on tutorial by <strong>${author}</strong> from <strong>${site}</strong><br>
+          <a href="${tutorialUrl}" target="_blank" rel="noopener noreferrer" class="credit-link">
+            View original tutorial <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
+          </a>
+        </p>
+      </div>
+    `;
+    
+    // Render steps with paint tables
+    if (recipe.Steps && Array.isArray(recipe.Steps)) {
+        recipe.Steps.forEach((step, stepIndex) => {
+            const stepName = escapeHtml(step.Name || `Step ${stepIndex + 1}`);
+            cardHTML += `
+              <div class="recipe-step">
+                <h4 class="step-title">${stepName}</h4>
+                <div class="paint-table-wrapper">
+                  <table class="paint-table">
+                    <thead>
+                      <tr>
+                        <th>Citadel</th>
+                        <th>AK Interactive</th>
+                        <th>Vallejo</th>
+                        <th style="width: 60px;">Votes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            if (step.Paints && Array.isArray(step.Paints)) {
+                step.Paints.forEach((paint) => {
+                    const citadel  = escapeHtml(paint.Citadel  || '—');
+                    const ak       = escapeHtml(paint.AK       || '—');
+                    const vallejo  = escapeHtml(paint.Vallejo  || '—');
+                    const cType    = paint.CType ? ` <small class="paint-type">(${escapeHtml(paint.CType)})</small>` : '';
+                    const paintCode = escapeHtml(paint.PaintCode || '');
+
+                    // Colour swatches
+                    const citHex  = paint.Hex       || '';
+                    const akHex   = paint.AKHex     || '';
+                    const valHex  = paint.VallejoHex || '';
+                    const citSwatch = citHex  ? `<span class="paint-swatch" style="background:${citHex}"  title="${citHex}"></span>`  : '';
+                    const akSwatch  = akHex   ? `<span class="paint-swatch" style="background:${akHex}"   title="${akHex}"></span>`   : '';
+                    const valSwatch = valHex  ? `<span class="paint-swatch" style="background:${valHex}"  title="${valHex}"></span>`  : '';
+
+                    // ΔE match badges (computed at runtime)
+                    const akMatch  = getMatchLabel(deltaEFromHex(citHex, akHex));
+                    const valMatch = getMatchLabel(deltaEFromHex(citHex, valHex));
+                    const akBadge  = akMatch  ? `<span class="match-badge ${akMatch.css}"  title="${akMatch.tooltip}"  style="cursor:help">${akMatch.pct}%</span>`  : '';
+                    const valBadge = valMatch ? `<span class="match-badge ${valMatch.css}" title="${valMatch.tooltip}" style="cursor:help">${valMatch.pct}%</span>` : '';
+                    
+                    cardHTML += `
+                      <tr class="paint-row">
+                        <td class="paint-cell citadel-cell">${citSwatch}${citadel}${cType}</td>
+                        <td class="paint-cell ak-cell">${akSwatch}${ak === '—' ? '—' : ak + akBadge}</td>
+                        <td class="paint-cell vallejo-cell">${valSwatch}${vallejo === '—' ? '—' : vallejo + valBadge}</td>
+                        <td class="votes-cell">
+                          <button class="vote-btn like-btn" title="Like this match" onclick="handleVote(this, 'like')" data-paint="${paintCode}" data-brand="Citadel">👍 <span>0</span></button>
+                          <button class="vote-btn dislike-btn" title="Dislike this match" onclick="handleVote(this, 'dislike')" data-paint="${paintCode}" data-brand="Citadel">👎 <span>0</span></button>
+                        </td>
+                      </tr>
+                    `;
+                });
+            }
+            
+            cardHTML += `
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `;
+        });
+    }
+
+    cardHTML += `
+          </div>
+        </div>
+      </div>
+    `;
+    
+    return cardHTML;
+}
+
+/**
+ * Fetches vote counts from Supabase and updates all vote buttons on screen.
+ * Non-blocking — failures are logged as warnings.
+ */
+async function loadRecipeVotes() {
+    const buttons = document.querySelectorAll('.vote-btn[data-paint]');
+    if (buttons.length === 0) return;
+    const paintCodes = [...new Set([...buttons].map(b => b.dataset.paint).filter(Boolean))];
+    try {
+        const counts = await getVoteCounts(paintCodes);
+        buttons.forEach(btn => {
+            const code  = btn.dataset.paint;
+            const count = counts[code];
+            if (!count) return;
+            const span = btn.querySelector('span');
+            if (span) span.textContent = btn.classList.contains('like-btn') ? count.likes : count.dislikes;
+        });
+    } catch (err) {
+        console.warn('Could not load vote counts from Supabase:', err.message);
+    }
+}
+
+async function handleVote(button, voteType) {
+    const paintCode = button.dataset.paint;
+    if (!paintCode) return;
+
+    const span    = button.querySelector('span');
+    const isVoted = button.classList.contains('voted');
+
+    // If the opposite button is currently voted, remove it first
+    const oppositeType = voteType === 'like' ? 'dislike' : 'like';
+    const oppositeBtn  = button.parentElement.querySelector(`.${oppositeType}-btn[data-paint="${paintCode}"]`);
+    if (oppositeBtn && oppositeBtn.classList.contains('voted')) {
+        oppositeBtn.classList.remove('voted');
+        const oppositeSpan = oppositeBtn.querySelector('span');
+        if (oppositeSpan) oppositeSpan.textContent = Math.max(0, parseInt(oppositeSpan.textContent || '0') - 1);
+        try { await deleteVote(paintCode); }
+        catch (err) { console.warn('Un-vote opposite failed:', err.message); }
+    }
+
+    if (isVoted) {
+        // Un-vote
+        button.classList.remove('voted');
+        span.textContent = Math.max(0, parseInt(span.textContent || '0') - 1);
+        try { await deleteVote(paintCode); }
+        catch (err) { console.warn('Un-vote failed:', err.message); }
+    } else {
+        // Vote
+        button.classList.add('voted');
+        span.textContent = parseInt(span.textContent || '0') + 1;
+        try { await registerVote(paintCode, voteType); }
+        catch (err) { console.warn('Vote failed:', err.message); }
+    }
+}
+
 function toggleAccordion(button) {
     button.classList.toggle('collapsed');
     const body = button.nextElementSibling;
@@ -1867,6 +2230,47 @@ function toggleAccordion(button) {
     } else {
         body.style.display = "block";
     }
+}
+
+/**
+ * Builds the System and Army filter pill-buttons for the Paint Recipes tab.
+ * Reads unique values from the loaded recipes data.
+ */
+function buildRecipeFilters() {
+    const recipes = DataService.getRecipes();
+    const systems = ['all', ...new Set(recipes.map(r => r.System).filter(Boolean))];
+    const armies  = ['all', ...new Set(recipes.map(r => r.Army ).filter(Boolean))];
+
+    function makeButtons(containerId, values, stateKey, stateVar) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        // Keep the label, remove old buttons
+        Array.from(container.querySelectorAll('.recipe-filter-btn')).forEach(b => b.remove());
+        values.forEach(val => {
+            const btn = document.createElement('button');
+            btn.className = 'recipe-filter-btn' + (stateVar === val ? ' active' : '');
+            btn.textContent = val === 'all' ? 'All' : val;
+            btn.dataset.value = val;
+            btn.addEventListener('click', function() {
+                if (stateKey === 'system') recipeFilterSystem = val;
+                else                       recipeFilterArmy   = val;
+                // Reset army when system changes to avoid stale filters
+                if (stateKey === 'system') {
+                    recipeFilterArmy = 'all';
+                    buildRecipeFilters(); // Rebuild to update active states
+                    return;
+                }
+                container.querySelectorAll('.recipe-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                performSearch();
+            });
+            container.appendChild(btn);
+        });
+    }
+
+    makeButtons('recipe-filter-system-group', systems, 'system', recipeFilterSystem);
+    makeButtons('recipe-filter-army-group',   armies,  'army',   recipeFilterArmy);
+    performSearch();
 }
 
 function getSpecialClass(hexColor) {
@@ -2106,7 +2510,8 @@ function syncTabWithHash() {
     [TAB_NAMES.COLOURS]: TAB_NAMES.COLOURS,
     [TAB_NAMES.EFFECTS]: TAB_NAMES.EFFECTS,
     [TAB_NAMES.PUTTY]: TAB_NAMES.PUTTY,
-    [TAB_NAMES.PROJECTS]: TAB_NAMES.PROJECTS
+    [TAB_NAMES.PROJECTS]: TAB_NAMES.PROJECTS,
+    [TAB_NAMES.RECIPES]: TAB_NAMES.RECIPES
   };
 
   if (tabMap[hash]) {
