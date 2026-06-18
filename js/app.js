@@ -2090,6 +2090,7 @@ function createRecipeCard(recipe) {
     `;
     
     // Credit section
+    const creditNote = recipe.CreditNote ? escapeHtml(recipe.CreditNote) : '';
     cardHTML += `
       <div class="recipe-credit"${creditBgStyle}>
         <p class="credit-text">
@@ -2098,6 +2099,7 @@ function createRecipeCard(recipe) {
             View original tutorial <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
           </a>
         </p>
+        ${creditNote ? `<p class="credit-note"><em>${creditNote}</em></p>` : ''}
       </div>
     `;
     

@@ -14,10 +14,11 @@
 ## Metadata
 - **Feature Name:** Paint Recipes
 - **Tab Label:** Paint Recipes
-- **Status:** Planning
+- **Status:** Launched
+- **Launch Date:** 18 de Junho de 2026
 - **Site:** https://codecraftandchronicles.github.io/cores/
 - **Repositório:** https://github.com/codecraftandchronicles/cores
-- **Data do documento:** 2025
+- **Data do documento:** 2026
 - **Autor:** Bruno
 
 ---
@@ -31,7 +32,7 @@
 5. [Schema JSON — colours.json (novo)](#5-schema-json--coloursjson-novo)
 6. [Sistema de Equivalências](#6-sistema-de-equivalências)
 7. [Sistema de Votos (Like / Dislike)](#7-sistema-de-votos-like--dislike)
-8. [Firebase — Configuração](#8-firebase--configuração)
+8. [Supabase — Configuração](#8-supabase--configuração)
 9. [Fontes e Referências](#9-fontes-e-referências)
 10. [Roadmap de Implementação](#10-roadmap-de-implementação)
 11. [Decisões de Arquitectura](#11-decisões-de-arquitectura)
@@ -388,7 +389,7 @@ Utilizador clica LIKE
   → Verificar localStorage: já votou neste sentido?
       SE SIM → não fazer nada (botão já estava inibido)
       SE NÃO →
-          → Incrementar contador no Firebase (+1 like)
+          → Incrementar contador no Supabase (+1 like)
           → Guardar estado no localStorage: "like"
           → Inibir botão LIKE
           → Manter botão DISLIKE activo
