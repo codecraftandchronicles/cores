@@ -2,7 +2,7 @@ name: Test Suite
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, 'features/**']
   pull_request:
     branches: [main, develop]
 jobs:
@@ -16,15 +16,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium firefox
       
       - name: Run Playwright tests
-        run: npx playwright test tests/basic-test.spec.js
+        run: npx playwright test
       
       - name: Upload test results
         if: always()
