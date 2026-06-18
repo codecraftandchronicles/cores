@@ -134,6 +134,20 @@ test.describe('Paint Recipes — Voting System', () => {
     // Second row should remain unvoted
     await expect(likeBtns.nth(1)).not.toHaveClass(/voted/);
   });
+
+  test('duplicate paint codes in different steps use distinct vote keys', async ({ page }) => {
+    const basilicanumRows = page.locator('tr.paint-row', { hasText: 'Basilicanum Grey' });
+    await expect(basilicanumRows).toHaveCount(2);
+
+    const firstKey = await basilicanumRows.nth(0).locator('.vote-btn.like-btn').getAttribute('data-paint');
+    const secondKey = await basilicanumRows.nth(1).locator('.vote-btn.like-btn').getAttribute('data-paint');
+
+    expect(firstKey).toBeTruthy();
+    expect(secondKey).toBeTruthy();
+    expect(firstKey).not.toBe(secondKey);
+    expect(firstKey).toContain('CIT-BASILICANUM');
+    expect(secondKey).toContain('CIT-BASILICANUM');
+  });
 });
 
 // ─── System Filter ──────────────────────────────────────────────────────────

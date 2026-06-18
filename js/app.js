@@ -1298,6 +1298,15 @@ function buildColorMap() {
     console.log('Color map built with', Object.keys(colorMap).length, 'entries');
 }
 
+function buildRecipeVoteKey(recipeName, stepName, paintCode) {
+  const parts = [recipeName, stepName, paintCode]
+    .map(part => String(part || '').trim())
+    .filter(Boolean)
+    .map(part => part.replace(/\|/g, ' '));
+
+  return parts.join('|');
+}
+
 function extractUniqueValues(fieldName) {
   const data = currentTab === 'colours' ? DataService.getColours() : DataService.getEffects();
   const values = new Set();
@@ -2118,7 +2127,8 @@ function createRecipeCard(recipe) {
                     const ak       = escapeHtml(paint.AK       || '—');
                     const vallejo  = escapeHtml(paint.Vallejo  || '—');
                     const cType    = paint.CType ? ` <small class="paint-type">(${escapeHtml(paint.CType)})</small>` : '';
-                    const paintCode = escapeHtml(paint.PaintCode || '');
+                    const rawPaintCode = paint.PaintCode || '';
+                    const votePaintKey = escapeHtml(buildRecipeVoteKey(recipeName, stepName, rawPaintCode));
 
                     // Colour swatches
                     const citHex  = paint.Hex       || '';
@@ -2140,8 +2150,8 @@ function createRecipeCard(recipe) {
                         <td class="paint-cell ak-cell">${akSwatch}${ak === '—' ? '—' : ak + akBadge}</td>
                         <td class="paint-cell vallejo-cell">${valSwatch}${vallejo === '—' ? '—' : vallejo + valBadge}</td>
                         <td class="votes-cell">
-                          <button class="vote-btn like-btn" title="Like this match" onclick="handleVote(this, 'like')" data-paint="${paintCode}" data-brand="Citadel">👍 <span>0</span></button>
-                          <button class="vote-btn dislike-btn" title="Dislike this match" onclick="handleVote(this, 'dislike')" data-paint="${paintCode}" data-brand="Citadel">👎 <span>0</span></button>
+                          <button class="vote-btn like-btn" title="Like this match" onclick="handleVote(this, 'like')" data-paint="${votePaintKey}" data-brand="Citadel">👍 <span>0</span></button>
+                          <button class="vote-btn dislike-btn" title="Dislike this match" onclick="handleVote(this, 'dislike')" data-paint="${votePaintKey}" data-brand="Citadel">👎 <span>0</span></button>
                         </td>
                       </tr>
                     `;

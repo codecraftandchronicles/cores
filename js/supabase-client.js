@@ -67,8 +67,8 @@ async function _getPublicIP() {
  */
 async function getVoteCounts(paintCodes) {
     if (!paintCodes || paintCodes.length === 0) return {};
-    const codes = paintCodes.join(',');
-    const url   = `${SUPABASE_URL}/rest/v1/paint_votes?paint_code=in.(${codes})&select=paint_code,vote_type`;
+    const encodedCodes = paintCodes.map(code => encodeURIComponent(code)).join(',');
+    const url   = `${SUPABASE_URL}/rest/v1/paint_votes?paint_code=in.(${encodedCodes})&select=paint_code,vote_type`;
     const response = await fetch(url, { headers: _HEADERS });
     if (!response.ok) throw new Error(`getVoteCounts HTTP ${response.status}`);
     const rows   = await response.json();
