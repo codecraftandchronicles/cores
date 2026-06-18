@@ -13,7 +13,6 @@ Thumbs.db
 
 # Dependências (se usar Node.js no futuro)
 node_modules/
-package-lock.json
 yarn.lock
 
 # C# / .NET build artifacts
