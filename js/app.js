@@ -262,22 +262,39 @@ const DataService = (function() {
                 })
                 .then(data => {
                     validateProjectsData(data);
-                    // Sort projects by status priority then by name
+                    // Sort projects by status priority → date (descending) → name (ascending)
                     if (data.projects) {
                         const priorityOrder = ['to do', 'in progress', 'on the bench', 'done', 'completed', 'parking lot'];
+                        
+                        // Helper: parse DD/MM/YYYY format to Date object
+                        const parseDate = (dateStr) => {
+                            if (!dateStr || dateStr.trim() === '') return new Date(0); // earliest date for empty
+                            const [day, month, year] = dateStr.split('/');
+                            return new Date(year, month - 1, day);
+                        };
+                        
                         data.projects.sort((a, b) => {
                             const statusA = (a.Status || 'to do').toLowerCase();
                             const statusB = (b.Status || 'to do').toLowerCase();
                             const priorityA = priorityOrder.indexOf(statusA);
                             const priorityB = priorityOrder.indexOf(statusB);
                             
-                            // If same priority, sort by project name
-                            if (priorityA === priorityB) {
-                                const nameA = (a.ProjectName || '').toUpperCase();
-                                const nameB = (b.ProjectName || '').toUpperCase();
-                                return nameA.localeCompare(nameB);
+                            // First: sort by status priority
+                            if (priorityA !== priorityB) {
+                                return priorityA - priorityB;
                             }
-                            return priorityA - priorityB;
+                            
+                            // Second: sort by date (most recent first)
+                            const dateA = parseDate(a.FinishDate);
+                            const dateB = parseDate(b.FinishDate);
+                            if (dateA.getTime() !== dateB.getTime()) {
+                                return dateB.getTime() - dateA.getTime(); // descending (newest first)
+                            }
+                            
+                            // Third: sort by project name alphabetically
+                            const nameA = (a.ProjectName || '').toUpperCase();
+                            const nameB = (b.ProjectName || '').toUpperCase();
+                            return nameA.localeCompare(nameB);
                         });
                     }
                     projectsData = data;
@@ -615,11 +632,7 @@ function validateColourData(data) {
 //                 validateColourData(data);
                 
 //                 if (data.colours) {
-//                     data.colours.sort((a, b) => {
-//                         const nomeA = (a["Base Colour"] || "").toUpperCase();
-//                         const nomeB = (b["Base Colour"] || "").toUpperCase();
-//                         return nomeA.localeCompare(nomeB);
-//                     });
+//                     data.colours.sort((a, b) => (a["Base Colour"] || "").toUpperCase().localeCompare((b["Base Colour"] || "").toUpperCase()));
 //                 }               
 
 //                 allDataColours = data;                  
@@ -744,11 +757,7 @@ function loadDataEffects(lang) {
                 validateEffectsData(data);
                 
                 if (data.effects) {
-                    data.effects.sort((a, b) => {
-                        const nomeA = (a["Product Name"] || "").toUpperCase();
-                        const nomeB = (b["Product Name"] || "").toUpperCase();
-                        return nomeA.localeCompare(nomeB);
-                    });
+                    data.effects.sort((a, b) => (a["Product Name"] || "").toUpperCase().localeCompare((b["Product Name"] || "").toUpperCase()));
                 }
 
                 allDataEffects = data;
@@ -1099,9 +1108,11 @@ function cleanupEventListeners() {
 //       checkbox.checked = false;
 //     });
     
-//     // Clear search when switching tabs
+//     // Clear search when switching tabs — but only if actually changing tab
 //     document.getElementById('searchInput').value = '';
-//     document.getElementById('searchField').value = '';
+//     if (previousTab !== tab) { 
+//       document.getElementById('searchField').value = '';
+//     }
 //     validateSearchButton();
 
 //     if (tab === 'putty' || tab === 'projects') {
