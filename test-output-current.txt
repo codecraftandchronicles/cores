@@ -1,0 +1,189 @@
+
+> cores@1.0.0 test
+> playwright test
+
+
+Running 66 tests using 4 workers
+
+[1A[2K[1/66] [chromium] ÔÇ║ tests\business-logic.spec.js:37:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should export inventory to CSV
+[1A[2K[2/66] [chromium] ÔÇ║ tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid
+[1A[2K[3/66] [chromium] ÔÇ║ tests\business-logic.spec.js:12:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should filter colours by temperature correctly
+[1A[2K[4/66] [chromium] ÔÇ║ tests\business-logic.spec.js:55:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should display search controls and allow interaction
+[1A[2K[5/66] [chromium] ÔÇ║ tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card
+[1A[2K[6/66] [chromium] ÔÇ║ tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results
+[1A[2K[7/66] [chromium] ÔÇ║ tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads
+[1A[2K[8/66] [chromium] ÔÇ║ tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders
+[1A[2K[9/66] [chromium] ÔÇ║ tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders
+[1A[2K[10/66] [chromium] ÔÇ║ tests\search-form.spec.js:231:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses
+[1A[2K[11/66] [chromium] ÔÇ║ tests\search-form.spec.js:337:3 ÔÇ║ Data load overlay ÔÇ║ verify loading overlay appears and disappears during page load
+[1A[2K[12/66] [chromium] ÔÇ║ tests\search-form.spec.js:364:3 ÔÇ║ Untested functions coverage ÔÇ║ escapeHtml() - verify script tags in search input do not execute
+[1A[2K[13/66] [chromium] ÔÇ║ tests\search-form.spec.js:416:3 ÔÇ║ Untested functions coverage ÔÇ║ copyToClipboard() - verify hex badge click shows COPIED tooltip
+[1A[2K[14/66] [chromium] ÔÇ║ tests\search-form.spec.js:437:3 ÔÇ║ Untested functions coverage ÔÇ║ validateSearchButton() - verify button state transitions (disabled ÔåÆ enabled)
+[1A[2K[15/66] [chromium] ÔÇ║ tests\search-form.spec.js:465:3 ÔÇ║ Untested functions coverage ÔÇ║ toggleSort() - verify sort button click reverses results order
+[1A[2K[16/66] [chromium] ÔÇ║ tests\search-form.spec.js:506:3 ÔÇ║ Untested functions coverage ÔÇ║ exportInventoryToCSV() - verify export button downloads CSV file
+[1A[2K[17/66] [chromium] ÔÇ║ tests\search-form.spec.js:562:3 ÔÇ║ Untested functions coverage ÔÇ║ showError() - verify error message displays when data loading fails
+[1A[2K[18/66] [chromium] ÔÇ║ tests\search-form.spec.js:600:3 ÔÇ║ Untested functions coverage ÔÇ║ REGRESSION: app.js loads without SyntaxError (no duplicate declarations)
+[1A[2K[19/66] [chromium] ÔÇ║ tests\smoke-test.spec.js:10:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should load app with Colours tab active by default
+[1A[2K[20/66] [chromium] ÔÇ║ tests\smoke-test.spec.js:24:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should switch between tabs using [data-tab] selectors
+[1A[2K[21/66] [chromium] ÔÇ║ tests\smoke-test.spec.js:46:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should render search controls on searchable tabs
+[1A[2K[22/66] [chromium] ÔÇ║ tests\smoke-test.spec.js:64:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should handle page resize without errors
+[1A[2K[23/66] [firefox] ÔÇ║ tests\business-logic.spec.js:12:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should filter colours by temperature correctly
+[1A[2K  1) [chromium] ÔÇ║ tests\smoke-test.spec.js:24:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should switch between tabs using [data-tab] selectors 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('[data-tab="effects"]')
+    Expected pattern: [32m/active/[39m
+    Received string:  [31m"tab-btn"[39m
+    Timeout: 5000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 5000ms[22m
+    [2m  - waiting for locator('[data-tab="effects"]')[22m
+    [2m    12 ├ù locator resolved to <button role="tab" class="tab-btn" data-tab="effects" aria-selected="false" id="tab-efeitos-label" aria-controls="effects-content">ÔåÁ          EFFECTS ÔåÁ        </button>[22m
+    [2m       - unexpected value "tab-btn"[22m
+
+
+      26 |     await page.locator('[data-tab="effects"]').click();
+      27 |     await page.waitForTimeout(300);
+    > 28 |     await expect(page.locator('[data-tab="effects"]')).toHaveAttribute('class', /active/);
+         |                                                        ^
+      29 |
+      30 |     // Switch to Putty tab
+      31 |     await page.locator('[data-tab="putty"]').click();
+        at C:\Users\breis\Documents\Pessoal\cores\tests\smoke-test.spec.js:28:56
+
+    Error Context: test-results\smoke-test-CORES-Project---61b8c-bs-using-data-tab-selectors-chromium\error-context.md
+
+
+[1A[2K[24/66] [firefox] ÔÇ║ tests\business-logic.spec.js:55:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should display search controls and allow interaction
+[1A[2K[25/66] [firefox] ÔÇ║ tests\business-logic.spec.js:37:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should export inventory to CSV
+[1A[2K[26/66] [firefox] ÔÇ║ tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid
+[1A[2K[27/66] [firefox] ÔÇ║ tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card
+[1A[2K[28/66] [firefox] ÔÇ║ tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results
+[1A[2K[29/66] [firefox] ÔÇ║ tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads
+[1A[2K[30/66] [firefox] ÔÇ║ tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders
+[1A[2K[31/66] [firefox] ÔÇ║ tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders
+[1A[2K[32/66] [firefox] ÔÇ║ tests\search-form.spec.js:231:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses
+[1A[2K[33/66] [firefox] ÔÇ║ tests\search-form.spec.js:337:3 ÔÇ║ Data load overlay ÔÇ║ verify loading overlay appears and disappears during page load
+[1A[2K  2) [chromium] ÔÇ║ tests\smoke-test.spec.js:64:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should handle page resize without errors 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      78 |
+      79 |     await expect(header).toBeVisible();
+    > 80 |     expect(await cards.count()).toBeGreaterThan(0);
+         |                                 ^
+      81 |   });
+      82 | });
+        at C:\Users\breis\Documents\Pessoal\cores\tests\smoke-test.spec.js:80:33
+
+    Error Context: test-results\smoke-test-CORES-Project---49356--page-resize-without-errors-chromium\error-context.md
+
+
+[1A[2K  3) [firefox] ÔÇ║ tests\business-logic.spec.js:37:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should export inventory to CSV 
+
+    [31mTest timeout of 30000ms exceeded while running "beforeEach" hook.[39m
+
+      3 |
+      4 | test.describe('CORES Project - Essential Business Logic Tests', () => {
+    > 5 |   test.beforeEach(async ({ page }) => {
+        |        ^
+      6 |     await page.goto('/');
+      7 |     // Wait for initial data loading
+      8 |     await page.waitForLoadState('networkidle');
+        at C:\Users\breis\Documents\Pessoal\cores\tests\business-logic.spec.js:5:8
+
+    Error: page.waitForLoadState: Test timeout of 30000ms exceeded.
+
+       6 |     await page.goto('/');
+       7 |     // Wait for initial data loading
+    >  8 |     await page.waitForLoadState('networkidle');
+         |                ^
+       9 |     await page.waitForSelector('.tab-btn', { state: 'visible' });
+      10 |   });
+      11 |
+        at C:\Users\breis\Documents\Pessoal\cores\tests\business-logic.spec.js:8:16
+
+    Error Context: test-results\business-logic-CORES-Proje-4394f-uld-export-inventory-to-CSV-firefox\error-context.md
+
+
+[1A[2K[34/66] [firefox] ÔÇ║ tests\search-form.spec.js:437:3 ÔÇ║ Untested functions coverage ÔÇ║ validateSearchButton() - verify button state transitions (disabled ÔåÆ enabled)
+[1A[2K[35/66] [firefox] ÔÇ║ tests\search-form.spec.js:416:3 ÔÇ║ Untested functions coverage ÔÇ║ copyToClipboard() - verify hex badge click shows COPIED tooltip
+[1A[2K[36/66] [firefox] ÔÇ║ tests\search-form.spec.js:364:3 ÔÇ║ Untested functions coverage ÔÇ║ escapeHtml() - verify script tags in search input do not execute
+[1A[2K[37/66] [firefox] ÔÇ║ tests\search-form.spec.js:465:3 ÔÇ║ Untested functions coverage ÔÇ║ toggleSort() - verify sort button click reverses results order
+[1A[2K[38/66] [firefox] ÔÇ║ tests\search-form.spec.js:506:3 ÔÇ║ Untested functions coverage ÔÇ║ exportInventoryToCSV() - verify export button downloads CSV file
+[1A[2K  4) [firefox] ÔÇ║ tests\search-form.spec.js:231:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveClass[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#btn-sort')
+    Expected pattern: [32m/desc/[39m
+    Received string:  [31m"sort-btn"[39m
+    Timeout: 5000ms
+
+    Call log:
+    [2m  - Expect "toHaveClass" with timeout 5000ms[22m
+    [2m  - waiting for locator('#btn-sort')[22m
+    [2m    - waiting for" http://127.0.0.1:5500/" navigation to finish...[22m
+    [2m    - navigated to "http://127.0.0.1:5500/"[22m
+    [2m    11 ├ù locator resolved to <button id="btn-sort" class="sort-btn" aria-label="Toggle sort order (ascending/descending)">ÔÇª</button>[22m
+    [2m       - unexpected value "sort-btn"[22m
+
+
+      255 |
+      256 |     // Verify sort button visual state changed (has 'desc' class)
+    > 257 |     await expect(sortButton).toHaveClass(/desc/);
+          |                              ^
+      258 |   });
+      259 | });
+      260 |
+        at C:\Users\breis\Documents\Pessoal\cores\tests\search-form.spec.js:257:30
+
+    Error Context: test-results\search-form-Sort-toggle-fu-8140f-rify-results-order-reverses-firefox\error-context.md
+
+
+[1A[2K[39/66] [firefox] ÔÇ║ tests\search-form.spec.js:600:3 ÔÇ║ Untested functions coverage ÔÇ║ REGRESSION: app.js loads without SyntaxError (no duplicate declarations)
+[1A[2K[40/66] [firefox] ÔÇ║ tests\smoke-test.spec.js:10:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should load app with Colours tab active by default
+[1A[2K[41/66] [firefox] ÔÇ║ tests\search-form.spec.js:562:3 ÔÇ║ Untested functions coverage ÔÇ║ showError() - verify error message displays when data loading fails
+[1A[2K[42/66] [firefox] ÔÇ║ tests\smoke-test.spec.js:24:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should switch between tabs using [data-tab] selectors
+[1A[2K[43/66] [firefox] ÔÇ║ tests\smoke-test.spec.js:46:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should render search controls on searchable tabs
+[1A[2K[44/66] [firefox] ÔÇ║ tests\smoke-test.spec.js:64:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should handle page resize without errors
+[1A[2K[45/66] [webkit] ÔÇ║ tests\business-logic.spec.js:12:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should filter colours by temperature correctly
+[1A[2K[46/66] [webkit] ÔÇ║ tests\business-logic.spec.js:55:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should display search controls and allow interaction
+[1A[2K[47/66] [webkit] ÔÇ║ tests\business-logic.spec.js:37:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should export inventory to CSV
+[1A[2K[48/66] [webkit] ÔÇ║ tests\search-form.spec.js:13:3 ÔÇ║ Search form on colours tab ÔÇ║ search button is disabled until form is valid
+[1A[2K[49/66] [webkit] ÔÇ║ tests\search-form.spec.js:24:3 ÔÇ║ Search form on colours tab ÔÇ║ search by Base Colour returns a matching colours card
+[1A[2K[50/66] [webkit] ÔÇ║ tests\search-form.spec.js:37:3 ÔÇ║ Search form on colours tab ÔÇ║ clear search resets the form and shows multiple colours results
+[1A[2K[51/66] [webkit] ÔÇ║ tests\search-form.spec.js:60:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Effects tab and verify effects data loads
+[1A[2K[52/66] [webkit] ÔÇ║ tests\search-form.spec.js:83:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Putty tab and verify static table renders
+[1A[2K[53/66] [webkit] ÔÇ║ tests\search-form.spec.js:109:3 ÔÇ║ Tab switching functionality ÔÇ║ switch to Projects tab and verify projects accordion renders
+[1A[2K[54/66] [webkit] ÔÇ║ tests\search-form.spec.js:231:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses
+[1A[2K[55/66] [webkit] ÔÇ║ tests\search-form.spec.js:337:3 ÔÇ║ Data load overlay ÔÇ║ verify loading overlay appears and disappears during page load
+[1A[2K[56/66] [webkit] ÔÇ║ tests\search-form.spec.js:364:3 ÔÇ║ Untested functions coverage ÔÇ║ escapeHtml() - verify script tags in search input do not execute
+[1A[2K[57/66] [webkit] ÔÇ║ tests\search-form.spec.js:416:3 ÔÇ║ Untested functions coverage ÔÇ║ copyToClipboard() - verify hex badge click shows COPIED tooltip
+[1A[2K[58/66] [webkit] ÔÇ║ tests\search-form.spec.js:437:3 ÔÇ║ Untested functions coverage ÔÇ║ validateSearchButton() - verify button state transitions (disabled ÔåÆ enabled)
+[1A[2K[59/66] [webkit] ÔÇ║ tests\search-form.spec.js:465:3 ÔÇ║ Untested functions coverage ÔÇ║ toggleSort() - verify sort button click reverses results order
+[1A[2K[60/66] [webkit] ÔÇ║ tests\search-form.spec.js:506:3 ÔÇ║ Untested functions coverage ÔÇ║ exportInventoryToCSV() - verify export button downloads CSV file
+[1A[2K[61/66] [webkit] ÔÇ║ tests\search-form.spec.js:562:3 ÔÇ║ Untested functions coverage ÔÇ║ showError() - verify error message displays when data loading fails
+[1A[2K[62/66] [webkit] ÔÇ║ tests\search-form.spec.js:600:3 ÔÇ║ Untested functions coverage ÔÇ║ REGRESSION: app.js loads without SyntaxError (no duplicate declarations)
+[1A[2K[63/66] [webkit] ÔÇ║ tests\smoke-test.spec.js:10:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should load app with Colours tab active by default
+[1A[2K[64/66] [webkit] ÔÇ║ tests\smoke-test.spec.js:24:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should switch between tabs using [data-tab] selectors
+[1A[2K[65/66] [webkit] ÔÇ║ tests\smoke-test.spec.js:46:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should render search controls on searchable tabs
+[1A[2K[66/66] [webkit] ÔÇ║ tests\smoke-test.spec.js:64:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should handle page resize without errors
+[1A[2KError: worker-13 process did not exit within 300000ms after stop, force-killed it
+
+[1A[2KError: worker-13 process did not exit within 300000ms after stop, force-killed it
+
+[1A[2K  4 failed
+    [chromium] ÔÇ║ tests\smoke-test.spec.js:24:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should switch between tabs using [data-tab] selectors 
+    [chromium] ÔÇ║ tests\smoke-test.spec.js:64:7 ÔÇ║ CORES Project - Smoke Tests ÔÇ║ should handle page resize without errors 
+    [firefox] ÔÇ║ tests\business-logic.spec.js:37:7 ÔÇ║ CORES Project - Essential Business Logic Tests ÔÇ║ should export inventory to CSV 
+    [firefox] ÔÇ║ tests\search-form.spec.js:231:3 ÔÇ║ Sort toggle functionality ÔÇ║ click sort button and verify results order reverses 
+  62 passed (8.6m)
+  2 errors were not a part of any test, see above for details
+
+[36m  Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.[39m
