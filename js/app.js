@@ -992,7 +992,10 @@ function setupEventListeners() {
   // --- NAVEGAÇÃO DE ABAS ---
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      switchTab(e.target.dataset.tab);
+      // Only switch tabs for buttons with data-tab; ignore Typeform/external buttons
+      if (e.target.dataset.tab) {
+        switchTab(e.target.dataset.tab);
+      }
     });
   });
   
