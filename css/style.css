@@ -137,6 +137,99 @@ header p {
   color: #ffc107;
 }
 
+/* Hamburger menu toggle button */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  gap: 5px;
+}
+
+.mobile-header {
+  display: none;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.mobile-tab-indicator {
+  display: none;
+  font-family: 'Mason Alternate Regular', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle.open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+/* Mobile menu styles */
+#navMenu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Desktop: menu always visible */
+@media (min-width: 769px) {
+  .mobile-header {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .mobile-tab-indicator {
+    display: none !important;
+  }
+
+  #navMenu {
+    display: flex !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    background: none !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    z-index: auto !important;
+    border-bottom: 2px solid #e0e0e0 !important;
+  }
+
+  /* Override .mobile-hidden on desktop */
+  #navMenu.mobile-hidden {
+    display: flex !important;
+  }
+
+  .tab-btn {
+    padding: 12px 20px;
+    border-bottom: 3px solid transparent;
+    border-left: none !important;
+  }
+}
+
 .btn-search {
   background-color: #3f4052;
   border: 2px solid #d4af37;
@@ -446,12 +539,110 @@ header p {
 }
 
 @media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
   header h1 {
     font-size: 1.8rem;
   }
 
+  /* Show mobile header on mobile */
+  .mobile-header {
+    display: flex;
+    margin-bottom: 0;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  /* Show hamburger menu on mobile */
+  .menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    gap: 5px;
+  }
+
+  .mobile-tab-indicator {
+    display: block;
+    flex: 1;
+  }
+
+  .hamburger-line {
+    width: 26px;
+    height: 3px;
+    background: #d4af37;
+    border-radius: 2px;
+  }
+
+  /* Mobile fullscreen menu layout */
+  .search-section {
+    padding: 20px 15px;
+    margin-top: 0;
+  }
+
+  .tabs {
+    border: none;
+    margin: 0;
+    gap: 0;
+  }
+
+  #navMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding-top: 100px;
+    padding-bottom: 20px;
+    z-index: 1999;
+    border: none;
+    margin: 0;
+    overflow-y: auto;
+    gap: 0;
+  }
+
+  #navMenu.mobile-hidden {
+    display: none !important;
+  }
+
+  .tab-btn {
+    padding: 20px 20px;
+    border-bottom: 2px solid #e0e0e0;
+    border-left: 5px solid transparent;
+    margin: 0;
+    display: block !important;
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 600;
+    touch-action: manipulation;
+    border-bottom-color: #d4af37 !important;
+    border-bottom-width: 3px !important;
+  }
+
+  .tab-btn.active {
+    background: #f0f0f0;
+    border-left-color: #d4af37;
+    color: #333;
+  }
+
+  .tab-btn:active {
+    background: #ddd;
+  }
+
   .search-controls {
     grid-template-columns: 1fr;
+    margin-top: 20px;
   }
 
   .results-grid {
@@ -459,7 +650,6 @@ header p {
     overflow-x: hidden;
   }
 
-  .search-section,
   .results-section {
     padding: 20px;
   }

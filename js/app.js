@@ -995,9 +995,31 @@ function setupEventListeners() {
       // Only switch tabs for buttons with data-tab; ignore Typeform/external buttons
       if (e.target.dataset.tab) {
         switchTab(e.target.dataset.tab);
+        // Close mobile menu after tab click
+        closeMenuToggle();
       }
     });
   });
+
+  // --- MOBILE MENU TOGGLE ---
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      navMenu.classList.toggle('mobile-hidden');
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = menuToggle.classList.contains('open') ? 'hidden' : '';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.menu-toggle') && !e.target.closest('#navMenu')) {
+        closeMenuToggle();
+      }
+    });
+  }
   
   // --- EXPORTAR INVENTÁRIO ---
   const exportBtn = document.getElementById('btnInventory');
@@ -1134,6 +1156,19 @@ function switchTab(tab) {
     const sortContainer = document.querySelector('.sort-container');
     const searchControls = document.querySelector('.search-controls');
     const primerSelector = document.querySelector('.primer-selector-container');
+
+    // Update mobile tab indicator
+    const tabNames = {
+      'colours': 'COLOURS',
+      'effects': 'EFFECTS',
+      'putty': 'PUTTY',
+      'projects': 'PROJECTS',
+      'recipes': 'PAINT RECIPES'
+    };
+    const mobileIndicator = document.getElementById('mobileTabIndicator');
+    if (mobileIndicator) {
+      mobileIndicator.textContent = tabNames[tab] || tab.toUpperCase();
+    }
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tab);
@@ -2502,6 +2537,17 @@ function exportInventoryToCSV() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+// Helper: Close mobile menu
+function closeMenuToggle() {
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+  if (menuToggle && navMenu) {
+    menuToggle.classList.remove('open');
+    navMenu.classList.add('mobile-hidden');
+    document.body.style.overflow = '';
+  }
 }
 
  window.addEventListener('load', () => {
