@@ -39,7 +39,17 @@
     </header>
 
     <div class="search-section">
-      <div class="tabs" role="tablist">        
+      <!-- Mobile tab indicator and hamburger button -->
+      <div class="mobile-header">
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        <div class="mobile-tab-indicator" id="mobileTabIndicator">COLOURS</div>
+      </div>
+
+      <div class="tabs mobile-hidden" role="tablist" id="navMenu">        
         <button id="tab-cores-label" class="tab-btn active" data-tab="colours" role="tab" aria-selected="true" aria-controls="colours-content">
           COLOURS 
         </button>        
