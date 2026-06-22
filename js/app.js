@@ -1612,13 +1612,9 @@ function displayResults(results = null) {
         const legendEl = document.createElement('div');
         legendEl.className = 'delta-e-legend';
         legendEl.innerHTML = `
-          <h5 class="legend-title">δE (CIE76) — How match scores are calculated</h5>
+          <h5 class="legend-title">ΔE (CIEDE2000) — How match scores are calculated</h5>
           <p class="legend-text">
-            Each match percentage is derived from <strong>ΔE (CIE76)</strong> — the international standard
-            for measuring colour difference perceptible to the human eye. The formula converts each colour
-            from <em>sRGB → linear RGB → XYZ → CIELAB</em>, then computes the Euclidean distance between
-            the two colours in perceptual space. A ΔE of 1 is the smallest difference a trained eye can detect;
-            values below 2 are invisible in normal viewing conditions.
+            Each match percentage is derived from <strong>ΔE (CIEDE2000)</strong> — the industry-standard colour difference metric adopted by the CIE. This advanced algorithm accounts for human perception across the entire colour space, including corrections for hue, saturation, and luminance shifts. The metric converts each colour from <em>sRGB → linear RGB → XYZ → CIELAB</em>, then applies perceptual weights and a blue-region correction to compute the visual distance between colours. A ΔE of 1 is the smallest difference a trained eye can detect; values below 2 are invisible in normal viewing conditions.
           </p>
           <table class="legend-table" aria-label="ΔE match score interpretation">
             <thead>
@@ -2060,7 +2056,7 @@ function getMaterialDetails(subKey, id) {
 }
 
 /**
- * Computes CIE76 ΔE between two hex colour strings.
+ * Computes CIEDE2000 ΔE between two hex colour strings.
  * Returns null if either hex is missing or '—'.
  */
 function deltaEFromHex(hex1, hex2) {
