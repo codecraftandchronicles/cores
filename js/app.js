@@ -1377,6 +1377,11 @@ function updateFilters() {
     if (!container) return;
     container.innerHTML = '';    
     
+    // Only show filters for colours and effects tabs
+    if (currentTab !== 'colours' && currentTab !== 'effects') {
+        return;
+    }
+    
     // Get the correct filter configuration based on current tab
     const tabConfig = currentTab === 'effects' ? configFiltros['EN']['effects'] : configFiltros['EN']['colours'];
     if (!tabConfig) return;
@@ -2091,6 +2096,36 @@ function getMatchLabel(de) {
     return { pct, css, tooltip: `${desc} — ΔE ${de.toFixed(1)}. ${detail}` };
 }
 
+// Recipe Scheme Helpers (2026-06-19)
+function isModernRecipe(recipe) {
+    return recipe.Schemes && Array.isArray(recipe.Schemes) && recipe.Schemes.length > 0;
+}
+
+function getSchemes(recipe) {
+    if (isModernRecipe(recipe)) {
+        return recipe.Schemes;
+    }
+    return [{
+        SchemeName: recipe.Army || 'Default Scheme',
+        TutorialAuthor: recipe.TutorialAuthor,
+        TutorialSite: recipe.TutorialSite,
+        TutorialURL: recipe.TutorialURL,
+        SchemeImage: recipe.RecipeImage,
+        CreditNote: recipe.CreditNote,
+        Steps: recipe.Steps
+    }];
+}
+
+function switchScheme(tabElement, schemeIndex, cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    card.querySelectorAll('.scheme-tab').forEach(t => t.classList.remove('active'));
+    card.querySelectorAll('.scheme-content').forEach(c => c.classList.remove('active'));
+    tabElement.classList.add('active');
+    const content = card.querySelector(`[data-scheme-index="${schemeIndex}"]`);
+    if (content) content.classList.add('active');
+}
+
 function createRecipeCard(recipe) {
     if (!recipe) {
         console.warn('Invalid recipe item data');
@@ -2100,29 +2135,23 @@ function createRecipeCard(recipe) {
     const recipeName = escapeHtml(recipe.RecipeName || 'Unnamed Recipe');
     const system = escapeHtml(recipe.System || 'Unknown System');
     const army = escapeHtml(recipe.Army || '');
-    const author = escapeHtml(recipe.TutorialAuthor || '');
-    const site = escapeHtml(recipe.TutorialSite || '');
-    const tutorialUrl = recipe.TutorialURL || '#';
-    const numPaints = recipe.Steps ? recipe.Steps.reduce((sum, step) => sum + (step.Paints ? step.Paints.length : 0), 0) : 0;
-
-    // Map tutorial site to a logo image
-    const siteLogoMap = {
-        'Tale of Painters':   './img/tale_of_painters_logo_2023.png.webp',
-        'Warhammer Community':'./img/Warhammer-logo-main.png.webp',
-        'Warhammer Guild':    './img/Warhammer-logo-main.png.webp',
-    };
-    const siteLogo = siteLogoMap[recipe.TutorialSite] || '';
-    const creditBgStyle = siteLogo
-        ? ` style="background-image: url('${siteLogo}'); background-repeat: no-repeat; background-position: right 16px center; background-size: auto 60%;"` 
-        : '';
+    const schemes = getSchemes(recipe);
+    const cardId = `recipe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
-    // Determine if expanded by default
-    const isExpanded = true; // Always expand for better UX on first view
+    // Calculate total paints across all schemes
+    let totalPaints = 0;
+    schemes.forEach(scheme => {
+        if (scheme.Steps && Array.isArray(scheme.Steps)) {
+            totalPaints += scheme.Steps.reduce((sum, step) => sum + (step.Paints ? step.Paints.length : 0), 0);
+        }
+    });
+    
+    const isExpanded = true;
     const buttonClass = isExpanded ? "accordion-button" : "accordion-button collapsed";
     const bodyStyle = isExpanded ? 'style="display: block;"' : 'style="display: none;"';
     
     let cardHTML = `
-      <div class="recipe-accordion">
+      <div class="recipe-accordion" id="${cardId}">
         <div class="accordion-item recipe-border">
           <button class="${buttonClass}" type="button" onclick="toggleAccordion(this)">
             <div class="recipe-header-main">
@@ -2130,7 +2159,7 @@ function createRecipeCard(recipe) {
               <div class="recipe-badges">
                 <span class="badge recipe-system">${system}</span>
                 ${army ? `<span class="badge recipe-army">${army}</span>` : ''}
-                <span class="badge recipe-count">🎨 ${numPaints} paints</span>
+                <span class="badge recipe-count">🎨 ${totalPaints} paints</span>
               </div>
             </div>
           </button>
@@ -2138,86 +2167,115 @@ function createRecipeCard(recipe) {
           <div class="accordion-body recipe-body" ${bodyStyle}>
     `;
     
-    // Credit section
-    const creditNote = recipe.CreditNote ? escapeHtml(recipe.CreditNote) : '';
-    cardHTML += `
-      <div class="recipe-credit"${creditBgStyle}>
-        <p class="credit-text">
-          📖 Recipe based on tutorial by <strong>${author}</strong> from <strong>${site}</strong><br>
-          <a href="${tutorialUrl}" target="_blank" rel="noopener noreferrer" class="credit-link">
-            View original tutorial <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
-          </a>
-        </p>
-        ${creditNote ? `<p class="credit-note"><em>${creditNote}</em></p>` : ''}
-      </div>
-    `;
-    
-    // Render steps with paint tables
-    if (recipe.Steps && Array.isArray(recipe.Steps)) {
-        recipe.Steps.forEach((step, stepIndex) => {
-            const stepName = escapeHtml(step.Name || `Step ${stepIndex + 1}`);
-            cardHTML += `
-              <div class="recipe-step">
-                <h4 class="step-title">${stepName}</h4>
-                <div class="paint-table-wrapper">
-                  <table class="paint-table">
-                    <thead>
-                      <tr>
-                        <th>Citadel</th>
-                        <th>AK Interactive</th>
-                        <th>Vallejo</th>
-                        <th style="width: 60px;">Votes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            if (step.Paints && Array.isArray(step.Paints)) {
-                step.Paints.forEach((paint) => {
-                    const citadel  = escapeHtml(paint.Citadel  || '—');
-                    const ak       = escapeHtml(paint.AK       || '—');
-                    const vallejo  = escapeHtml(paint.Vallejo  || '—');
-                    const cType    = paint.CType ? ` <small class="paint-type">(${escapeHtml(paint.CType)})</small>` : '';
-                    const rawPaintCode = paint.PaintCode || '';
-                    const votePaintKey = escapeHtml(buildRecipeVoteKey(recipeName, stepName, rawPaintCode));
-
-                    // Colour swatches
-                    const citHex  = paint.Hex       || '';
-                    const akHex   = paint.AKHex     || '';
-                    const valHex  = paint.VallejoHex || '';
-                    const citSwatch = citHex  ? `<span class="paint-swatch" style="background:${citHex}"  title="${citHex}"></span>`  : '';
-                    const akSwatch  = akHex   ? `<span class="paint-swatch" style="background:${akHex}"   title="${akHex}"></span>`   : '';
-                    const valSwatch = valHex  ? `<span class="paint-swatch" style="background:${valHex}"  title="${valHex}"></span>`  : '';
-
-                    // ΔE match badges (computed at runtime)
-                    const akMatch  = getMatchLabel(deltaEFromHex(citHex, akHex));
-                    const valMatch = getMatchLabel(deltaEFromHex(citHex, valHex));
-                    const akBadge  = akMatch  ? `<span class="match-badge ${akMatch.css}"  title="${akMatch.tooltip}"  style="cursor:help">${akMatch.pct}%</span>`  : '';
-                    const valBadge = valMatch ? `<span class="match-badge ${valMatch.css}" title="${valMatch.tooltip}" style="cursor:help">${valMatch.pct}%</span>` : '';
-                    
-                    cardHTML += `
-                      <tr class="paint-row">
-                        <td class="paint-cell citadel-cell">${citSwatch}${citadel}${cType}</td>
-                        <td class="paint-cell ak-cell">${akSwatch}${ak === '—' ? '—' : ak + akBadge}</td>
-                        <td class="paint-cell vallejo-cell">${valSwatch}${vallejo === '—' ? '—' : vallejo + valBadge}</td>
-                        <td class="votes-cell">
-                          <button class="vote-btn like-btn" title="Like this match" onclick="handleVote(this, 'like')" data-paint="${votePaintKey}" data-brand="Citadel">👍 <span>0</span></button>
-                          <button class="vote-btn dislike-btn" title="Dislike this match" onclick="handleVote(this, 'dislike')" data-paint="${votePaintKey}" data-brand="Citadel">👎 <span>0</span></button>
-                        </td>
-                      </tr>
-                    `;
-                });
-            }
-            
-            cardHTML += `
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            `;
+    // Render scheme tabs if multiple schemes
+    if (schemes.length > 1) {
+        cardHTML += `<div class="recipe-schemes-tabs">`;
+        schemes.forEach((scheme, idx) => {
+            const schemeName = escapeHtml(scheme.SchemeName || `Scheme ${idx + 1}`);
+            const activeClass = idx === 0 ? 'active' : '';
+            cardHTML += `<button class="scheme-tab ${activeClass}" onclick="switchScheme(this, ${idx}, '${cardId}')" title="${schemeName} by ${escapeHtml(scheme.TutorialAuthor || 'Unknown')}">${schemeName}</button>`;
         });
+        cardHTML += `</div>`;
     }
+    
+    // Render content for each scheme
+    schemes.forEach((scheme, schemeIdx) => {
+        const schemeClass = schemeIdx === 0 ? 'scheme-content active' : 'scheme-content';
+        const author = escapeHtml(scheme.TutorialAuthor || '');
+        const site = escapeHtml(scheme.TutorialSite || '');
+        const tutorialUrl = scheme.TutorialURL || '#';
+        const creditNote = scheme.CreditNote ? escapeHtml(scheme.CreditNote) : '';
+        
+        const siteLogoMap = {
+            'Tale of Painters':   './img/tale_of_painters_logo_2023.png.webp',
+            'Warhammer Community':'./img/Warhammer-logo-main.png.webp',
+            'Warhammer Guild':    './img/Warhammer-logo-main.png.webp',
+        };
+        const siteLogo = siteLogoMap[scheme.TutorialSite] || '';
+        const creditBgStyle = siteLogo
+            ? ` style="background-image: url('${siteLogo}'); background-repeat: no-repeat; background-position: right 16px center; background-size: auto 60%;"` 
+            : '';
+        
+        cardHTML += `
+          <div class="${schemeClass}" data-scheme-index="${schemeIdx}">
+            <div class="recipe-credit"${creditBgStyle}>
+              <p class="credit-text">
+                📖 Recipe by <strong>${author}</strong> from <strong>${site}</strong><br>
+                <a href="${tutorialUrl}" target="_blank" rel="noopener noreferrer" class="credit-link">
+                  View original <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
+                </a>
+              </p>
+              ${creditNote ? `<p class="credit-note"><em>${creditNote}</em></p>` : ''}
+            </div>
+        `;
+        
+        // Render steps
+        if (scheme.Steps && Array.isArray(scheme.Steps)) {
+            scheme.Steps.forEach((step, stepIndex) => {
+                const stepName = escapeHtml(step.Name || `Step ${stepIndex + 1}`);
+                cardHTML += `
+                  <div class="recipe-step">
+                    <h4 class="step-title">${stepName}</h4>
+                    <div class="paint-table-wrapper">
+                      <table class="paint-table">
+                        <thead>
+                          <tr>
+                            <th>Citadel</th>
+                            <th>AK Interactive</th>
+                            <th>Vallejo</th>
+                            <th style="width: 60px;">Votes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                if (step.Paints && Array.isArray(step.Paints)) {
+                    step.Paints.forEach((paint) => {
+                        const citadel  = escapeHtml(paint.Citadel  || '—');
+                        const ak       = escapeHtml(paint.AK       || '—');
+                        const vallejo  = escapeHtml(paint.Vallejo  || '—');
+                        const cType    = paint.CType ? ` <small class="paint-type">(${escapeHtml(paint.CType)})</small>` : '';
+                        const rawPaintCode = paint.PaintCode || '';
+                        const votePaintKey = escapeHtml(buildRecipeVoteKey(recipeName, stepName, rawPaintCode));
 
+                        const citHex  = paint.Hex       || '';
+                        const akHex   = paint.AKHex     || '';
+                        const valHex  = paint.VallejoHex || '';
+                        const citSwatch = citHex  ? `<span class="paint-swatch" style="background:${citHex}"  title="${citHex}"></span>`  : '';
+                        const akSwatch  = akHex   ? `<span class="paint-swatch" style="background:${akHex}"   title="${akHex}"></span>`   : '';
+                        const valSwatch = valHex  ? `<span class="paint-swatch" style="background:${valHex}"  title="${valHex}"></span>`  : '';
+
+                        const akMatch  = getMatchLabel(deltaEFromHex(citHex, akHex));
+                        const valMatch = getMatchLabel(deltaEFromHex(citHex, valHex));
+                        const akBadge  = akMatch  ? `<span class="match-badge ${akMatch.css}"  title="${akMatch.tooltip}"  style="cursor:help">${akMatch.pct}%</span>`  : '';
+                        const valBadge = valMatch ? `<span class="match-badge ${valMatch.css}" title="${valMatch.tooltip}" style="cursor:help">${valMatch.pct}%</span>` : '';
+                        
+                        cardHTML += `
+                          <tr class="paint-row">
+                            <td class="paint-cell citadel-cell">${citSwatch}${citadel}${cType}</td>
+                            <td class="paint-cell ak-cell">${akSwatch}${ak === '—' ? '—' : ak + akBadge}</td>
+                            <td class="paint-cell vallejo-cell">${valSwatch}${vallejo === '—' ? '—' : vallejo + valBadge}</td>
+                            <td class="votes-cell">
+                              <button class="vote-btn like-btn" title="Like this match" onclick="handleVote(this, 'like')" data-paint="${votePaintKey}" data-brand="Citadel">👍 <span>0</span></button>
+                              <button class="vote-btn dislike-btn" title="Dislike this match" onclick="handleVote(this, 'dislike')" data-paint="${votePaintKey}" data-brand="Citadel">👎 <span>0</span></button>
+                            </td>
+                          </tr>
+                        `;
+                    });
+                }
+                
+                cardHTML += `
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                `;
+            });
+        }
+        
+        cardHTML += `</div>`;
+    });
+    
     cardHTML += `
           </div>
         </div>
