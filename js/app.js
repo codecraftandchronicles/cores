@@ -1637,6 +1637,15 @@ function displayResults(results = null) {
 
         // Load real vote counts from Supabase (non-blocking)
         loadRecipeVotes();
+
+        // Re-initialize Bootstrap tooltips for dynamically rendered elements
+        setTimeout(() => {
+          if (typeof bootstrap !== 'undefined') {
+            document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el =>
+              bootstrap.Tooltip.getOrCreateInstance(el)
+            );
+          }
+        }, 100);
       }
     } else {
       resultsContainer.innerHTML = data.map(item => createCard(item)).join('');
@@ -1802,7 +1811,7 @@ function createCard(item) {
                 <span class="card-code ${compSpecialClass}" 
                       style="background-color: ${compHex}; color: ${compContrast};
                             padding: 2px 8px; font-size: 0.7rem; border: 1px solid rgba(0,0,0,0.1);">
-                  ${compHex}
+                    ${compHex}
                 </span>
               </div>
             `;
@@ -1811,7 +1820,7 @@ function createCard(item) {
               <div style="display: flex; align-items: center; gap: 8px;">
                 <span>${value}</span>
                 <span style="font-size: 0.7rem; color: #999; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">
-                  Hex N/A
+                    Hex N/A
                 </span>
               </div>
             `;
@@ -2073,8 +2082,73 @@ function deltaEFromHex(hex1, hex2) {
             const f = t => t > 0.008856 ? Math.cbrt(t) : 7.787*t + 16/116;
             return { L: 116*f(y)-16, a: 500*(f(x)-f(y)), b: 200*(f(y)-f(z)) };
         }
-        const l1 = toLab(hexToRgb(hex1)), l2 = toLab(hexToRgb(hex2));
-        return Math.sqrt((l1.L-l2.L)**2 + (l1.a-l2.a)**2 + (l1.b-l2.b)**2);
+
+        const lab1 = toLab(hexToRgb(hex1));
+        const lab2 = toLab(hexToRgb(hex2));
+
+        // CIEDE2000
+        const { L: L1, a: a1, b: b1 } = lab1;
+        const { L: L2, a: a2, b: b2 } = lab2;
+
+        const C1ab = Math.sqrt(a1*a1 + b1*b1);
+        const C2ab = Math.sqrt(a2*a2 + b2*b2);
+        const Cab_avg7 = Math.pow((C1ab + C2ab) / 2, 7);
+        const G = 0.5 * (1 - Math.sqrt(Cab_avg7 / (Cab_avg7 + 6103515625))); // 25^7
+
+        const a1p = a1 * (1 + G),  a2p = a2 * (1 + G);
+        const C1p = Math.sqrt(a1p*a1p + b1*b1);
+        const C2p = Math.sqrt(a2p*a2p + b2*b2);
+
+        function hprime(a, b) {
+            if (a === 0 && b === 0) return 0;
+            const h = Math.atan2(b, a) * 180 / Math.PI;
+            return h >= 0 ? h : h + 360;
+        }
+        const h1p = hprime(a1p, b1);
+        const h2p = hprime(a2p, b2);
+
+        const dLp = L2 - L1;
+        const dCp = C2p - C1p;
+
+        let dhp;
+        if (C1p * C2p === 0)                  { dhp = 0; }
+        else if (Math.abs(h2p - h1p) <= 180)  { dhp = h2p - h1p; }
+        else if (h2p - h1p > 180)             { dhp = h2p - h1p - 360; }
+        else                                   { dhp = h2p - h1p + 360; }
+
+        const dHp = 2 * Math.sqrt(C1p * C2p) * Math.sin(dhp * Math.PI / 360);
+
+        const Lp_avg = (L1 + L2) / 2;
+        const Cp_avg = (C1p + C2p) / 2;
+
+        let Hp_avg;
+        if (C1p * C2p === 0)                 { Hp_avg = h1p + h2p; }
+        else if (Math.abs(h1p - h2p) <= 180) { Hp_avg = (h1p + h2p) / 2; }
+        else if (h1p + h2p < 360)            { Hp_avg = (h1p + h2p + 360) / 2; }
+        else                                  { Hp_avg = (h1p + h2p - 360) / 2; }
+
+        const deg = x => x * Math.PI / 180;
+        const T = 1
+            - 0.17 * Math.cos(deg(Hp_avg - 30))
+            + 0.24 * Math.cos(deg(2 * Hp_avg))
+            + 0.32 * Math.cos(deg(3 * Hp_avg + 6))
+            - 0.20 * Math.cos(deg(4 * Hp_avg - 63));
+
+        const SL = 1 + 0.015 * Math.pow(Lp_avg - 50, 2) / Math.sqrt(20 + Math.pow(Lp_avg - 50, 2));
+        const SC = 1 + 0.045 * Cp_avg;
+        const SH = 1 + 0.015 * Cp_avg * T;
+
+        const Cp_avg7 = Math.pow(Cp_avg, 7);
+        const RC = 2 * Math.sqrt(Cp_avg7 / (Cp_avg7 + 6103515625));
+        const dTheta = 30 * Math.exp(-Math.pow((Hp_avg - 275) / 25, 2));
+        const RT = -Math.sin(deg(2 * dTheta)) * RC;
+
+        return Math.sqrt(
+            Math.pow(dLp / SL, 2) +
+            Math.pow(dCp / SC, 2) +
+            Math.pow(dHp / SH, 2) +
+            RT * (dCp / SC) * (dHp / SH)
+        );
     } catch(e) { return null; }
 }
 
@@ -2136,7 +2210,8 @@ function createRecipeCard(recipe) {
     const system = escapeHtml(recipe.System || 'Unknown System');
     const army = escapeHtml(recipe.Army || '');
     const schemes = getSchemes(recipe);
-    const cardId = `recipe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const cardId = `recipe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;    
+    const recipeCreditNote = recipe.CreditNote ? escapeHtml(recipe.CreditNote) : '';
     
     // Calculate total paints across all schemes
     let totalPaints = 0;
@@ -2146,7 +2221,7 @@ function createRecipeCard(recipe) {
         }
     });
     
-    const isExpanded = true;
+    const isExpanded = false;
     const buttonClass = isExpanded ? "accordion-button" : "accordion-button collapsed";
     const bodyStyle = isExpanded ? 'style="display: block;"' : 'style="display: none;"';
     
@@ -2166,6 +2241,10 @@ function createRecipeCard(recipe) {
 
           <div class="accordion-body recipe-body" ${bodyStyle}>
     `;
+
+    if (recipeCreditNote) {
+        cardHTML += `<p class="credit-note"><em>${recipeCreditNote}</em></p>`;
+    }
     
     // Render scheme tabs if multiple schemes
     if (schemes.length > 1) {
@@ -2187,13 +2266,16 @@ function createRecipeCard(recipe) {
         const creditNote = scheme.CreditNote ? escapeHtml(scheme.CreditNote) : '';
         
         const siteLogoMap = {
-            'Tale of Painters':   './img/tale_of_painters_logo_2023.png.webp',
-            'Warhammer Community':'./img/Warhammer-logo-main.png.webp',
-            'Warhammer Guild':    './img/Warhammer-logo-main.png.webp',
+            'Tale of Painters':    { src: './img/tale_of_painters_logo_2023.png.webp', bgSize: '175px auto' },
+            'Warhammer Community': { src: './img/Warhammer-logo-main.png.webp',        bgSize: 'auto 52px'  },
+            'Warhammer Guild':     { src: './img/Warhammer-logo-main.png.webp',        bgSize: 'auto 52px'  },
+            'Tabletop Battles':    { src: './img/ttb_logo_text_white.png',             bgSize: '175px auto' },
         };
-        const siteLogo = siteLogoMap[scheme.TutorialSite] || '';
+        const logoEntry  = siteLogoMap[scheme.TutorialSite];
+        const siteLogo   = logoEntry ? logoEntry.src    : '';
+        const logoBgSize = logoEntry ? logoEntry.bgSize : '155px auto';
         const creditBgStyle = siteLogo
-            ? ` style="background-image: url('${siteLogo}'); background-repeat: no-repeat; background-position: right 16px center; background-size: auto 60%;"` 
+            ? ` style="background-image: url('${siteLogo}'); background-repeat: no-repeat; background-position: right 16px center; background-size: ${logoBgSize};"` 
             : '';
         
         cardHTML += `
@@ -2205,7 +2287,7 @@ function createRecipeCard(recipe) {
                   View original <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; margin-left: 4px;"></i>
                 </a>
               </p>
-              ${creditNote ? `<p class="credit-note"><em>${creditNote}</em></p>` : ''}
+              ${!recipeCreditNote && creditNote ? `<p class="credit-note"><em>${creditNote}</em></p>` : ''}
             </div>
         `;
         
