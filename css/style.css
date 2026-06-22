@@ -1773,6 +1773,65 @@ header p {
   line-height: 1.4;
   margin: 6px 0 0 0;
   font-style: italic;
+  padding-bottom: 10px;
+}
+
+/* Recipe Scheme Tabs (2026-06-19) */
+.recipe-schemes-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3f4052;
+  padding-bottom: 8px;
+}
+
+.scheme-tab {
+  padding: 10px 16px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #c8b88a;
+  font-weight: 500;
+  font-family: 'Mason Alternate Regular', sans-serif;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  white-space: normal;
+  font-size: 0.95rem;
+  flex: 0 0 calc(33.333% - 6px);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.scheme-tab:hover {
+  color: #ffc107;
+  text-decoration: underline;
+}
+
+.scheme-tab.active {
+  color: #ffc107;
+  border-bottom-color: #ffc107;
+  font-weight: 700;
+}
+
+.scheme-content {
+  display: none;
+}
+
+.scheme-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .recipe-step {
@@ -2032,6 +2091,9 @@ header p {
   .recipe-filter-btn {
     padding: 4px 10px;
     font-size: 0.75rem;
+  }
+  .scheme-tab {
+    flex: 0 0 calc(50% - 4px);
   }
 }
 

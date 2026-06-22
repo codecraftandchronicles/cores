@@ -1,5 +1,6 @@
 {
   "_source": "Hex codes are community-sampled sRGB values digitally measured from cured paint swatches under controlled lighting. AK and Vallejo equivalences drawn from manufacturer conversion charts and community reference data.",
+  "_schemes_example": "Multi-scheme recipes use 'Schemes' array for alternative paint schemes. Legacy recipes without 'Schemes' key are automatically wrapped as single-scheme. Example: {\"RecipeName\": \"My Recipe\", \"System\": \"System\", \"Army\": \"Army\", \"Schemes\": [{\"SchemeName\": \"Scheme 1\", \"TutorialAuthor\": \"Author\", \"TutorialSite\": \"Site\", \"TutorialURL\": \"URL\", \"Steps\": [...]}, {\"SchemeName\": \"Scheme 2\", ...}]}",
   "recipes": [
     {
       "RecipeName": "Black Templars Crusader Squad",
@@ -8,7 +9,7 @@
       "TutorialAuthor": "Garfy",
       "TutorialSite": "Tale of Painters",
       "TutorialURL": "https://taleofpainters.com/2021/10/tutorial-how-to-paint-black-templars-crusader-squads/",
-      "CreditNote": "Permission request sent to Tale of Painters — awaiting response.",
+      "CreditNote": "* Permission request sent to Tale of Painters — awaiting response.",
       "RecipeImage": "black_templars.jpg",
       "Steps": [
         {
@@ -78,7 +79,7 @@
       "TutorialAuthor": "Warhammer Guild",
       "TutorialSite": "Warhammer Guild",
       "TutorialURL": "https://warhammerguild.com/painting/how-to-paint-blood-angels/",
-      "CreditNote": "We attempted to contact Warhammer Guild to request formal permission to reference this tutorial. Having received no response and being unable to find a contact method, we have maintained full attribution with a direct link to the original source. If you are the content owner and have any concerns, please reach out so we can address them promptly.",
+      "CreditNote": "* We attempted to contact Warhammer Guild to request formal permission to reference this tutorial. Having received no response and being unable to find a contact method, we have maintained full attribution with a direct link to the original source. If you are the content owner and have any concerns, please reach out so we can address them promptly.",
       "RecipeImage": "blood_angels.jpg",
       "Steps": [
         {
@@ -124,6 +125,345 @@
             { "Citadel": "Zandri Dust",    "CType": "Base",  "Hex": "#B49860", "AK": "Desert Sand AK11044",  "AKHex": "#B89C60", "Vallejo": "Tan Yellow 70.912",   "VallejoHex": "#B4945C", "PaintCode": "CIT-ZANDRI-DUST" },
             { "Citadel": "Seraphim Sepia", "CType": "Shade", "Hex": "#9C5A1C", "AK": "Sepia Wash AK11036",   "AKHex": "#9C5820", "Vallejo": "Sepia Wash 73.200",   "VallejoHex": "#9A5618", "PaintCode": "CIT-SERAPHIM-SEPIA" },
             { "Citadel": "Ushabti Bone",   "CType": "Layer", "Hex": "#C8B880", "AK": "Light Bone AK11040",   "AKHex": "#D0C09C", "Vallejo": "Buff 70.976",         "VallejoHex": "#C8B888", "PaintCode": "CIT-USHABTI-BONE" }
+          ]
+        }
+      ]
+    },
+    {
+      "RecipeName": "Adeptus Custodes",
+      "System": "Warhammer 40K",
+      "Army": "Adeptus Custodes",
+      "CreditNote": "* Permission request sent to Tabletop Battles — awaiting response.",
+      "Schemes": [
+        {
+          "SchemeName": "Crab Stuffed Mushrooms",
+          "TutorialAuthor": "Crab-stuffed Mushrooms",
+          "TutorialSite": "Tabletop Battles",
+          "TutorialURL": "https://www.tabletopbattles.com/how-to-paint-everything-adeptus-custodes/",
+          "CreditNote": "Original HTPE Custodes author. Classic golden armour with detailed power weapons, jewels, urban bases and skin.",
+          "Steps": [
+            {
+              "Name": "Gold Armour — Battle Ready",
+              "Paints": [
+                { "Citadel": "Retributor Gold",                    "CType": "Spray",        "Hex": "#C8901E", "AK": "True Gold AK11135",          "AKHex": "#C09030", "Vallejo": "Gold 70.996",               "VallejoHex": "#C29038", "PaintCode": "CIT-RETRIBUTOR-SPRAY" },
+                { "Citadel": "Reikland Fleshshade Gloss",          "CType": "Wash",         "Hex": "#C06030", "AK": "Flesh Wash AK11032",         "AKHex": "#C05830", "Vallejo": "Transparent Orange 70.737", "VallejoHex": "#B85828", "PaintCode": "CIT-REIKLAND-GLOSS" },
+                { "Citadel": "Druchii Violet + Lahmian Medium (50/50)", "CType": "Wash",    "Hex": "#7B529C", "AK": "Violet AK11101",             "AKHex": "#7A5AA0", "Vallejo": "Violet 70.810",             "VallejoHex": "#7458A0", "PaintCode": "CIT-DRUCHII-VIOLET" },
+                { "Citadel": "Golden Griffon",                     "CType": "Drybrush",     "Hex": "#D4A837", "AK": "Light Gold AK11137",         "AKHex": "#D4A831", "Vallejo": "Light Gold 70.997",         "VallejoHex": "#D4AC38", "PaintCode": "CIT-GOLDEN-GRIFFON" }
+              ]
+            },
+            {
+              "Name": "Metal Parts",
+              "Paints": [
+                { "Citadel": "Leadbelcher",     "CType": "Base",         "Hex": "#8C9098", "AK": "Silver AK11053",         "AKHex": "#909096", "Vallejo": "Natural Steel 70.864", "VallejoHex": "#909090", "PaintCode": "CIT-LEADBELCHER" },
+                { "Citadel": "Nuln Oil Gloss",  "CType": "Wash",         "Hex": "#303040", "AK": "Black Wash AK11010",     "AKHex": "#282830", "Vallejo": "Black Wash 73.200",    "VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL-GLOSS" },
+                { "Citadel": "Stormhost Silver","CType": "Spot Highlight","Hex": "#C8D0D8", "AK": "Bright Silver AK11054", "AKHex": "#C8CDD2", "Vallejo": "Silver 70.997",        "VallejoHex": "#C4C8CC", "PaintCode": "CIT-STORMHOST-SILVER" }
+              ]
+            },
+            {
+              "Name": "Leather",
+              "Paints": [
+                { "Citadel": "Doombull Brown",   "CType": "Base", "Hex": "#622A1A", "AK": "Dark Flesh AK11014", "AKHex": "#6E2E18", "Vallejo": "Flat Brown 70.984",  "VallejoHex": "#722E18", "PaintCode": "CIT-DOOMBULL-BROWN" },
+                { "Citadel": "Agrax Earthshade", "CType": "Wash", "Hex": "#7C401C", "AK": "Earth Wash AK11036", "AKHex": "#8C4820", "Vallejo": "Brown Wash 73.202",  "VallejoHex": "#7A4018", "PaintCode": "CIT-AGRAX-EARTHSHADE" }
+              ]
+            },
+            {
+              "Name": "Power Weapon",
+              "Paints": [
+                { "Citadel": "Kantor Blue",       "CType": "Base",         "Hex": "#2D2D5C", "AK": "Dark Blue AK11068",   "AKHex": "#1A3A5C", "Vallejo": "Deep Sea Blue 70.867", "VallejoHex": "#3A4B5C", "PaintCode": "CIT-KANTOR-BLUE" },
+                { "Citadel": "Sotek Green",        "CType": "Layer",        "Hex": "#3C8C8C", "AK": "Turquoise AK11071",   "AKHex": "#3C9CB8", "Vallejo": "Turquoise 70.914",     "VallejoHex": "#3C98BC", "PaintCode": "CIT-SOTEK-GREEN" },
+                { "Citadel": "Temple Guard Blue",  "CType": "Layer",        "Hex": "#3C7AA8", "AK": "Light Blue AK11069",  "AKHex": "#4A7CB8", "Vallejo": "Sky Blue 70.915",      "VallejoHex": "#4478B0", "PaintCode": "CIT-TEMPLE-GUARD-BLUE" },
+                { "Citadel": "Baharroth Blue",     "CType": "Highlight",    "Hex": "#5CAADC", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Light Blue 70.916",    "VallejoHex": "#6AC8DC", "PaintCode": "CIT-BAHARROTH-BLUE" },
+                { "Citadel": "White Scar",         "CType": "Spot Highlight","Hex": "#F0F0F8", "AK": "White AK11001",      "AKHex": "#F2F2F2", "Vallejo": "White 70.951",         "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            },
+            {
+              "Name": "Jewels",
+              "Paints": [
+                { "Citadel": "Thousand Sons Blue", "CType": "Base",      "Hex": "#1A3A52", "AK": "Dark Blue AK11068",   "AKHex": "#1A3A5C", "Vallejo": "Deep Sky Blue 70.914", "VallejoHex": "#1A3A52", "PaintCode": "CIT-THOUSAND-SONS-BLUE" },
+                { "Citadel": "Ahriman Blue",        "CType": "Layer",     "Hex": "#4E85BC", "AK": "Medium Blue AK11069", "AKHex": "#4A7CB8", "Vallejo": "Azure 70.902",         "VallejoHex": "#4478A8", "PaintCode": "CIT-AHRIMAN-BLUE" },
+                { "Citadel": "Incubi Darkness",     "CType": "Darklight",  "Hex": "#1E4E4E", "AK": "Dark Green AK11072",  "AKHex": "#1A4A40", "Vallejo": "Dark Green 70.895",    "VallejoHex": "#1A4A40", "PaintCode": "CIT-INCUBI-DARKNESS" },
+                { "Citadel": "Temple Guard Blue",   "CType": "Highlight",  "Hex": "#3C7AA8", "AK": "Light Blue AK11069",  "AKHex": "#4A7CB8", "Vallejo": "Sky Blue 70.915",      "VallejoHex": "#4478B0", "PaintCode": "CIT-TEMPLE-GUARD-BLUE" },
+                { "Citadel": "Baharroth Blue",      "CType": "Highlight",  "Hex": "#5CAADC", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Light Blue 70.916",    "VallejoHex": "#6AC8DC", "PaintCode": "CIT-BAHARROTH-BLUE" },
+                { "Citadel": "White Scar",          "CType": "Dot",        "Hex": "#F0F0F8", "AK": "White AK11001",       "AKHex": "#F2F2F2", "Vallejo": "White 70.951",         "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            },
+            {
+              "Name": "Urban Bases",
+              "Paints": [
+                { "Citadel": "Abaddon Black",       "CType": "Base",      "Hex": "#1A1A1F", "AK": "Black AK11029",               "AKHex": "#1C1C1C", "Vallejo": "Black 70.950",         "VallejoHex": "#18181C", "PaintCode": "CIT-ABADDON-BLACK" },
+                { "Citadel": "Doombull Brown",       "CType": "Roughbrush","Hex": "#622A1A", "AK": "Dark Flesh AK11014",          "AKHex": "#6E2E18", "Vallejo": "Flat Brown 70.984",    "VallejoHex": "#722E18", "PaintCode": "CIT-DOOMBULL-BROWN" },
+                { "Citadel": "Dark Reaper",          "CType": "Drybrush",  "Hex": "#3C4B55", "AK": "Dark Prussian Blue AK11189",  "AKHex": "#2E3D50", "Vallejo": "Deep Sea Blue 70.867", "VallejoHex": "#3A4B5C", "PaintCode": "CIT-DARK-REAPER" },
+                { "Citadel": "Thunderhawk Blue",     "CType": "Drybrush",  "Hex": "#4C6878", "AK": "Light Prussian Blue AK11190", "AKHex": "#4E6A82", "Vallejo": "Pale Grey Blue 70.907","VallejoHex": "#5A7080", "PaintCode": "CIT-THUNDERHAWK" },
+                { "Citadel": "Administratum Grey",   "CType": "Drybrush",  "Hex": "#9CA0A4", "AK": "Medium Grey AK11050",         "AKHex": "#9CA0A4", "Vallejo": "Basalt Grey 70.869",   "VallejoHex": "#82909E", "PaintCode": "CIT-ADMINISTRATUM-GREY" }
+              ]
+            },
+            {
+              "Name": "Skin",
+              "Paints": [
+                { "Citadel": "Bloodreaver Flesh",   "CType": "Base",      "Hex": "#C87050", "AK": "Flesh AK11018",       "AKHex": "#C07058", "Vallejo": "Basic Skintone 70.815", "VallejoHex": "#C87868", "PaintCode": "CIT-BLOODREAVER-FLESH" },
+                { "Citadel": "Druchii Violet",       "CType": "Wash",      "Hex": "#7B529C", "AK": "Violet AK11101",      "AKHex": "#7A5AA0", "Vallejo": "Violet 70.810",         "VallejoHex": "#7458A0", "PaintCode": "CIT-DRUCHII-VIOLET" },
+                { "Citadel": "Knight-Questor Flesh", "CType": "Highlight", "Hex": "#D89068", "AK": "Light Flesh AK11019", "AKHex": "#D09060", "Vallejo": "Light Flesh 70.928",    "VallejoHex": "#E4A878", "PaintCode": "CIT-KNIGHT-QUESTOR-FLESH" }
+              ]
+            }
+          ]
+        },
+        {
+          "SchemeName": "Keewa's Praetorian",
+          "TutorialAuthor": "Keewa",
+          "TutorialSite": "Tabletop Battles",
+          "TutorialURL": "https://www.tabletopbattles.com/how-to-paint-everything-adeptus-custodes/",
+          "CreditNote": "Advanced airbrush method. Keewa uses Vallejo TMM (Imperial Gold 77.725, Imperial Gold Light 77.726, Imperial Gold Shade 77.727, Sterling Silver Light 77.722), ProAcryl Dark/Royal Purple, AP Speedpaints and Molotow Turquoise. Citadel/AK/Vallejo MC values shown are closest approximations.",
+          "Steps": [
+            {
+              "Name": "Gold Armour (TMM Airbrush)",
+              "Paints": [
+                { "Citadel": "Rhinox Hide",        "CType": "Basecoat (deep shadows)",  "Hex": "#4A2818", "AK": "Dark Brown AK11017",    "AKHex": "#4A2818", "Vallejo": "VMM Imperial Gold 77.725",        "VallejoHex": "#C8981E", "PaintCode": "CIT-RHINOX-HIDE" },
+                { "Citadel": "Retributor Gold",    "CType": "Layer (airbrush, all over)","Hex": "#C8901E", "AK": "True Gold AK11135",     "AKHex": "#C09030", "Vallejo": "VMM Imperial Gold 77.725",        "VallejoHex": "#C8981E", "PaintCode": "CIT-RETRIBUTOR-SPRAY" },
+                { "Citadel": "Liberator Gold",     "CType": "Zenithal (from above)",    "Hex": "#B8912A", "AK": "Light Gold AK11137",    "AKHex": "#D4A831", "Vallejo": "VMM Imperial Gold Light 77.726",  "VallejoHex": "#D4A838", "PaintCode": "CIT-LIBERATOR-GOLD" },
+                { "Citadel": "Reikland Fleshshade","CType": "Shade (recesses)",         "Hex": "#B07040", "AK": "Earth Wash AK11036",    "AKHex": "#8C4820", "Vallejo": "VMM Imperial Gold Shade 77.727",  "VallejoHex": "#A06028", "PaintCode": "CIT-REIKLAND-FLESHSHADE" },
+                { "Citadel": "Stormhost Silver",   "CType": "Edge Highlight (corners)", "Hex": "#C8D0D8", "AK": "Bright Silver AK11054", "AKHex": "#C8CDD2", "Vallejo": "VMM Sterling Silver Light 77.722","VallejoHex": "#D0D8DC", "PaintCode": "CIT-STORMHOST-SILVER" }
+              ]
+            },
+            {
+              "Name": "Silver",
+              "Paints": [
+                { "Citadel": "Leadbelcher",          "CType": "Base (airbrush)",    "Hex": "#8C9098", "AK": "Silver AK11053",        "AKHex": "#909096", "Vallejo": "MC Duraluminium 77.701",  "VallejoHex": "#9CA0A4", "PaintCode": "CIT-LEADBELCHER" },
+                { "Citadel": "Ironbreaker",           "CType": "Drybrush",          "Hex": "#848C94", "AK": "Bright Silver AK11054", "AKHex": "#C8CDD2", "Vallejo": "Natural Steel 70.864",    "VallejoHex": "#909090", "PaintCode": "CIT-IRONBREAKER" },
+                { "Citadel": "Drakenhof Nightshade",  "CType": "Glaze (colour variety)","Hex": "#2A3050","AK": "Blue Wash AK11009",     "AKHex": "#2A3050", "Vallejo": "Blue Wash 73.208",        "VallejoHex": "#283050", "PaintCode": "CIT-DRAKENHOF" }
+              ]
+            },
+            {
+              "Name": "Purple Cloak — Inside (Dark)",
+              "Paints": [
+                { "Citadel": "Naggaroth Night",   "CType": "Base",                      "Hex": "#3C2050", "AK": "Dark Violet AK11101",   "AKHex": "#3A2058", "Vallejo": "Purple 70.959",      "VallejoHex": "#6A4890", "PaintCode": "CIT-NAGGAROTH-NIGHT" },
+                { "Citadel": "Druchii Violet",    "CType": "Shade",                      "Hex": "#7B529C", "AK": "Violet AK11101",        "AKHex": "#7A5AA0", "Vallejo": "Violet 70.810",      "VallejoHex": "#7458A0", "PaintCode": "CIT-DRUCHII-VIOLET" },
+                { "Citadel": "Ulthuan Grey",      "CType": "Highlight (progressive mix)", "Hex": "#C8D4DC", "AK": "Light Grey AK11049",   "AKHex": "#B8C4CC", "Vallejo": "Light Sea Grey 70.765","VallejoHex": "#C8D0D8", "PaintCode": "CIT-ULTHUAN-GREY" }
+              ]
+            },
+            {
+              "Name": "Purple Cloak — Outside (Bright)",
+              "Paints": [
+                { "Citadel": "Xereus Purple",      "CType": "Base",             "Hex": "#6C3080", "AK": "Violet AK11101",       "AKHex": "#7A5AA0", "Vallejo": "Violet Red 70.812",  "VallejoHex": "#9A3880", "PaintCode": "CIT-XEREUS-PURPLE" },
+                { "Citadel": "Druchii Violet",     "CType": "Shade",            "Hex": "#7B529C", "AK": "Violet AK11101",       "AKHex": "#7A5AA0", "Vallejo": "Violet 70.810",      "VallejoHex": "#7458A0", "PaintCode": "CIT-DRUCHII-VIOLET" },
+                { "Citadel": "Genestealer Purple", "CType": "Highlight",        "Hex": "#9060A0", "AK": "Light Violet AK11102", "AKHex": "#E494C4", "Vallejo": "Purple 70.959",      "VallejoHex": "#8A62A0", "PaintCode": "CIT-GENESTEALER-PURPLE" },
+                { "Citadel": "White Scar",         "CType": "Final Highlight",  "Hex": "#F0F0F8", "AK": "White AK11001",        "AKHex": "#F2F2F2", "Vallejo": "White 70.951",       "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            },
+            {
+              "Name": "Power Swords (Turquoise Glow)",
+              "Paints": [
+                { "Citadel": "Incubi Darkness",  "CType": "Shade (darkest)", "Hex": "#1E4E4E", "AK": "Dark Green AK11072",   "AKHex": "#1A4A40", "Vallejo": "Dark Green 70.895",  "VallejoHex": "#1A4A40", "PaintCode": "CIT-INCUBI-DARKNESS" },
+                { "Citadel": "Sotek Green",       "CType": "Base",            "Hex": "#3C8C8C", "AK": "Turquoise AK11071",    "AKHex": "#3C9CB8", "Vallejo": "Turquoise 70.914",   "VallejoHex": "#3C98BC", "PaintCode": "CIT-SOTEK-GREEN" },
+                { "Citadel": "Temple Guard Blue", "CType": "Layer",           "Hex": "#3C7AA8", "AK": "Light Blue AK11069",   "AKHex": "#4A7CB8", "Vallejo": "Sky Blue 70.915",    "VallejoHex": "#4478B0", "PaintCode": "CIT-TEMPLE-GUARD-BLUE" },
+                { "Citadel": "Baharroth Blue",    "CType": "Highlight",       "Hex": "#5CAADC", "AK": "Bright Blue AK11070",  "AKHex": "#6AB8DC", "Vallejo": "Light Blue 70.916",  "VallejoHex": "#6AC8DC", "PaintCode": "CIT-BAHARROTH-BLUE" },
+                { "Citadel": "White Scar",        "CType": "Edge Highlight",  "Hex": "#F0F0F8", "AK": "White AK11001",        "AKHex": "#F2F2F2", "Vallejo": "White 70.951",       "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            }
+          ]
+        },
+        {
+          "SchemeName": "Felime's Antiqued Bronze",
+          "TutorialAuthor": "Felime",
+          "TutorialSite": "Tabletop Battles",
+          "TutorialURL": "https://www.tabletopbattles.com/how-to-paint-everything-adeptus-custodes/",
+          "CreditNote": "Evan 'Felime' Siefring. Original uses VGC Hammered Copper + VMA Gold zenithal, then custom sepia/purple wash (Golden HFA Sepia + Dioxazine Purple + Pledge Floor Finish). The author explicitly provides Citadel alternatives in the text — those are shown here.",
+          "Steps": [
+            {
+              "Name": "Gold Armour",
+              "Paints": [
+                { "Citadel": "Screaming Bell",                        "CType": "Base",    "Hex": "#882A0C", "AK": "Bronze AK11134",     "AKHex": "#9A5C28", "Vallejo": "Brassy Brass 70.801",  "VallejoHex": "#9C5820", "PaintCode": "CIT-SCREAMING-BELL" },
+                { "Citadel": "Druchii Violet + Agrax Earthshade (mix)","CType": "Wash",    "Hex": "#7B529C", "AK": "Violet AK11101",     "AKHex": "#7A5AA0", "Vallejo": "Violet 70.810",        "VallejoHex": "#7458A0", "PaintCode": "CIT-DRUCHII-VIOLET" },
+                { "Citadel": "Golden Griffon",                        "CType": "Drybrush","Hex": "#D4A837", "AK": "Light Gold AK11137", "AKHex": "#D4A831", "Vallejo": "Light Gold 70.997",    "VallejoHex": "#D4AC38", "PaintCode": "CIT-GOLDEN-GRIFFON" }
+              ]
+            },
+            {
+              "Name": "Weapons & Steel",
+              "Paints": [
+                { "Citadel": "Abaddon Black", "CType": "Base",      "Hex": "#1A1A1F", "AK": "Black AK11029",      "AKHex": "#1C1C1C", "Vallejo": "Black 70.950",        "VallejoHex": "#18181C", "PaintCode": "CIT-ABADDON-BLACK" },
+                { "Citadel": "Eshin Grey",    "CType": "Highlight", "Hex": "#4A4A5A", "AK": "Dark Grey AK11048",  "AKHex": "#4A4A58", "Vallejo": "German Grey 70.995",  "VallejoHex": "#4A4A5A", "PaintCode": "CIT-ESHIN-GREY" },
+                { "Citadel": "Ironbreaker",   "CType": "Layer",     "Hex": "#848C94", "AK": "Silver AK11053",     "AKHex": "#909096", "Vallejo": "Natural Steel 70.864","VallejoHex": "#909090", "PaintCode": "CIT-IRONBREAKER" },
+                { "Citadel": "Nuln Oil",      "CType": "Wash",      "Hex": "#303040", "AK": "Black Wash AK11010", "AKHex": "#282830", "Vallejo": "Black Wash 73.200",   "VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL" }
+              ]
+            },
+            {
+              "Name": "Red Accents",
+              "Paints": [
+                { "Citadel": "Khorne Red",    "CType": "Base",      "Hex": "#6A1A14", "AK": "Flat Red AK11003",   "AKHex": "#8A1A14", "Vallejo": "Flat Red 70.957",  "VallejoHex": "#9A1810", "PaintCode": "CIT-KHORNE-RED" },
+                { "Citadel": "Mephiston Red", "CType": "Highlight", "Hex": "#9A1A14", "AK": "Red AK11002",        "AKHex": "#9C1C18", "Vallejo": "Scarlet 70.817",   "VallejoHex": "#C43020", "PaintCode": "CIT-MEPHISTON-RED" },
+                { "Citadel": "Nuln Oil",      "CType": "Shade",     "Hex": "#303040", "AK": "Black Wash AK11010", "AKHex": "#282830", "Vallejo": "Black Wash 73.200","VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL" }
+              ]
+            },
+            {
+              "Name": "Leather",
+              "Paints": [
+                { "Citadel": "Doombull Brown",   "CType": "Base", "Hex": "#622A1A", "AK": "Dark Flesh AK11014", "AKHex": "#6E2E18", "Vallejo": "Flat Brown 70.984", "VallejoHex": "#722E18", "PaintCode": "CIT-DOOMBULL-BROWN" },
+                { "Citadel": "Agrax Earthshade", "CType": "Wash", "Hex": "#7C401C", "AK": "Earth Wash AK11036", "AKHex": "#8C4820", "Vallejo": "Brown Wash 73.202", "VallejoHex": "#7A4018", "PaintCode": "CIT-AGRAX-EARTHSHADE" }
+              ]
+            },
+            {
+              "Name": "Gems",
+              "Paints": [
+                { "Citadel": "Temple Guard Blue", "CType": "Base (+ Black mix)",        "Hex": "#3C7AA8", "AK": "Light Blue AK11069",  "AKHex": "#4A7CB8", "Vallejo": "Turquoise 70.914", "VallejoHex": "#3C98BC", "PaintCode": "CIT-TEMPLE-GUARD-BLUE" },
+                { "Citadel": "Baharroth Blue",    "CType": "Highlight (towards 1 edge)", "Hex": "#5CAADC", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Sky Blue 70.915",   "VallejoHex": "#4478B0", "PaintCode": "CIT-BAHARROTH-BLUE" },
+                { "Citadel": "White Scar",        "CType": "Reflection Dot",             "Hex": "#F0F0F8", "AK": "White AK11001",       "AKHex": "#F2F2F2", "Vallejo": "White 70.951",      "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            }
+          ]
+        },
+        {
+          "SchemeName": "Jack's Solar Watch",
+          "TutorialAuthor": "Jack",
+          "TutorialSite": "Tabletop Battles",
+          "TutorialURL": "https://www.tabletopbattles.com/how-to-paint-everything-adeptus-custodes/",
+          "CreditNote": "Solar Watch white-armour scheme. Jack uses VMA Insignia White and Scale 75 metallics (Necro Gold, Dwarven Gold, Heavy Metal). Paint the rider separate from the bike.",
+          "Steps": [
+            {
+              "Name": "White Armour",
+              "Paints": [
+                { "Citadel": "Corax White",    "CType": "Base (near-white primer)", "Hex": "#E2E2E2", "AK": "White AK11001",      "AKHex": "#F2F2F2", "Vallejo": "White 70.951",    "VallejoHex": "#F0F0F4", "PaintCode": "CIT-CORAX-WHITE" },
+                { "Citadel": "Seraphim Sepia", "CType": "Shade (panel lines)",      "Hex": "#B09060", "AK": "Earth Wash AK11036", "AKHex": "#8C4820", "Vallejo": "Sepia Wash 73.200","VallejoHex": "#9A7840", "PaintCode": "CIT-SERAPHIM-SEPIA" },
+                { "Citadel": "White Scar",     "CType": "Edge Highlight",           "Hex": "#F0F0F8", "AK": "White AK11001",      "AKHex": "#F2F2F2", "Vallejo": "White 70.951",    "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            },
+            {
+              "Name": "Silver Metal",
+              "Paints": [
+                { "Citadel": "Iron Hands Steel","CType": "Base",                   "Hex": "#909898", "AK": "Silver AK11053",        "AKHex": "#909096", "Vallejo": "Natural Steel 70.864","VallejoHex": "#909090", "PaintCode": "CIT-IRON-HANDS-STEEL" },
+                { "Citadel": "Nuln Oil Gloss",  "CType": "Wash",                   "Hex": "#303040", "AK": "Black Wash AK11010",    "AKHex": "#282830", "Vallejo": "Black Wash 73.200",   "VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL-GLOSS" },
+                { "Citadel": "Ironbreaker",     "CType": "Drybrush (dark metals)", "Hex": "#848C94", "AK": "Silver AK11053",        "AKHex": "#909096", "Vallejo": "Natural Steel 70.864","VallejoHex": "#909090", "PaintCode": "CIT-IRONBREAKER" },
+                { "Citadel": "Runefang Steel",  "CType": "Highlight (light metals)","Hex": "#BCC2C8", "AK": "Bright Silver AK11054", "AKHex": "#C8CDD2", "Vallejo": "Silver 70.997",       "VallejoHex": "#C4C8CC", "PaintCode": "CIT-RUNEFANG-STEEL" }
+              ]
+            },
+            {
+              "Name": "Leather",
+              "Paints": [
+                { "Citadel": "Corvus Black",  "CType": "Base", "Hex": "#1C1A1F", "AK": "Black AK11029",      "AKHex": "#1C1C1C", "Vallejo": "Black 70.950",     "VallejoHex": "#18181C", "PaintCode": "CIT-CORVUS-BLACK" },
+                { "Citadel": "Nuln Oil Gloss","CType": "Wash", "Hex": "#303040", "AK": "Black Wash AK11010", "AKHex": "#282830", "Vallejo": "Black Wash 73.200","VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL-GLOSS" }
+              ]
+            },
+            {
+              "Name": "Red Cloth",
+              "Paints": [
+                { "Citadel": "Khorne Red",    "CType": "Base",                  "Hex": "#6A1A14", "AK": "Flat Red AK11003",    "AKHex": "#8A1A14", "Vallejo": "Flat Red 70.957",  "VallejoHex": "#9A1810", "PaintCode": "CIT-KHORNE-RED" },
+                { "Citadel": "Nuln Oil",      "CType": "Wash (deep shadows)",   "Hex": "#303040", "AK": "Black Wash AK11010",  "AKHex": "#282830", "Vallejo": "Black Wash 73.200","VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL" },
+                { "Citadel": "Mephiston Red", "CType": "Highlight",             "Hex": "#9A1A14", "AK": "Red AK11002",         "AKHex": "#9C1C18", "Vallejo": "Scarlet 70.817",   "VallejoHex": "#C43020", "PaintCode": "CIT-MEPHISTON-RED" },
+                { "Citadel": "Wild Rider Red","CType": "Edge Highlight",        "Hex": "#C83018", "AK": "Bright Red AK11004",  "AKHex": "#C83018", "Vallejo": "Bloody Red 70.926","VallejoHex": "#C42010", "PaintCode": "CIT-WILD-RIDER-RED" }
+              ]
+            },
+            {
+              "Name": "Gold Accents",
+              "Paints": [
+                { "Citadel": "Retributor Gold",         "CType": "Base",         "Hex": "#C8901E", "AK": "True Gold AK11135",     "AKHex": "#C09030", "Vallejo": "Gold 70.996",              "VallejoHex": "#C29038", "PaintCode": "CIT-RETRIBUTOR-SPRAY" },
+                { "Citadel": "Reikland Fleshshade Gloss","CType": "Wash",        "Hex": "#C06030", "AK": "Flesh Wash AK11032",    "AKHex": "#C05830", "Vallejo": "Transparent Orange 70.737", "VallejoHex": "#B85828", "PaintCode": "CIT-REIKLAND-GLOSS" },
+                { "Citadel": "Liberator Gold",           "CType": "Highlight",   "Hex": "#B8912A", "AK": "Light Gold AK11137",    "AKHex": "#D4A831", "Vallejo": "Light Gold 70.997",         "VallejoHex": "#D4AC38", "PaintCode": "CIT-LIBERATOR-GOLD" },
+                { "Citadel": "Stormhost Silver",         "CType": "Edge Highlight","Hex": "#C8D0D8","AK": "Bright Silver AK11054", "AKHex": "#C8CDD2", "Vallejo": "Silver 70.997",             "VallejoHex": "#C4C8CC", "PaintCode": "CIT-STORMHOST-SILVER" }
+              ]
+            }
+          ]
+        },
+        {
+          "SchemeName": "Silks' NMM",
+          "TutorialAuthor": "Silks",
+          "TutorialSite": "Tabletop Battles",
+          "TutorialURL": "https://www.tabletopbattles.com/how-to-paint-everything-adeptus-custodes/",
+          "CreditNote": "Non-metallic metal (NMM) approach described as 'cel-shaded'. Same colours on vehicles and infantry. Airbrush optional but speeds it up considerably.",
+          "Steps": [
+            {
+              "Name": "Gold NMM (9 layers)",
+              "Paints": [
+                { "Citadel": "Chaos Black",                    "CType": "Primer",                        "Hex": "#1A1A1F", "AK": "Black AK11029",        "AKHex": "#1C1C1C", "Vallejo": "Black 70.950",         "VallejoHex": "#18181C", "PaintCode": "CIT-CHAOS-BLACK" },
+                { "Citadel": "Dryad Bark",                     "CType": "Base (all over)",               "Hex": "#3A2A1A", "AK": "Dark Brown AK11017",   "AKHex": "#4A2818", "Vallejo": "Dark Brown 70.846",    "VallejoHex": "#3A2818", "PaintCode": "CIT-DRYAD-BARK" },
+                { "Citadel": "Rhinox Hide",                    "CType": "Layer (all but deepest recess)","Hex": "#4A2818", "AK": "Dark Brown AK11017",   "AKHex": "#4A2818", "Vallejo": "Chocolate Brown 70.872","VallejoHex": "#4A2C18", "PaintCode": "CIT-RHINOX-HIDE" },
+                { "Citadel": "Mournfang Brown",                "CType": "Highlight (most of armour)",    "Hex": "#72301A", "AK": "Dark Flesh AK11014",   "AKHex": "#6E2E18", "Vallejo": "Flat Brown 70.984",    "VallejoHex": "#722E18", "PaintCode": "CIT-MOURNFANG-BROWN" },
+                { "Citadel": "XV-88",                          "CType": "Highlight (raised parts)",      "Hex": "#8C5A20", "AK": "Medium Brown AK11015", "AKHex": "#7C3A1C", "Vallejo": "Orange Brown 70.981",  "VallejoHex": "#9C4C20", "PaintCode": "CIT-XV-88" },
+                { "Citadel": "Balor Brown",                    "CType": "Highlight (points of interest)","Hex": "#A06020", "AK": "Light Brown AK11016",  "AKHex": "#9C4620", "Vallejo": "Dark Yellow 70.978",   "VallejoHex": "#A86820", "PaintCode": "CIT-BALOR-BROWN" },
+                { "Citadel": "Zamesi Desert",                  "CType": "Highlight (spiky bits)",        "Hex": "#C89020", "AK": "Desert Sand AK11044",  "AKHex": "#C8A868", "Vallejo": "Light Sand 70.837",    "VallejoHex": "#C8B070", "PaintCode": "CIT-ZAMESI-DESERT" },
+                { "Citadel": "Zamesi Desert + White Scar (50/50)","CType": "Highlight (tips & corners)", "Hex": "#D8C060", "AK": "Light Bone AK11040",   "AKHex": "#D0C09C", "Vallejo": "Buff 70.976",          "VallejoHex": "#C8B888", "PaintCode": "CIT-ZAMESI-WHITE-MIX" },
+                { "Citadel": "White Scar",                     "CType": "Dots (creates metal illusion)", "Hex": "#F0F0F8", "AK": "White AK11001",        "AKHex": "#F2F2F2", "Vallejo": "White 70.951",         "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            },
+            {
+              "Name": "Red Cloth",
+              "Paints": [
+                { "Citadel": "Khorne Red",    "CType": "Base",                 "Hex": "#6A1A14", "AK": "Flat Red AK11003",   "AKHex": "#8A1A14", "Vallejo": "Flat Red 70.957",  "VallejoHex": "#9A1810", "PaintCode": "CIT-KHORNE-RED" },
+                { "Citadel": "Mephiston Red", "CType": "Highlight (airbrush)", "Hex": "#9A1A14", "AK": "Red AK11002",        "AKHex": "#9C1C18", "Vallejo": "Scarlet 70.817",   "VallejoHex": "#C43020", "PaintCode": "CIT-MEPHISTON-RED" },
+                { "Citadel": "Wild Rider Red","CType": "Edge Highlight",       "Hex": "#C83018", "AK": "Bright Red AK11004", "AKHex": "#C83018", "Vallejo": "Bloody Red 70.926","VallejoHex": "#C42010", "PaintCode": "CIT-WILD-RIDER-RED" }
+              ]
+            },
+            {
+              "Name": "Blue Glow (Weapons)",
+              "Paints": [
+                { "Citadel": "Kantor Blue",                   "CType": "Base",                       "Hex": "#2D2D5C", "AK": "Dark Blue AK11068",   "AKHex": "#1A3A5C", "Vallejo": "Deep Sea Blue 70.867", "VallejoHex": "#3A4B5C", "PaintCode": "CIT-KANTOR-BLUE" },
+                { "Citadel": "Ahriman Blue",                  "CType": "Layer (airbrush, edges)",    "Hex": "#4E85BC", "AK": "Medium Blue AK11069", "AKHex": "#4A7CB8", "Vallejo": "Electric Blue 72.023", "VallejoHex": "#3AACDC", "PaintCode": "CIT-AHRIMAN-BLUE" },
+                { "Citadel": "Baharroth Blue + White Scar mix","CType": "Edge Highlight",            "Hex": "#9AD8F0", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Light Blue 70.916",    "VallejoHex": "#6AC8DC", "PaintCode": "CIT-BAHARROTH-WHITE-MIX" }
+              ]
+            }
+          ]
+        },
+        {
+          "SchemeName": "Lupe's Crimson Agamatus",
+          "TutorialAuthor": "Lupe",
+          "TutorialSite": "Tabletop Battles",
+          "TutorialURL": "https://www.tabletopbattles.com/how-to-paint-everything-adeptus-custodes/",
+          "CreditNote": "Red-dominated scheme with dark bronze metallics, inspired by Agamatus jetbike riders. Paint the rider separate from the bike to avoid painting headaches.",
+          "Steps": [
+            {
+              "Name": "Red Armour",
+              "Paints": [
+                { "Citadel": "Mephiston Red",   "CType": "Base",             "Hex": "#9A1A14", "AK": "Red AK11002",        "AKHex": "#9C1C18", "Vallejo": "Flat Red 70.957",  "VallejoHex": "#9A1810", "PaintCode": "CIT-MEPHISTON-RED" },
+                { "Citadel": "Nuln Oil",        "CType": "Panel Line",       "Hex": "#303040", "AK": "Black Wash AK11010", "AKHex": "#282830", "Vallejo": "Black Wash 73.200","VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL" },
+                { "Citadel": "Evil Sunz Scarlet","CType": "Light Drybrush",  "Hex": "#C43020", "AK": "Bright Red AK11004", "AKHex": "#C83018", "Vallejo": "Scarlet 70.817",   "VallejoHex": "#C43020", "PaintCode": "CIT-EVIL-SUNZ-SCARLET" },
+                { "Citadel": "Squig Orange",    "CType": "Light Drybrush (edges)","Hex": "#D44818","AK": "Orange AK11005", "AKHex": "#D44820", "Vallejo": "Hot Orange 70.851","VallejoHex": "#D44018", "PaintCode": "CIT-SQUIG-ORANGE" }
+              ]
+            },
+            {
+              "Name": "Bronze Metal",
+              "Paints": [
+                { "Citadel": "Warplock Bronze", "CType": "Base",     "Hex": "#4A3820", "AK": "Bronze AK11134",     "AKHex": "#9A5C28", "Vallejo": "Brassy Brass 70.801",  "VallejoHex": "#9C5820", "PaintCode": "CIT-WARPLOCK-BRONZE" },
+                { "Citadel": "Nuln Oil Gloss",  "CType": "Shade",    "Hex": "#303040", "AK": "Black Wash AK11010", "AKHex": "#282830", "Vallejo": "Black Wash 73.200",    "VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL-GLOSS" },
+                { "Citadel": "Brass Scorpion",  "CType": "Drybrush", "Hex": "#A06030", "AK": "Bronze AK11134",     "AKHex": "#9A5C28", "Vallejo": "Bright Bronze 70.998", "VallejoHex": "#9C6028", "PaintCode": "CIT-BRASS-SCORPION" }
+              ]
+            },
+            {
+              "Name": "Steel",
+              "Paints": [
+                { "Citadel": "Leadbelcher",   "CType": "Base",  "Hex": "#8C9098", "AK": "Silver AK11053",        "AKHex": "#909096", "Vallejo": "Natural Steel 70.864","VallejoHex": "#909090", "PaintCode": "CIT-LEADBELCHER" },
+                { "Citadel": "Ironbreaker",   "CType": "Layer", "Hex": "#848C94", "AK": "Bright Silver AK11054", "AKHex": "#C8CDD2", "Vallejo": "Silver 70.997",        "VallejoHex": "#C4C8CC", "PaintCode": "CIT-IRONBREAKER" },
+                { "Citadel": "Nuln Oil Gloss","CType": "Wash",  "Hex": "#303040", "AK": "Black Wash AK11010",    "AKHex": "#282830", "Vallejo": "Black Wash 73.200",    "VallejoHex": "#303030", "PaintCode": "CIT-NULN-OIL-GLOSS" }
+              ]
+            },
+            {
+              "Name": "Leather & Cloth",
+              "Paints": [
+                { "Citadel": "Rakarth Flesh",    "CType": "Base",                     "Hex": "#C0A87C", "AK": "Light Sand AK11046", "AKHex": "#D4C89A", "Vallejo": "Beige 70.917",       "VallejoHex": "#C4A87C", "PaintCode": "CIT-RAKARTH-FLESH" },
+                { "Citadel": "Agrax Earthshade", "CType": "Wash",                     "Hex": "#7C401C", "AK": "Earth Wash AK11036", "AKHex": "#8C4820", "Vallejo": "Brown Wash 73.202",  "VallejoHex": "#7A4018", "PaintCode": "CIT-AGRAX-EARTHSHADE" },
+                { "Citadel": "Pallid Wych Flesh","CType": "Highlight (1:1 w/ Rakarth)","Hex": "#D8C8A8","AK": "Pale Sand AK11046",  "AKHex": "#D4C89A", "Vallejo": "Buff 70.976",        "VallejoHex": "#C8B888", "PaintCode": "CIT-PALLID-WYCH-FLESH" }
+              ]
+            },
+            {
+              "Name": "Dark Brown Leather (Rider)",
+              "Paints": [
+                { "Citadel": "Rhinox Hide",        "CType": "Base",      "Hex": "#4A2818", "AK": "Dark Brown AK11017", "AKHex": "#4A2818", "Vallejo": "Chocolate Brown 70.872","VallejoHex": "#4A2C18", "PaintCode": "CIT-RHINOX-HIDE" },
+                { "Citadel": "Reikland Fleshshade","CType": "Shade",     "Hex": "#B07040", "AK": "Flesh Wash AK11032", "AKHex": "#C05830", "Vallejo": "Brown Wash 73.202",     "VallejoHex": "#7A4018", "PaintCode": "CIT-REIKLAND-FLESHSHADE" },
+                { "Citadel": "Karak Stone",        "CType": "Highlight", "Hex": "#C0A070", "AK": "Khaki AK11039",      "AKHex": "#B89A60", "Vallejo": "Dark Sand 70.847",      "VallejoHex": "#BCAA70", "PaintCode": "CIT-KARAK-STONE" }
+              ]
+            },
+            {
+              "Name": "Blue Stones",
+              "Paints": [
+                { "Citadel": "Thousand Sons Blue","CType": "Base",         "Hex": "#1A3A52", "AK": "Dark Blue AK11068",   "AKHex": "#1A3A5C", "Vallejo": "Deep Sky Blue 70.914","VallejoHex": "#1A3A52", "PaintCode": "CIT-THOUSAND-SONS-BLUE" },
+                { "Citadel": "Temple Guard Blue", "CType": "Highlight",    "Hex": "#3C7AA8", "AK": "Light Blue AK11069",  "AKHex": "#4A7CB8", "Vallejo": "Sky Blue 70.915",     "VallejoHex": "#4478B0", "PaintCode": "CIT-TEMPLE-GUARD-BLUE" },
+                { "Citadel": "Baharroth Blue",    "CType": "Dot Highlight","Hex": "#5CAADC", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Light Blue 70.916",   "VallejoHex": "#6AC8DC", "PaintCode": "CIT-BAHARROTH-BLUE" }
+              ]
+            },
+            {
+              "Name": "Power Lance",
+              "Paints": [
+                { "Citadel": "Baharroth Blue",                    "CType": "Base",                    "Hex": "#5CAADC", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Light Blue 70.916","VallejoHex": "#6AC8DC", "PaintCode": "CIT-BAHARROTH-BLUE" },
+                { "Citadel": "Baharroth Blue + White Scar (1:1 glaze)","CType": "Highlight Band",     "Hex": "#A0D0F0", "AK": "Bright Blue AK11070", "AKHex": "#6AB8DC", "Vallejo": "Sky Blue 70.961", "VallejoHex": "#80C0E8", "PaintCode": "CIT-BAHARROTH-WHITE-GLAZE" },
+                { "Citadel": "White Scar",                        "CType": "Edge Highlight + nodes",  "Hex": "#F0F0F8", "AK": "White AK11001",        "AKHex": "#F2F2F2", "Vallejo": "White 70.951",    "VallejoHex": "#F0F0F4", "PaintCode": "CIT-WHITE-SCAR" }
+              ]
+            }
           ]
         }
       ]
