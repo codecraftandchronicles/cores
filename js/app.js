@@ -5,7 +5,8 @@ const TAB_NAMES = Object.freeze({
   EFFECTS: 'effects',
   PUTTY: 'putty',
   PROJECTS: 'projects',
-  RECIPES: 'recipes'
+  RECIPES: 'recipes',
+  ABOUT: 'about'
 });
 
 // Field names
@@ -502,6 +503,113 @@ const htmlPutty = `
         <figcaption>Cianoacrilato + Baking Soda: Utilised to fix the miniature on the base, taking advantage of the snow effect obtained from using baking soda, but with PVA glue and water.</figcaption>
       </figure>
 
+    </div>
+  </div>
+
+</div>`;
+
+const htmlAbout = `
+<div class="about-datasheet">
+
+  <div class="about-header">
+    <div class="about-header-text">
+      <h1 class="about-name">BRUNO AMARAL</h1>
+      <div class="about-stats-row">
+        <div class="about-stat">
+          <span class="about-stat-label">AG</span>
+          <span class="about-stat-value">50</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-label">NAT</span>
+          <span class="about-stat-value">BR</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-label">LOC</span>
+          <span class="about-stat-value">PT</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-label">PROF</span>
+          <span class="about-stat-value">DEV</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-label">EXP</span>
+          <span class="about-stat-value">26+</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-header-image">
+      <img src="img/about.jpeg" alt="Bruno Amaral">
+    </div>
+  </div>
+
+  <div class="about-body">
+
+    <div class="about-col-left">
+      <div class="about-section-header">
+        <i class="bi bi-person-fill"></i> ABOUT ME
+      </div>
+      <div class="about-text-block">
+        <p>Hi! I'm 50 years old, Portuguese-Brazilian, and currently living in Lisbon, Portugal. I've been a software developer and IT consultant for over 26 years, and I found in miniature painting, dioramas, and the grimdark aesthetic the perfect fusion of engineering, precision, and creativity.</p>
+        <p>What started as a passion for 3D printing and scale modelling evolved into a constant pursuit of the perfect colour, the most realistic textures, and the finest painting techniques. This site was born from that passion: the need to organise, plan, and master the colour palette that brings miniature worlds to life, combining the logic of software development with the art of the hobby.</p>
+        <p>Here I share my personal paint inventory, my experiences with different brands (such as Vallejo and AK Interactive), and the progress of my builds. Whether bringing a sci-fi warrior to life or crafting detailed organic terrain, the goal remains the same: mastering the rules of colour to tell captivating visual stories.</p>
+        <p>If you'd like to get in touch, feel free to drop me an e-mail at <a href="mailto:bruno.ramaral@gmail.com" class="about-contact-link">bruno.ramaral@gmail.com</a> or use the Contact form in the navigation bar above.</p>
+      </div>
+    </div>
+
+    <div class="about-col-right">
+      <div class="about-section-header">
+        <i class="bi bi-lightning-charge-fill"></i> SKILLS
+      </div>
+      <table class="about-skills-table">
+        <thead>
+          <tr>
+            <th>SKILL</th>
+            <th>XP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Developer</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip"></span></div></td>
+          </tr>
+          <tr>
+            <td>AI Specialist</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip"></span></div></td>
+          </tr>
+          <tr>
+            <td>DIY</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span></div></td>
+          </tr>
+          <tr>
+            <td>Kitbashing</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip"></span><span class="xp-pip"></span><span class="xp-pip"></span><span class="xp-pip"></span></div></td>
+          </tr>
+          <tr>
+            <td>Blender 3D</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip"></span><span class="xp-pip"></span><span class="xp-pip"></span><span class="xp-pip"></span></div></td>
+          </tr>
+          <tr>
+            <td>Tinkercad</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip"></span><span class="xp-pip"></span></div></td>
+          </tr>
+          <tr>
+            <td>3D Printing</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip"></span><span class="xp-pip"></span></div></td>
+          </tr>
+          <tr>
+            <td>Painting</td>
+            <td><div class="xp-bar"><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip filled"></span><span class="xp-pip"></span><span class="xp-pip"></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="about-footer">
+    <div class="about-footer-faction">
+      <span class="about-footer-label">INTERESTS:</span>
+      Miniature Painting &nbsp;·&nbsp; Helmet Painting &nbsp;·&nbsp; Diorama Building &nbsp;·&nbsp; LED Dioramas &nbsp;·&nbsp; 3D Modelling &nbsp;·&nbsp; Kitbashing &nbsp;·&nbsp; Miniature Photography &nbsp;·&nbsp; Collection Management
     </div>
   </div>
 
@@ -1174,7 +1282,8 @@ function switchTab(tab) {
       'effects': 'EFFECTS',
       'putty': 'PUTTY',
       'projects': 'PROJECTS',
-      'recipes': 'PAINT RECIPES'
+      'recipes': 'PAINT RECIPES',
+      'about': 'ABOUT'
     };
     const mobileIndicator = document.getElementById('mobileTabIndicator');
     if (mobileIndicator) {
@@ -1206,7 +1315,7 @@ function switchTab(tab) {
     }
     validateSearchButton();
 
-    if (tab === 'putty' || tab === 'projects' || tab === 'recipes') {
+    if (tab === 'putty' || tab === 'projects' || tab === 'recipes' || tab === 'about') {
       if (resultsEl) {
         resultsEl.innerHTML = '';
         resultsEl.classList.add('massa-active');
@@ -1478,6 +1587,14 @@ function performSearch() {
         const resultsContainer = document.getElementById('results');  
         resultsContainer.innerHTML = htmlPutty; 
         resultsInfo.innerHTML = "<p>Technical reference guide for fillers</p>";
+        document.querySelector('.search-controls').style.display = 'none';
+        return;
+    }
+
+    if (currentTab === TAB_NAMES.ABOUT) {
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = htmlAbout;
+        resultsInfo.innerHTML = '';
         document.querySelector('.search-controls').style.display = 'none';
         return;
     }

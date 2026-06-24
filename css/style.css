@@ -2231,3 +2231,317 @@ header p {
   }
 }
 
+/* ============================================================
+   ABOUT TAB — Warhammer 40K Datasheet Layout
+   ============================================================ */
+
+.about-datasheet {
+  max-width: 900px;
+  margin: 0 auto;
+  border: 2px solid #5a3a1a;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: #1e1e2e;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+}
+
+/* --- Header --- */
+.about-header {
+  background: linear-gradient(135deg, #6b0f0f 60%, #8b1a1a 100%);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 130px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-header-text {
+  padding: 20px 24px;
+  flex: 1;
+  z-index: 1;
+}
+
+.about-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.about-stats-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.about-stat {
+  background: #e8d5a3;
+  min-width: 52px;
+  padding: 4px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  /* top-left & bottom-right: 90° sharp | top-right & bottom-left: chamfered */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 9px) 0,
+    100% 9px,
+    100% 100%,
+    9px 100%,
+    0 calc(100% - 9px)
+  );
+  filter: drop-shadow(0 0 1.5px #8b6914) drop-shadow(0 0 1px #8b6914);
+}
+
+.about-stat-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #3a2000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.about-stat-value {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #1a0a00;
+  line-height: 1.1;
+}
+
+.about-header-image {
+  width: 160px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.about-header-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* --- Body --- */
+.about-body {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  border-top: 3px solid #5a3a1a;
+}
+
+.about-col-left {
+  border-right: 2px solid #3f4052;
+  padding: 0 0 16px 0;
+}
+
+.about-col-right {
+  padding: 0 0 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Section headers (brown bar) --- */
+.about-section-header {
+  background: linear-gradient(90deg, #5a3a1a, #7a5022);
+  color: #e8d5a3;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #8b6914;
+}
+
+/* --- Skills table --- */
+.about-skills-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.about-skills-table thead tr {
+  background: #2a2a3e;
+  border-bottom: 1px solid #5a3a1a;
+}
+
+.about-skills-table th {
+  color: #d4af37;
+  padding: 6px 14px;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.about-skills-table tbody tr {
+  border-bottom: 1px solid #2a2a3e;
+  transition: background 0.15s;
+}
+
+.about-skills-table tbody tr:hover {
+  background: rgba(212, 175, 55, 0.07);
+}
+
+.about-skills-table td {
+  padding: 6px 14px;
+  color: #d0d0e0;
+  vertical-align: middle;
+}
+
+.about-skills-table td:first-child {
+  color: #d0d0e0;
+  font-size: 0.85rem;
+}
+
+/* --- XP pip bar --- */
+.xp-bar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.xp-pip {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #8b6914;
+  border-radius: 2px;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.xp-pip.filled {
+  background: #d4af37;
+  box-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
+}
+
+/* Tooltip font size override for About stats */
+.tooltip-inner {
+  font-size: 0.8em;
+}
+
+/* --- About Me text block --- */
+.about-text-block {
+  padding: 14px 16px;
+  flex: 1;
+}
+
+.about-text-block p {
+  font-size: 0.88rem;
+  color: #c8c8d8;
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+
+.about-text-block p:last-child {
+  margin-bottom: 0;
+}
+
+.about-contact-link {
+  color: #d4af37;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+  transition: border-color 0.2s;
+}
+
+.about-contact-link:hover {
+  color: #f0cc5a;
+  border-bottom-color: #f0cc5a;
+}
+
+/* --- Footer --- */
+.about-footer {
+  background: #161622;
+  border-top: 3px solid #5a3a1a;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  flex-wrap: wrap;
+}
+
+.about-footer-keywords {
+  flex: 1;
+  color: #c8c8d8;
+  min-width: 0;
+}
+
+.about-footer-faction {
+  flex: 2;
+  color: #c8c8d8;
+  min-width: 0;
+}
+
+.about-footer-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #e8d5a3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.about-footer-icon {
+  color: #d4af37;
+  font-size: 1.2rem;
+  padding-top: 6px;
+  flex-shrink: 0;
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .about-name {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+  }
+
+  .about-header-image {
+    width: 100px;
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .about-stat {
+    min-width: 42px;
+    padding: 3px 6px;
+  }
+
+  .about-stat-value {
+    font-size: 0.9rem;
+  }
+
+  .about-body {
+    grid-template-columns: 1fr;
+  }
+
+  .about-col-left {
+    border-right: none;
+    border-bottom: 2px solid #3f4052;
+  }
+
+  .about-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .about-footer-icon {
+    display: none;
+  }
+}
