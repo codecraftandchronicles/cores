@@ -538,7 +538,7 @@ const htmlAbout = `
       </div>
     </div>
     <div class="about-header-image">
-      <img src="img/about.jpeg" alt="Bruno Amaral">
+      <img src="img/about2.jpeg" alt="Bruno Amaral">
     </div>
   </div>
 
@@ -2836,7 +2836,8 @@ function syncTabWithHash() {
     [TAB_NAMES.EFFECTS]: TAB_NAMES.EFFECTS,
     [TAB_NAMES.PUTTY]: TAB_NAMES.PUTTY,
     [TAB_NAMES.PROJECTS]: TAB_NAMES.PROJECTS,
-    [TAB_NAMES.RECIPES]: TAB_NAMES.RECIPES
+    [TAB_NAMES.RECIPES]: TAB_NAMES.RECIPES,
+    [TAB_NAMES.ABOUT]: TAB_NAMES.ABOUT
   };
 
   if (tabMap[hash]) {
