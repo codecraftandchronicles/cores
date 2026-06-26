@@ -538,7 +538,7 @@ const htmlAbout = `
       </div>
     </div>
     <div class="about-header-image">
-      <img src="img/about.jpeg" alt="Bruno Amaral">
+      <img src="img/about2.jpeg" alt="Bruno Amaral">
     </div>
   </div>
 
