@@ -500,7 +500,7 @@
          "Primary Function":"Opaque Base Black — Foundational black colour for primers, basecoats, armour panels, and for correcting mistakes. Smooth and consistent finish.",
          "Strategic Use":"Ideal for Black Legion armour or the under-suits of Space Marines. Use as a base for highlighting with greys like Eshin Grey and Dawnstone to create volume.",
          "Keywords":"Black, Base, Armour, Black Legion, Corrector",
-         "Owned":"TrFalseue"
+         "Owned":"False"
       },
       {
          "Base Colour":"Mephiston Red",
@@ -556,53 +556,50 @@
          "Keywords": "Vibrant, Intense, Game Color, Acrylic, Drop Bottle",
          "Owned":"True"
       },
-+      {
-+         "Base Colour":"OLD GOLD (Model Color)",
-+         "Code":"70.878",
-+         "Hex":"#C2882A",
-+         "Manufacturer":"Vallejo",
-+         "Temperature":"Warm",
-+         "Phase":"Base\/Metallic",
-+         "Saturation":"Medium",
-+         "Primary Function":"Warm antique gold metallic — dense acrylic good for brush details and traditional model finishes.",
-+         "Strategic Use":"Best over black primer for depth on 3D-printed miniatures; apply in thin layers for brush work; glaze with brown or umber washes for aged appearance. Works well on textured and smooth surfaces.",
-+         "Complementary":"DEEP PURPLE",
-+         "Role of Complementary":"Chromatic shadow — deep purple/violet provides rich contrast that enhances perceived warmth and shine of gold.",
-+         "Keywords":"Vallejo, Model Color, Old Gold, Metallic, Brush, 3D Prints, Antique",
-+         "Notes":"Portuguese reference: 'Sim, a Vallejo tem excelentes alternativas ... Vallejo Model Color - Old Gold (70.878) ... tinta acrílica densa, com um tom de ouro mais antigo e levemente esverdeado/bronzeado.'",
-+         "Owned":"False"
-+      },
-+      {
-+         "Base Colour":"POLISHED GOLD (Game Color)",
-+         "Code":"72.055",
-+         "Hex":"#D1B053",
-+         "Manufacturer":"Vallejo",
-+         "Temperature":"Warm",
-+         "Phase":"Base\/Highlight\/Metallic",
-+         "Saturation":"Vibrant",
-+         "Primary Function":"Bright, saturated metallic suitable for fantasy miniatures; provides a vivid polished gold finish.",
-+         "Strategic Use":"Great for trimmed details and highlights; layer over a dark base for contrast; combine with bright highlights and brown washes for shaded depth.",
-+         "Complementary":"DEEP PURPLE",
-+         "Role of Complementary":"Creates strong chromatic contrast that makes polished highlights read as brighter and more reflective.",
-+         "Keywords":"Vallejo, Game Color, Polished Gold, Metallic, Fantasy, Highlights",
-+         "Notes":"Portuguese reference mentions Polished Gold (72.055) as a more vivid option for fantasy miniatures.",
-+         "Owned":"False"
-+      },
-+      {
-+         "Base Colour":"GOLD (Metal Color)",
-+         "Code":"77.725",
-+         "Hex":"#D3C6AF",
-+         "Manufacturer":"Vallejo",
-+         "Temperature":"Warm",
-+         "Phase":"Base\/Highlight\/Metallic (TMM)",
-+         "Saturation":"Light\/Reflective",
-+         "Primary Function":"High-quality metallic finish — thin and flowy, excellent for airbrushing and achieving smooth metallic surfaces.",
-+         "Strategic Use":"Best applied thinly (airbrush or multiple thin brush coats) over black primer for maximum depth; particularly suited to smooth 3D prints and fine metalwork. Tends to behave like an ink — avoid heavy brushwork.",
-+         "Complementary":"DEEP PURPLE",
-+         "Role of Complementary":"Produces rich chromatic shadows and improves perceived metallic sheen in TMM approaches.",
-+         "Keywords":"Vallejo, Metal Color, Gold, Airbrush, Thin, Metallic, 3D Prints",
-+         "Notes":"Portuguese reference highlights Metal Color Gold (77.725) as thin, ink-like, and ideal for airbrush/smooth 3D surfaces.",
-+         "Owned":"False"
-+      }
+      {
+         "Base Colour":"OLD GOLD (Model Color)",
+         "Code":"70.878",
+         "Hex":"#C2882A",
+         "Manufacturer":"Vallejo",
+         "Temperature":"Warm",
+         "Phase":"Base\/Metallic",
+         "Saturation":"Medium",
+         "Primary Function":"Warm antique gold metallic — dense acrylic good for brush details and traditional model finishes.",
+         "Strategic Use":"Best over black primer for depth on 3D-printed miniatures; apply in thin layers for brush work; glaze with brown or umber washes for aged appearance. Works well on textured and smooth surfaces.",
+         "Complementary":"DEEP PURPLE",
+         "Role of Complementary":"Chromatic shadow — deep purple/violet provides rich contrast that enhances perceived warmth and shine of gold.",
+         "Keywords":"Vallejo, Model Color, Old Gold, Metallic, Brush, 3D Prints, Antique",
+         "Owned":"False"
+      },
+      {
+         "Base Colour":"POLISHED GOLD (Game Color)",
+         "Code":"72.055",
+         "Hex":"#D1B053",
+         "Manufacturer":"Vallejo",
+         "Temperature":"Warm",
+         "Phase":"Base\/Highlight\/Metallic",
+         "Saturation":"Vibrant",
+         "Primary Function":"Bright, saturated metallic suitable for fantasy miniatures; provides a vivid polished gold finish.",
+         "Strategic Use":"Great for trimmed details and highlights; layer over a dark base for contrast; combine with bright highlights and brown washes for shaded depth.",
+         "Complementary":"DEEP PURPLE",
+         "Role of Complementary":"Creates strong chromatic contrast that makes polished highlights read as brighter and more reflective.",
+         "Keywords":"Vallejo, Game Color, Polished Gold, Metallic, Fantasy, Highlights",
+         "Owned":"False"
+      },
+      {
+         "Base Colour":"GOLD (Metal Color)",
+         "Code":"77.725",
+         "Hex":"#D3C6AF",
+         "Manufacturer":"Vallejo",
+         "Temperature":"Warm",
+         "Phase":"Base\/Highlight\/Metallic (TMM)",
+         "Saturation":"Light\/Reflective",
+         "Primary Function":"High-quality metallic finish — thin and flowy, excellent for airbrushing and achieving smooth metallic surfaces.",
+         "Strategic Use":"Best applied thinly (airbrush or multiple thin brush coats) over black primer for maximum depth; particularly suited to smooth 3D prints and fine metalwork. Tends to behave like an ink — avoid heavy brushwork.",
+         "Complementary":"DEEP PURPLE",
+         "Role of Complementary":"Produces rich chromatic shadows and improves perceived metallic sheen in TMM approaches.",
+         "Keywords":"Vallejo, Metal Color, Gold, Airbrush, Thin, Metallic, 3D Prints",
+         "Owned":"False"
+      }
     ]
  }
