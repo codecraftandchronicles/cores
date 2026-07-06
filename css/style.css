@@ -779,11 +779,13 @@ header p {
     justify-content: center;
     width: 44px;
     height: 44px;
+    text-decoration: none;
+    border-bottom: none;
 }
 
 .footer-links a:before {
     font-family: "Font Awesome 6 Brands";
-    font-weight: 900;
+    font-weight: 400;
 }
 
 .footer-links a[title="Instagram"]:before {
@@ -791,7 +793,7 @@ header p {
 }
 
 .footer-links a[title="Blog"]:before {
-    content: "\f198"; /* WordPress icon */
+    content: "\f19a"; /* WordPress icon */
 }
 
 .footer-links a i {
