@@ -29,6 +29,10 @@ obj/
 *.tmp
 *.log
 
+# Playwright MCP (diagnóstico de browser — gerado automaticamente)
+.playwright-mcp/
+network-requests.txt
+
 # Playwright
 /test-results/
 /playwright-report/
