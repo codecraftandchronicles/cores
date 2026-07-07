@@ -34,11 +34,7 @@
          "Hex":"#E34234",
          "Manufacturer":"AK",
          "Phase":"Base\/Highlight",
-<<<<<<< HEAD
          "Value\/Lightness":"Medium",
-=======
-         "Saturation":"Low\/Medium",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Base\/Intermediate Tone — Warm and vibrant colour, excellent for highlights of earth tones or as a base for reddish and rusty wood.",
          "Strategic Use":"Use in light drybrush for warm highlights on reddish wood or leather. Apply with stippling to create rust or earth texture.",
          "Complementary":"ARCHAIC TURQUOISE",
@@ -66,11 +62,7 @@
          "Hex":"#5D8AA8",
          "Manufacturer":"AK",
          "Phase":"Base\/Highlight",
-<<<<<<< HEAD
          "Value\/Lightness":"Medium",
-=======
-         "Saturation":"Low",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Base Tone\/Blue Highlight — Lighter and less saturated blue than Ultramarine. Ideal for cold base layers or for highlighting edges of darker blues.",
          "Strategic Use":"Essential for edge highlighting on bluish armour or fine fabrics. Can be mixed with skin tones to create realistic cold shadows.",
          "Complementary":"LIGHT ORANGE",
@@ -98,11 +90,7 @@
          "Hex":"#F5F5DC",
          "Manufacturer":"AK",
          "Phase":"Base",
-<<<<<<< HEAD
          "Value\/Lightness":"Very Light",
-=======
-         "Saturation":"Low\/Medium",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Neutral\/Warm Base Tone — Used for cloaks and scrolls and as a base colour for mortar or light stone in dioramas.",
          "Strategic Use":"Versatile base for scrolls, bones and cloaks. Excellent for receiving earth tone washes and for texturing light stone surfaces.",
          "Complementary":"AMETHYST BLUE",
@@ -116,11 +104,7 @@
          "Hex":"#FFFFF0",
          "Manufacturer":"AK",
          "Phase":"Highlight",
-<<<<<<< HEAD
          "Value\/Lightness":"Very Light",
-=======
-         "Saturation":"Low",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Highlight\/Light Point — The lightest tone for Beige fabric highlights or for the most illuminated points of stone\/bone.",
          "Strategic Use":"Ideal for final highlights on scrolls, purity seals etc. Use for detailed freehand writing with a fine-tip brush over Beige bases. Perfect colour for illuminating the sh[...],",
          "Complementary":"DEEP PURPLE",
@@ -162,11 +146,7 @@
          "Hex":"#F7D5B4",
          "Manufacturer":"AK",
          "Phase":"Base\/Highlight",
-<<<<<<< HEAD
          "Value\/Lightness":"Very Light",
-=======
-         "Saturation":"Low\/Medium",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Base Tone\/Warm Highlight — Mainly for skin painting. Also useful as a warm, yellowish highlight for stone and earth textures, complementing your Beige.",
          "Strategic Use":"Fundamental colour to illuminate the high volumes of the face (forehead, nose and cheekbones). Can be used to simulate the warm sun reflection hitting the staircase ston[...],",
          "Complementary":"DARK PRUSSIAN BLUE",
@@ -236,11 +216,7 @@
          "Hex":"#98FF98",
          "Manufacturer":"AK",
          "Phase":"Highlight\/Filter",
-<<<<<<< HEAD
          "Value\/Lightness":"Light",
-=======
-         "Saturation":"Low",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Cold Light Contrast: Perfect for simulating moonlight reflections or cold light on metallic\/leather surfaces. Acts as the \"negative\" of orange to balance light.",
          "Strategic Use":"Use as a filter on metals to simulate moonlight reflections. Apply in fine highlights on leather to balance warm tones and give a touch of freshness.",
          "Complementary":"MATT RED",
@@ -266,13 +242,8 @@
          "Hex":"#f3e601",
          "Manufacturer":"AK",
          "Phase":"Highlight",
-<<<<<<< HEAD
          "Value\/Lightness":"Medium",
          "Primary Function":"Sunlight Highlight: The ideal colour for making the \"light point\" on warm colours (red, skin, yellow). Gives a natural light appearance instead of artificial light.[...],",
-=======
-         "Saturation":"Low",
-         "Primary Function":"Sunlight Highlight: The ideal colour for making the \"light point\" on warm colours (red, skin, yellow). Gives a natural light appearance instead of artificial light.",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Strategic Use":"Use in fine highlights to simulate direct intense sunlight on warm colours (reds, oranges). Mix for light skin tones.",
          "Complementary":"DEEP PURPLE",
          "Role of Complementary":"Complementary Shadow: Instead of using black to shade yellow (which would create an ugly sludge green), use purple to create deep, rich and natural shadows.",
@@ -341,11 +312,7 @@
          "Hex":"#FFB347",
          "Manufacturer":"AK",
          "Phase":"Highlight",
-<<<<<<< HEAD
          "Value\/Lightness":"Light",
-=======
-         "Saturation":"Low",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Warm Sunlight Highlight — Excellent for illuminating fabrics, leather and gold metals while maintaining chromatic richness without resorting to pure yellow.",
          "Strategic Use":"Use in glazing on reds to intensify heat. Apply in fine highlights on gold or bronze to simulate reflection of flames or embers.",
          "Complementary":"ULTRAMARINE",
@@ -531,11 +498,7 @@
          "Hex":"#BDB5A1",
          "Manufacturer":"Citadel",
          "Phase":"Base",
-<<<<<<< HEAD
          "Value\/Lightness":"Light",
-=======
-         "Saturation":"Low",
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
          "Primary Function":"Flesh\/Bone Base Tone — A versatile, warm off-white. Ideal for bone, parchment, pale skin, cloth, and light-coloured stone.",
          "Strategic Use":"Use as a basecoat for any bone or parchment elements. Shade with Agrax Earthshade or Seraphim Sepia for an aged look. Highlight with Pallid Wych Flesh.",
          "Keywords":"Bone, Parchment, Pale Skin, Stone, Base",
@@ -556,7 +519,6 @@
          "Owned":"True"
       },
       {
-<<<<<<< HEAD
          "Base Colour":"OLD GOLD (MODEL COLOR)",
          "Code":"70.878",
          "Hex":"#C2882A",
@@ -600,51 +562,3 @@
       }
     ]
  }
-=======
-          "Base Colour": "OLD GOLD (Model Color)",
-          "Code": "70.878",
-          "Hex": "#766950",
-          "Manufacturer": "Vallejo",
-          "Temperature": "Warm",
-          "Phase": "Base/Metallic",
-          "Saturation": "Low\/Medium",
-          "Primary Function": "Warm antique gold metallic — matte acrylic with high pigment density, suitable for brush application on miniatures.",
-          "Strategic Use": "Best over black primer for depth on 3D-printed miniatures; apply in thin layers for brush work; glaze with brown or umber washes for an aged appearance.",
-          "Complementary": "DEEP PURPLE",
-          "Role of Complementary": "Chromatic shadow — deep purple/violet provides rich contrast that enhances perceived warmth and shine of gold.",
-          "Keywords": "Vallejo, Model Color, Old Gold, Metallic, Brush, 3D Prints, Antique",
-          "Owned": "False"
-      },
-      {
-          "Base Colour": "POLISHED GOLD (Game Color)",
-          "Code": "72.055",
-          "Hex": "#D2AE22",
-          "Manufacturer": "Vallejo",
-          "Temperature": "Warm",
-          "Phase": "Base/Highlight/Metallic",
-          "Saturation": "Vibrant",
-          "Primary Function": "Bright, saturated metallic suitable for fantasy miniatures; provides a vivid polished gold finish.",
-          "Strategic Use": "Layer over a dark base for contrast; use for trimmed details and highlights; combine with bright highlights and brown washes for shaded depth.",
-          "Complementary": "DEEP PURPLE",
-          "Role of Complementary": "Creates strong chromatic contrast that makes polished highlights read as brighter and more reflective.",
-          "Keywords": "Vallejo, Game Color, Polished Gold, Metallic, Fantasy, Highlights",
-          "Owned": "False"     
-      },
-     {
-          "Base Colour": "GOLD (Metal Color)",
-          "Code": "77.725",
-          "Hex": "#8F7341",
-          "Manufacturer": "Vallejo",
-          "Temperature": "Warm",
-          "Phase": "Base/Metallic (TMM)",
-          "Saturation": "Medium",
-          "Primary Function": "High-quality metallic finish with aluminium pigments — thin and flowy, excellent for airbrushing and achieving smooth metallic surfaces.",
-          "Strategic Use": "Apply thinly (airbrush or multiple thin brush coats) over black primer for maximum depth; suited to smooth 3D prints and fine metalwork. Wait 12h before applying masks.",
-          "Complementary": "DEEP PURPLE",
-          "Role of Complementary": "Produces rich chromatic shadows and improves perceived metallic sheen in TMM approaches.",
-          "Keywords": "Vallejo, Metal Color, Gold, Airbrush, Thin, Metallic, 3D Prints, Aluminium Pigments",
-          "Owned": "False"
-     }
-   ]
-}
->>>>>>> 83a4b61ada1a0df5b0be26cb41e165909d466056
