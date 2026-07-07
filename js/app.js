@@ -15,9 +15,8 @@ const FIELD_KEYS = Object.freeze({
   PRODUCT_NAME: 'Product Name',
   CODE: 'Code',
   HEX: 'Hex',
-  TEMPERATURE: 'Temperature',
   PHASE: 'Phase',
-  SATURATION: 'Saturation',
+  VALUE_LIGHTNESS: 'Value/Lightness',
   MANUFACTURER: 'Manufacturer',
   COMPLEMENTARY: 'Complementary',
   ROLE_OF_COMPLEMENTARY: 'Role of Complementary',
@@ -391,7 +390,7 @@ let currentTabOperation = null;
 let lastTabSwitchTime = 0;
 let searchDebounceTimeout = null; // Global debounce timeout
 const TAB_SWITCH_DEBOUNCE = 300; // ms
-const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Temperature','Phase','Saturation Level', 'Manufacturer', 'Owned'];
+const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Phase', 'Value/Lightness', 'Manufacturer', 'Owned'];
 let colorMap = {};
 
 // Legacy global variables (kept for backward compatibility during transition)
@@ -402,9 +401,8 @@ let allDataTools = { tools: [] };
 const configFiltros = {    
     'EN': {
         'colours': {
-            'Temperature': ['Warm', 'Cold', 'Neutral'],
             'Phase': ['Base', 'Shadow', 'Highlight', 'Filter', 'Fluorescent', 'TMM'],
-            'Saturation': ['Light', 'Medium', 'Dark'],
+            'Value/Lightness': ['Very Light', 'Light', 'Medium', 'Dark'],
             'Manufacturer': ['AK', 'Citadel', 'Vallejo']
         },
         'effects': {
