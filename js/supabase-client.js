@@ -70,7 +70,13 @@ async function _getPublicIP() {
  */
 async function getVoteCounts(paintCodes) {
     if (!paintCodes || paintCodes.length === 0) return {};
-    const encodedCodes = paintCodes.map(code => encodeURIComponent(code)).join(',');
+    // PostgREST `in.(...)` exige aspas duplas em valores com caracteres
+    // reservados — ( ) , espaços, aspas. Sem isso, chaves como
+    // "Gold Armour (TMM Airbrush)" partem o filtro e a maioria dos votos
+    // é silenciosamente ignorada (contagens vêm a 0).
+    const encodedCodes = paintCodes
+        .map(code => encodeURIComponent('"' + String(code).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"'))
+        .join(',');
     const url   = `${SUPABASE_URL}/rest/v1/paint_votes?paint_code=in.(${encodedCodes})&select=paint_code,vote_type`;
     const response = await fetch(url, { headers: _HEADERS });
     if (!response.ok) throw new Error(`getVoteCounts HTTP ${response.status}`);
