@@ -3,7 +3,7 @@
     {
       "ProjectName": "Tower of Óbidos",
       "Status": "In Progress",
-      "Pct": "20%",
+      "Pct": "30%",
       "Description": "<strong>Reclaiming History – The Tower of Óbidos Diorama (Pre-Production)</strong>\nEvery great diorama begins not with the first brushstroke, but with a vision and a carefully curated workbench. This upcoming project marks the beginning of a dedicated build: recreating a realistic, atmospheric miniature scene centered around the historic Tower of Óbidos, a legendary Portuguese landmark.\n\nThe Catalyst:\nThe centerpiece of this project is a traditional resin tower souvenir purchased in the medieval village of Óbidos. While it captures the general architecture, it currently sits as a flat, dark plastic-like object. The goal of this build is to ground it in a living, breathing landscape, giving it the scale, grime, and history it deserves.\n\nThe Alchemist's Workbench (Materials & DIY Recipes):\nBefore the assembly begins, a unique selection of orthodox and unorthodox materials has been gathered, setting the stage for some heavy texture experimentation:\n\nThe Foundation: High-density XPS foam will be carved to create the rugged terrain elevation and rocky outcrops where the tower will stand.\n\nThe Custom Structural Paste: Instead of relying on expensive off-the-shelf textures, a homemade, high-strength compound will be mixed. This unique recipe combines shredded egg carton cardboard, PVA glue, and Axton flexible tile grout. This creates an ultra-durable, easily moldable plaster paste perfect for realistic groundwork, stone filling, and organic transitions.\n\nOrganic Textures: Finely dried coffee grounds will be used to simulate organic earth, rich soil, and historical debris accumulated at the base of the fortress.\n\nWeathering & Flora: A massive array of AK Interactive technical paints (including rust and grime streaks), static grass tufts, and dried flora are standing by to turn this clean workbench into a weathered, ancient outpost. \n\nThe materials are gathered, the recipes are set, and the workbench is ready. The next step is getting our hands dirty to turn raw foam, cardboard, and resin into a piece of medieval history.",
       "FinishDate": "",
       "Materials": {
@@ -11,7 +11,7 @@
         "Effects": [],
         "Tools": []
       },
-      "ProjectImage": ["obidos_tower.png", "obidos_tower2.png"]
+      "ProjectImage": ["obidos_tower.png", "obidos_tower2.png", "obidos_tower3.jpeg", "obidos_tower4.jpeg", "obidos_tower5.jpeg", "obidos_tower6.jpeg"]
     },
     {
       "ProjectName": "Greek Helmet",
