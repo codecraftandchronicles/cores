@@ -19,9 +19,12 @@
  *   );
  *   create index on paint_votes (paint_code);
  *   alter table paint_votes enable row level security;
- *   create policy "Allow public read"    on paint_votes for select using (true);
- *   create policy "Allow public insert"  on paint_votes for insert with check (true);
- *   create policy "Allow session delete" on paint_votes for delete using (true);
+ *   create policy "Allow public read" on paint_votes for select using (true);
+ *
+ *   Writes (insert/delete) go through SECURITY DEFINER functions instead of
+ *   permissive RLS policies -- see sql/paint_votes_rls_hardening.sql.
+ *   Direct INSERT/DELETE are revoked from the anon role; the anon key can only
+ *   SELECT the table and EXECUTE cast_vote / retract_vote.
  */
 
 const SUPABASE_URL  = 'https://jhuvfnczlnlgkpdqkwau.supabase.co';
@@ -82,19 +85,21 @@ async function getVoteCounts(paintCodes) {
 }
 
 /**
- * Inserts a single vote row. Includes voter_ip for anti-spam analysis.
+ * Registers a single vote via the cast_vote RPC. The function validates the
+ * payload and enforces one vote per session/paint. Includes voter_ip for
+ * anti-spam analysis.
  */
 async function registerVote(paintCode, voteType) {
     const ip  = await _getPublicIP();
-    const url = `${SUPABASE_URL}/rest/v1/paint_votes`;
+    const url = `${SUPABASE_URL}/rest/v1/rpc/cast_vote`;
     const response = await fetch(url, {
         method:  'POST',
         headers: { ..._HEADERS, 'Prefer': 'return=minimal' },
         body:    JSON.stringify({
-            paint_code: paintCode,
-            vote_type:  voteType,
-            session_id: _getSessionId(),
-            voter_ip:   ip
+            p_paint_code: paintCode,
+            p_vote_type:  voteType,
+            p_session_id: _getSessionId(),
+            p_voter_ip:   ip
         })
     });
     if (!response.ok) throw new Error(`registerVote HTTP ${response.status}`);
@@ -102,14 +107,18 @@ async function registerVote(paintCode, voteType) {
 }
 
 /**
- * Deletes all votes by this session for a given paint code (un-vote).
+ * Removes this session's vote for a given paint code (un-vote) via the
+ * retract_vote RPC, which is scoped to the caller's session_id.
  */
 async function deleteVote(paintCode) {
-    const sessionId = _getSessionId();
-    const url = `${SUPABASE_URL}/rest/v1/paint_votes?paint_code=eq.${encodeURIComponent(paintCode)}&session_id=eq.${encodeURIComponent(sessionId)}`;
+    const url = `${SUPABASE_URL}/rest/v1/rpc/retract_vote`;
     const response = await fetch(url, {
-        method:  'DELETE',
-        headers: { ..._HEADERS, 'Prefer': 'return=minimal' }
+        method:  'POST',
+        headers: { ..._HEADERS, 'Prefer': 'return=minimal' },
+        body:    JSON.stringify({
+            p_paint_code: paintCode,
+            p_session_id: _getSessionId()
+        })
     });
     if (!response.ok) throw new Error(`deleteVote HTTP ${response.status}`);
     return true;
