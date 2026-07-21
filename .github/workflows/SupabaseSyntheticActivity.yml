@@ -6,22 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  synthetic-cycle:
+  synthetic-insert:
     runs-on: ubuntu-latest
     steps:
-      - name: Decide fase do ciclo (par = insere, ímpar = limpa)
-        id: phase
-        run: |
-          HOUR=$(date -u +%H)
-          if [ $((10#$HOUR % 2)) -eq 0 ]; then
-            echo "mode=insert" >> "$GITHUB_OUTPUT"
-          else
-            echo "mode=delete" >> "$GITHUB_OUTPUT"
-          fi
-          echo "Hora UTC: $HOUR -> modo: $(cat "$GITHUB_OUTPUT")"
-
       - name: Inserir linha sintética
-        if: steps.phase.outputs.mode == 'insert'
         run: |
           CODE=$(curl -s -o /dev/null -w "%{http_code}" \
             -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/paint_votes_synthetic" \
@@ -41,4 +29,4 @@ jobs:
           else
             echo "❌ Falha ao inserir (HTTP $CODE). Verifique a key/policy."
             exit 1
-          fi    
+          fi
