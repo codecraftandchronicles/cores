@@ -23,7 +23,7 @@ jobs:
       - name: Inserir linha sintética
         if: steps.phase.outputs.mode == 'insert'
         run: |
-          curl -s -o /dev/null -w "HTTP %{http_code}\n" \
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" \
             -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/paint_votes_synthetic" \
             -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
@@ -34,15 +34,27 @@ jobs:
                   "vote_type": "like",
                   "session_id": "gh-actions-keepalive",
                   "voter_ip": "localhost"
-                }'
-          echo "✅ Linha sintética inserida."
+                }')
+          echo "HTTP Status: $CODE"
+          if [ "$CODE" -ge 200 ] && [ "$CODE" -lt 300 ]; then
+            echo "✅ Linha sintética inserida."
+          else
+            echo "❌ Falha ao inserir (HTTP $CODE). Verifique a key/policy."
+            exit 1
+          fi
 
       - name: Limpar linhas sintéticas
         if: steps.phase.outputs.mode == 'delete'
         run: |
-          curl -s -o /dev/null -w "HTTP %{http_code}\n" \
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" \
             -X DELETE "${{ secrets.SUPABASE_URL }}/rest/v1/paint_votes_synthetic?voter_ip=eq.localhost" \
             -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
-            -H "Prefer: return=minimal"
-          echo "🧹 Linhas sintéticas removidas."
+            -H "Prefer: return=minimal")
+          echo "HTTP Status: $CODE"
+          if [ "$CODE" -ge 200 ] && [ "$CODE" -lt 300 ]; then
+            echo "🧹 Linhas sintéticas removidas."
+          else
+            echo "❌ Falha ao limpar (HTTP $CODE). Verifique a key/policy."
+            exit 1
+          fi
