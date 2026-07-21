@@ -1,0 +1,48 @@
+name: Supabase Synthetic Activity
+on:
+  schedule:
+    # Roda a cada hora, no minuto 0
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  synthetic-cycle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide fase do ciclo (par = insere, ímpar = limpa)
+        id: phase
+        run: |
+          HOUR=$(date -u +%H)
+          if [ $((10#$HOUR % 2)) -eq 0 ]; then
+            echo "mode=insert" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=delete" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Hora UTC: $HOUR -> modo: $(cat "$GITHUB_OUTPUT")"
+
+      - name: Inserir linha sintética
+        if: steps.phase.outputs.mode == 'insert'
+        run: |
+          curl -s -o /dev/null -w "HTTP %{http_code}\n" \
+            -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/paint_votes_synthetic" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d '{
+                  "paint_code": "SYNTHETIC_KEEPALIVE",
+                  "vote_type": "like",
+                  "session_id": "gh-actions-keepalive",
+                  "voter_ip": "localhost"
+                }'
+          echo "✅ Linha sintética inserida."
+
+      - name: Limpar linhas sintéticas
+        if: steps.phase.outputs.mode == 'delete'
+        run: |
+          curl -s -o /dev/null -w "HTTP %{http_code}\n" \
+            -X DELETE "${{ secrets.SUPABASE_URL }}/rest/v1/paint_votes_synthetic?voter_ip=eq.localhost" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+            -H "Prefer: return=minimal"
+          echo "🧹 Linhas sintéticas removidas."
