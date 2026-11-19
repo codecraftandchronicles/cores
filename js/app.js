@@ -389,6 +389,7 @@ let searchField = "Select field...", noResults = "No results found", showing = "
 let currentTabOperation = null;
 let lastTabSwitchTime = 0;
 let searchDebounceTimeout = null; // Global debounce timeout
+let copyNotificationTimeout = null;
 const TAB_SWITCH_DEBOUNCE = 300; // ms
 const fieldsToIgnoreEN = ['Hex', 'Role of Complementary', 'Complementary', 'Phase', 'Value/Lightness', 'Manufacturer', 'Owned'];
 let colorMap = {};
@@ -1897,9 +1898,13 @@ function createCard(item) {
     return '';
   }
   
+  const itemCode = String(item[FIELD_KEYS.CODE] ?? '');
   const mainHex = item['Hex'] || '#ccc';
   const mainContrast = getContrastColor(mainHex);
   const mainSpecialClass = getSpecialClass(mainHex);
+  const copyCodeButton = itemCode
+    ? `<button type="button" class="copy-code-btn" data-code="${escapeHtml(itemCode)}" aria-label="Copy code ${escapeHtml(itemCode)}" title="Copy code" onclick="copyCodeToClipboard(this, event)">Copy</button>`
+    : '';
 
 
     let cardHTML = `
@@ -1911,7 +1916,10 @@ function createCard(item) {
             ${escapeHtml(item[FIELD_KEYS.HEX]?.toUpperCase() || item[FIELD_KEYS.STATUS] || '')}
           </span>
         </div>
-        <span class="card-code">${escapeHtml((item[FIELD_KEYS.CODE] || '').toUpperCase())}</span>        
+        <div class="card-code-row">
+          <span class="card-code">${escapeHtml(itemCode.toUpperCase())}</span>
+          ${copyCodeButton}
+        </div>
     `;
 
   const hexColor = item[FIELD_KEYS.HEX] || '#ccc';
@@ -2789,6 +2797,49 @@ function copyToClipboard(text, event) {
         console.error('✗ Failed to copy to clipboard:', err);
         alert("Unable to copy HEX code. Please try again.");
     });
+}
+
+async function copyCodeToClipboard(button, event) {
+    if (event) event.stopPropagation();
+
+    const code = button?.dataset.code;
+    if (!code) {
+        console.error('Cannot copy paint code: code is missing.');
+        showCopyNotification('Unable to copy code. Please try again.', true);
+        return;
+    }
+
+    button.disabled = true;
+    try {
+        if (!navigator.clipboard?.writeText) {
+            throw new Error('Clipboard API is unavailable.');
+        }
+
+        await navigator.clipboard.writeText(code);
+        showCopyNotification('Code copied to memory');
+    } catch (error) {
+        console.error('Failed to copy code to clipboard:', error);
+        showCopyNotification('Unable to copy code. Please try again.', true);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+function showCopyNotification(message, isError = false) {
+    const notification = document.getElementById('copy-notification');
+    if (!notification) {
+        console.error('Copy notification element is missing.');
+        return;
+    }
+
+    notification.textContent = message;
+    notification.classList.toggle('copy-notification-error', isError);
+    notification.hidden = false;
+
+    clearTimeout(copyNotificationTimeout);
+    copyNotificationTimeout = setTimeout(() => {
+        notification.hidden = true;
+    }, 2500);
 }
 
 function exportInventoryToCSV() {

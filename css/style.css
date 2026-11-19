@@ -412,6 +412,62 @@ header p {
   color: var(--primer-accent, #ffc107);
 }
 
+.card-code-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.copy-code-btn {
+  border: 0;
+  border-radius: 4px;
+  padding: 1px 3px;
+  margin-left: 4px;
+  background: #5277f3;
+  color: #fff;
+  font: inherit;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.copy-code-btn:hover {
+  background: #4165df;
+}
+
+.copy-code-btn:focus-visible {
+  outline: 2px solid #ffc107;
+  outline-offset: 2px;
+}
+
+.copy-code-btn:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.copy-notification {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1100;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 12px 18px;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  background: #252632;
+  color: #f8fafc;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
+}
+
+.copy-notification[hidden] {
+  display: none;
+}
+
+.copy-notification-error {
+  border-color: #ff6b6b;
+}
+
 .card-keywords {
   color: var(--primer-text-main, #f8fafc);
   width: 100%;
