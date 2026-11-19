@@ -65,7 +65,8 @@ jobs:
       - name: Prepare application-only deployment files
         run: |
           mkdir -p "$RUNNER_TEMP/cores-deploy"
-          cp index.html css js data img "$RUNNER_TEMP/cores-deploy/"
+          cp index.html "$RUNNER_TEMP/cores-deploy/"
+          cp -r css js data img "$RUNNER_TEMP/cores-deploy/"
 
       - name: Deploy website using explicit FTPS
         # v4.4.0 pinned to its upstream commit.
