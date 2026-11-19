@@ -290,6 +290,13 @@ header p {
   font-size: 0.95rem;
 }
 
+.code-query-not-found {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #ffc107;
+  font-size: 0.875rem;
+}
+
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));

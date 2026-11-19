@@ -679,7 +679,9 @@ async function PageLoad() {
     buildColorMap();
     updateSearchFields();
     updateFilters();
-    displayResults();
+    if (!displayColourFromQuery()) {
+      displayResults();
+    }
     
   } catch (error) {
     console.error('Failed to load application data:', error);
@@ -693,6 +695,41 @@ async function PageLoad() {
       }, 500);
     }
   }
+}
+
+function displayColourFromQuery() {
+  if (currentTab !== TAB_NAMES.COLOURS) {
+    return false;
+  }
+
+  const requestedCode = new URLSearchParams(window.location.search).get('code');
+  if (requestedCode === null) {
+    return false;
+  }
+
+  const normalizedCode = requestedCode.trim().toUpperCase();
+  const colours = DataService.getColours();
+  const matchingColour = normalizedCode
+    ? colours.find(colour => String(colour[FIELD_KEYS.CODE] ?? '').trim().toUpperCase() === normalizedCode)
+    : undefined;
+
+  if (matchingColour) {
+    currentFilteredResults = [matchingColour];
+    displayResults(currentFilteredResults);
+  } else {
+    currentFilteredResults = colours;
+    displayResults(currentFilteredResults);
+
+    const resultsInfo = document.getElementById('resultsInfo');
+    if (resultsInfo) {
+      const notice = document.createElement('span');
+      notice.className = 'code-query-not-found';
+      notice.textContent = `Colour code "${requestedCode}" not found. Showing all colours.`;
+      resultsInfo.prepend(notice);
+    }
+  }
+
+  return true;
 }
 
 function validateColourData(data) {
@@ -1346,7 +1383,9 @@ function switchTab(tab) {
       // Update UI with cleared state
       updateSearchFields();
       updateFilters();
-      displayResults();
+      if (!displayColourFromQuery()) {
+        displayResults();
+      }
     }
 
     currentTabOperation = null;
@@ -2816,7 +2855,9 @@ function closeMenuToggle() {
   setTimeout(() => {
     updateSearchFields();
     updateFilters();
-    displayResults();
+    if (!displayColourFromQuery()) {
+      displayResults();
+    }
   }, 100);
 });
 
