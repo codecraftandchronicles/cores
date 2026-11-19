@@ -84,13 +84,13 @@ Configuration is read from `playwright.config.js` which respects the `TEST_BASE_
 
 ### GitHub Actions
 
-Every push to `main` or `develop`, and every pull request, triggers the **Test Suite** workflow (`.github/workflows/test.yml`):
+Pushes to `main`, `develop`, `features/**`, and `fix/**`, as well as pull requests targeting `main` or `develop`, run the **Test Suite** workflow (`.github/workflows/test.yml`) on Ubuntu 24.04 with Node.js 24.
 
 ```yaml
-Trigger: push (main, develop) + pull_request (main, develop)
+Trigger: push (main, develop, features/**, fix/**) + pull_request (main, develop)
 Steps:
   1. Checkout code
-  2. Setup Node.js 20
+  2. Setup Node.js 24
   3. Install dependencies (npm ci)
   4. Install Playwright browsers
   5. Run all tests (npx playwright test)
@@ -98,6 +98,18 @@ Steps:
 ```
 
 **Test results are archived** (30-day retention) and visible in PR checks.
+
+### cPanel FTPS deployment
+
+After the test job passes, pushes to `develop` can deploy `index.html`, `css/`, `js/`, `data/`, and `img/` to cPanel over explicit FTPS. The deployment account must be restricted to the subdomain's document root because the workflow deploys to the account's FTP root (`./`). Only files tracked by the deployment action are eligible for stale-file removal; unrelated cPanel files are not included in the staged deployment.
+
+Before enabling the first production deployment:
+
+1. Back up the cPanel document root and verify the FTP account opens at that exact directory.
+2. Add these repository **Actions secrets**: `CPANEL_FTP_SERVER`, `CPANEL_FTP_USERNAME`, and `CPANEL_FTP_PASSWORD`.
+3. Add the repository **Actions variable** `CPANEL_FTPS_DEPLOY_ENABLED` with value `true` to enable automatic deployment.
+
+The FTPS connection uses port `21` with strict certificate validation. Do not store FTP credentials in repository files.
 
 ### Workflow File
 

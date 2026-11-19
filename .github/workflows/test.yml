@@ -34,3 +34,48 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+  deploy-cpanel:
+    name: Deploy to cPanel over FTPS
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop' && vars.CPANEL_FTPS_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    concurrency:
+      group: cpanel-ftps-deploy
+      cancel-in-progress: false
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check deployment secrets
+        env:
+          FTP_SERVER: ${{ secrets.CPANEL_FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.CPANEL_FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.CPANEL_FTP_PASSWORD }}
+        run: |
+          if [ -z "$FTP_SERVER" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "::error::Configure CPANEL_FTP_SERVER, CPANEL_FTP_USERNAME, and CPANEL_FTP_PASSWORD in repository Actions secrets."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare application-only deployment files
+        run: |
+          mkdir -p "$RUNNER_TEMP/cores-deploy"
+          cp index.html css js data img "$RUNNER_TEMP/cores-deploy/"
+
+      - name: Deploy website using explicit FTPS
+        # v4.4.0 pinned to its upstream commit.
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287
+        with:
+          server: ${{ secrets.CPANEL_FTP_SERVER }}
+          username: ${{ secrets.CPANEL_FTP_USERNAME }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
+          security: strict
+          local-dir: ${{ runner.temp }}/cores-deploy/
+          server-dir: ./
